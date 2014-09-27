@@ -172,6 +172,7 @@ p.side_bar_text {
     margin-top: 20px;
     margin-left: 20px;
     margin-right: 20px;
+	margin-bottom: 40px;
 }
 
 .booking_info_summary {
@@ -370,8 +371,16 @@ img.activity_image {
 
 /* Payment */
 
+.payment_page {
+	background-color: #ffffff;
+	border-radius: 3px;
+	padding: 5px;
+	min-height:700px;
+}
+
 .payment_options {
-    margin-left: 100px;
+	width: 450px;
+	margin: auto;
     position: relative;
 }
 

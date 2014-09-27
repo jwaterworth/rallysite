@@ -134,8 +134,22 @@ a.booking_button:hover span{
     
 }
 
-.booking_form label{
+
+.booking_form_section {
+	background-color: #ffffff;
+	border-radius: 3px;
+	padding: 5px;
+	margin-bottom: 10px;
+}
+
+.booking_form_section  span {
+	margin: 3px;
+}
+
+label{
     font-weight: bold;
+	width: 150px;
+	display: inline-block;
 }
 
 .booking_form label span {

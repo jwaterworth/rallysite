@@ -1,10 +1,10 @@
 <head>
-    <link rel="stylesheet" type="text/css" href="http://co-project.lboro.ac.uk/users/cojw3/ssago/common_styles.css"/>
-    <link rel="stylesheet" type="text/css" href="http://co-project.lboro.ac.uk/users/cojw3/ssago/information_styles.css"/>
-    <link rel="stylesheet" type="text/css" href="http://co-project.lboro.ac.uk/users/cojw3/ssago/form_styles.css"/>
+    <link rel="stylesheet" type="text/css" href="styles/common_styles.css"/>
+    <link rel="stylesheet" type="text/css" href="styles/information_styles.css"/>
+    <link rel="stylesheet" type="text/css" href="styles/form_styles.css"/>
 </head>
 <body>
-    <div class="container">
+    <div class="popout_container">
         <?php
         require_once(PAGE_CONTROLLERS."/BookingSummaryPageController.inc.php");
         $eventID = isset( $_GET['event'] ) ? $_GET['event'] : "";

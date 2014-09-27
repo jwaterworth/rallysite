@@ -10,13 +10,13 @@ $booking = $controller->data['booking'];
 
 <h3 class="page_title">Payment Summary</h3>
 
-<div class="booking_page">
+<div class="booking_page payment_page">
     <?php if(!$controller->CheckAuth(ALLTYPES)) : ?>
         <p>Please log in to view payment summary</p>
     <?php elseif($controller->errorMessage != null) : ?>
         <p><?php echo $controller->errorMessage ?></p>
     <?php else : ?>
-        <div class="payment_summary"/>
+        <div class="payment_summary">
         <?php if($booking['paid']) : ?>
         <p>Congratulations, your booking has been paid for!</p>
         <?php endif; ?>
@@ -48,6 +48,7 @@ $booking = $controller->data['booking'];
         </div>
         <?php endif; ?>
     <?php endif; ?>
+	</div>
 <?php       
     include (COMMON_TEMPLATES."/footer.php");
 ?>

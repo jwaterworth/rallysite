@@ -15,39 +15,51 @@ $controller->GeneratePageData();
     <?php elseif($controller->errorMessage != null) : ?>
         <p><?php echo $controller->errorMessage ?></p>
     <?php else : ?>	
-        <form name="bookingForm" class="booking_form" action=".?event=<?php echo $controller->data['eventID']?>&action=entry&form=booking" method="POST">
-            <fieldset class="form_details">
-                <?php if($controller->data['bookingType'] == 'ownBooking') : ?>
-                    <legend>Membership details - <a href=".?action=myaccount">edit</a></legend>
-                    <input type="hidden" name="userID" value="<?php echo $controller->data['userID'] ?>"/>
-                    <p>Name: <?php echo $controller->data['userName'] ?></p>
-                    <p>Club: <?php echo $controller->data['club'] ?></p>
-                    <p>Email: <?php echo $controller->data['userEmail'] ?></p>
-                    <p>Phone: <?php echo $controller->data['userPhone'] ?></p>
-                    <p>Address: <?php echo $controller->data['userAddress'] ?></p>
-                    <p>Emergency Contact: <?php echo $controller->data['emergName'] ?></p>
-                    <p>Emergency Number: <?php echo $controller->data['emergPhone'] ?></p>
-                    <p>Emergency Address: <?php echo $controller->data['emergAddress'] ?></p>
-                <?php else : ?>
-                    <legend>Club Member</legend>
-                    <select id="accountID"  name="userID" onLoad="getAccountDetails()" onChange="getAccountDetails()">
-                        <?php foreach($controller->data['clubMembers'] as $clubMember) : ?>
-                            <option value="<?php echo $clubMember['id'] ?>"><?php echo $clubMember['name'] ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                    <p>
-                        <label>Member Name: <span id="memberName"></span></label>
-                    </p>
-                    <p>
-                        <label>Member Email: <span id="memberEmail"></span></label>
-                    </p>
-                    <p>
-                        <label>Member Phone: <span id="memberPhone"></span></label>
-                    </p>
-                <?php endif; ?>
-            </fieldset>
-            <fieldset class="form_details">
-                <legend>Activity Choice</legend>
+        <form name="bookingForm" class="booking_form" action=".?event=<?php echo $controller->data['eventID']?>&action=entry&form=booking" method="POST">            
+			<?php if($controller->data['bookingType'] == 'ownBooking') : ?>
+				<div class="booking_form_section">
+					<h3>Membership details - <a href=".?action=myaccount">edit</a></h3>				
+					<input type="hidden" name="userID" value="<?php echo $controller->data['userID'] ?>"/>
+					<div>
+					<label>Name</label><span><?php echo $controller->data['userName'] ?></span>
+					</div>
+					<div>
+					<label>Club</label><span><?php echo $controller->data['club'] ?></span>
+					</div>
+					<div>
+					<label>Email</label><span><?php echo $controller->data['userEmail'] ?></span>
+					</div>
+					<div>
+					<label>Phone</label><span><?php echo $controller->data['userPhone'] ?></span>
+					</div>
+					<div>
+					<label>Address</label><span><?php echo $controller->data['userAddress'] ?></span>
+					</div>
+					<div>
+					<label>Emergency Contact</label><span><?php echo $controller->data['emergName'] ?></span>
+					</div>
+					<div>
+					<label>Emergency Number</label><span><?php echo $controller->data['emergPhone'] ?></span>
+					</div>
+					<div>
+					<label>Emergency Address</label><span><?php echo $controller->data['emergAddress'] ?></span>
+					</div>
+				</div>				
+			<?php else : ?>
+				<div class="booking_form_section">
+					<h3>Club Member</h3>
+					<select id="accountID"  name="userID" onLoad="getAccountDetails()" onChange="getAccountDetails()">
+						<?php foreach($controller->data['clubMembers'] as $clubMember) : ?>
+							<option value="<?php echo $clubMember['id'] ?>"><?php echo $clubMember['name'] ?></option>
+						<?php endforeach; ?>
+					</select>
+					<label>Member Name</label><span id="memberName"></span>
+					<label>Member Email</label><span id="memberEmail"></span>
+					<label>Member Phone</label><span id="memberPhone"></span>
+				</div>
+			<?php endif; ?>
+            <div class="booking_form_section">
+                <h3>Activity Choice</h3>
                 <div class="normalise_grid">
                     <ol id="selectable">
                         <?php foreach($controller->data['activities'] as $activity) : ?>
@@ -58,19 +70,19 @@ $controller->GeneratePageData();
                     </ol>
                 </div>
                 <div class="clear"></div>
-                <input type="hidden" id="activityInput" name="activityID" value=""/>
-                <p>
-                    <label>Activity: <span id="activityName"></span></label>
-                </p>
-                <p>
-                    <label>Activity Fee: <span id="activityCost"></span></label>
-                </p>
-                <p>
-                    <label>Spaces: <span id="activitySpaces"></span></label>
-                </p>
-            </fieldset>
-            <fieldset class="form_details">
-                <legend>Food Choices</legend>
+				<input type="hidden" id="activityInput" name="activityID" value=""/>
+				<div>
+				<label>Activity</label><span id="activityName"></span>
+				</div>
+				<div>
+				<label>Activity Fee</label><span id="activityCost"></span>
+				</div>
+				<div>
+				<label>Spaces</label><span id="activitySpaces"></span>
+				</div>
+            </div>
+            <div class="booking_form_section">
+                <h3>Food Choices</h3>
                 <?php foreach($controller->data['foodTypes'] as $foodType) : ?>
                     <p>
                         <label><?php echo $foodType['name'] ?></label>
@@ -85,8 +97,8 @@ $controller->GeneratePageData();
                         <?php endif; ?>
                     </p>
                 <?php endforeach; ?>
-            </fieldset>
-            <input type="submit" value="Submit"/>
+				<input type="submit" value="Create Booking"/>
+			</div>
         </form>
     </div>
 
