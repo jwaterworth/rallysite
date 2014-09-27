@@ -1,5 +1,6 @@
 <?php
 include("config.php");
+
 session_start();
 $action = isset( $_GET['action'] ) ? $_GET['action'] : "";
 
