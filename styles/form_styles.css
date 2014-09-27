@@ -1,0 +1,151 @@
+/* 
+    Document   : form_styles
+    Created on : 10-Apr-2012, 18:14:39
+    Author     : James
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+input,textarea,select{
+	min-width: 200px;
+}
+
+
+
+fieldset.form_details {
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+legend.form_details {
+    font-size: 14pt;
+}
+
+.registration_form {
+	margin-bottom: 15px;
+}
+
+.registration_form label{
+    font-weight: bold;
+    display: block;
+	min-width: 100px;
+}
+
+.registration_form div span {
+    margin-left: 10px;
+    color: #b1b1b1;
+    font-size: 10pt;
+    font-style: italic;
+}
+
+.registration_form input.error{
+	background: #f8dbdb;
+	border-color: #e77776;
+}
+
+.registration_form textarea.error{
+	background: #f8dbdb;
+	border-color: #e77776;
+}
+
+ul.member_list {
+    position: relative;
+    float: left;
+    text-align: left;
+    border-bottom: 1px solid grey;
+    width: 80%;
+}
+
+.member_list li {
+    float: left;
+    padding-right: 15px;
+    list-style-type: none;
+    min-width: 120px;
+}
+
+li.member_email {
+    padding-right: 50px;
+    min-width: 200px;
+}
+
+li.member_phone {
+    padding-right: 10px;
+}
+
+li.tick {
+    padding-right: 15px;
+    min-width: 20px;
+    width: 20px;
+    
+}
+
+img.tick {
+    max-width: 20px;
+    max-height: 20px;
+}
+
+p.club_header {
+    clear: both;
+}
+
+/* admin entry */
+.admin_entry label{
+    font-weight: bold;
+    display: block;
+}
+
+.activity_form {
+    padding-top: 10px;
+}
+
+.activity_form legend{
+    font-weight: bold;
+}
+
+/*Button style*/
+
+a.booking_button {
+    /* Sliding right image */    background: transparent url('button_right.png') no-repeat scroll top right; 
+    display: block;
+    float: left;
+    height: 34px; /* CHANGE THIS VALUE ACCORDING TO IMAGE HEIGHT */
+    margin-right: 6px;
+    padding-right: 20px; /* CHENGE THIS VALUE ACCORDING TO RIGHT IMAGE WIDTH */
+    /* FONT PROPERTIES */
+    text-decoration: none;
+    color: #000000;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:12px;
+    font-weight:bold;
+}
+
+a.booking_button span{    /* Background left image */ 
+    background: transparent url('button_left.png') no-repeat;     display: block;
+    line-height: 22px; /* CHANGE THIS VALUE ACCORDING TO BUTTONG HEIGHT */
+    padding: 7px 0 5px 18px;
+} 
+
+a.booking_button:hover span{
+    text-decoration:underline;
+}
+
+/* booking form */
+.booking_form {
+    
+}
+
+.booking_form label{
+    font-weight: bold;
+}
+
+.booking_form label span {
+    font-weight: normal;
+}
+
+/*
+Jquery UI override
+*/
+
+.ui-widget {
+	font-size: 12pt;
+}

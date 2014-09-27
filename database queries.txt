@@ -1,0 +1,52 @@
+Create Account table:
+
+CREATE TABLE  `rallysite`.`Account` (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`name` VARCHAR( 255 ) NOT NULL ,
+`dateOfBirth` DATE NOT NULL ,
+`email` VARCHAR( 255 ) NOT NULL ,
+`phoneNumber` VARCHAR( 20 ) NOT NULL ,
+`emergName` VARCHAR( 255 ) NOT NULL ,
+`emergAddress` TEXT NOT NULL ,
+`emergPhone` VARCHAR( 20 ) NOT NULL ,
+`dietaryReq` TEXT NOT NULL ,
+`medialCond` TEXT NOT NULL ,
+`accountTypeID` INT NOT NULL ,
+`clubID` INT NOT NULL
+) ENGINE = MYISAM ;
+
+
+Create Club table:
+
+CREATE TABLE  `rallysite`.`Club` (
+`id` INT NULL AUTO_INCREMENT PRIMARY KEY ,
+`name` VARCHAR( 255 ) NOT NULL ,
+`logoLoc` VARCHAR( 255 ) NOT NULL
+) ENGINE = MYISAM ;
+
+Create NewsPost Table:
+CREATE TABLE  `rallysite`.`NewsPost` (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`newsTitle` VARCHAR( 255 ) NOT NULL ,
+`newsBody` TEXT NOT NULL ,
+`newsTimeStamp` DATE NOT NULL ,
+`userID` INT NOT NULL
+) ENGINE = MYISAM ;
+
+Create Event table:
+CREATE TABLE  `rallysite`.`Event` (
+`id` INT NOT NULL ,
+`eventName` VARCHAR( 255 ) NOT NULL ,
+`eventSummary` TEXT NOT NULL ,
+`eventInformation` TEXT NOT NULL ,
+`eventLogoLoc` VARCHAR( 255 ) NOT NULL ,
+PRIMARY KEY (  `id` )
+) ENGINE = MYISAM ;
+
+Create ActivityPage table:
+CREATE TABLE  `rallysite`.`ActivityPage` (
+`id` INT NOT NULL ,
+`activitiesBrief` TEXT NOT NULL ,
+`eventID` INT NOT NULL ,
+PRIMARY KEY (  `id` )
+) ENGINE = MYISAM ;

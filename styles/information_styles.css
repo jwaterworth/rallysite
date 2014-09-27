@@ -1,0 +1,410 @@
+/* 
+    Document   : news_styles
+    Created on : 04-Apr-2012, 20:15:04
+    Author     : Bernard
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/*News*/
+
+.home_page {
+    margin-top: 20px;
+}
+
+.news_posts {
+    position: relative;
+	width: 70%;
+	min-height: 500px;
+    margin-left: 20px;
+    padding-right: 15px;
+    float:left;    
+    border-right: 1px solid grey;
+}
+
+.news_post {
+    margin-bottom: 20px;
+    padding: 10px;
+	background-color: #FFFFFF;
+	border-radius: 3px;
+}
+
+.news_post a {
+	text-decoration: underline;
+	color: #000;	
+}
+
+.news_footer {
+    clear: both;
+}
+
+p.news_title {
+    font-size: 14pt;
+    line-height: 0.5em;
+}
+
+p.news_author {
+    color: #D6B92A;
+    line-height: 0.5em;
+}
+
+/*Side bar */
+
+
+.side_bar {
+    float: left;
+    width: 23%;
+	max-width: 230px;
+}
+@media (max-width:1520px) {
+	.side_bar {
+		display: none;
+	}
+	
+	.news_posts {
+		width: 95%;
+		border-right: none;
+	}
+}
+
+.side_bar_box {
+	margin-left: 15%;
+    padding: 5px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid grey;
+	width: 225px; 
+	background-color: #FFFFFF;
+	border-radius: 3px;
+}
+
+.side_bar_external {
+    color: #000;
+    /*background-color: #FACC2E;*/
+}
+
+.side_bar_activity {
+    color: #FACC2E;
+	height: 200px;
+}
+
+.side_bar_clear {
+    background: #FFF;
+}
+
+.side_bar_activity a {
+    color: #000000;
+}
+
+.side_bar_external a {
+    color: #000;
+}
+
+
+p.side_bar_header {
+    margin: 0px;
+    padding: 4px;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.side_bar_box a {
+    text-decoration: none;
+}
+
+.side_bar_box p {
+	margin: 3px;
+	padding: 0px;
+}
+
+.side_bar_box img{
+	margin-left: 26px;
+    height: 127.5px;
+    width: 170px;
+}
+
+p.side_bar_text {
+    text-align: center;
+    text-decoration: none;
+}
+
+
+/*Event Info*/
+
+#tabs {
+	min-height: 900px;
+}
+
+.event_information {
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+	min-height: 700px;
+}
+
+.event_information p {
+    white-space:pre-wrap;
+}
+
+.event_summary {
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.event_body {
+    padding: 10px;
+}
+
+.map_container {
+	width: 100%;
+	height: 100%;
+}
+
+.google_maps_iframe {
+	width:100%;
+	height: 60%%;
+	margin-left: auto;
+}
+
+/*Booking Info*/
+
+.booking_page {
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.booking_info_summary {
+    margin-bottom: 20px;
+    padding: 5px 10px 5px 10px;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+}
+
+.booking_fees {
+    margin-bottom: 20px;
+    padding: 5px 10px 5px 10px;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+}
+
+.booking_info {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+}
+
+ .booking_info_summary p {
+    white-space:pre-wrap;
+}
+
+.booking_info p {
+    white-space:pre-wrap;
+}
+
+.booking {
+    border-bottom: 1px solid grey;
+}
+
+.booking p{
+    display: inline-block;
+    min-width: 160px;
+    max-width: 200px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+p.short_attribute{
+    min-width: 10px;
+    max-width: 200px;
+    width: 50px;
+}
+
+.booking_activities {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.booking_activity {
+    margin-left: 50px;
+    width: 200px;
+    float: left;
+}
+
+.booking_header {
+    font-weight: bold;
+}
+
+ul.fee_list {
+    float: left;
+}
+
+li.fee_list {
+    list-style-type: none;
+}
+
+.normalise_grid {
+    
+}
+
+/*Activity choice grid css (supplements jQueryUI CSS framework */
+#selectable .ui-selecting { 
+    background: #21D639; 
+}
+
+#selectable .ui-selected { 
+    background: #21D639; 
+    color: white; 
+}
+
+#selectable { 
+    list-style-type: none; 
+    margin: 0; 
+    padding: 0; 
+}
+
+#selectable li {
+    margin: 3px; 
+    padding: 1px; 
+    float: left;
+    width: 150px; 
+    height: 100px;
+    text-align: center; 
+}
+
+#selectable p {
+    font-size: 12pt;
+    margin: 0px;
+    padding: 0px;
+}
+
+#selectable img {
+    max-height: 50px;
+    max-width: 50px;
+}
+
+/*Activities*/
+.activity_page {
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+	margin-bottom: 40px;
+	border-radius: 3px;
+}
+
+.activity_brief {
+    margin-bottom: 20px;
+    padding: 5px 10px 5px 10px;
+	background-color: #ffffff;
+	border-radius: 3px;
+}
+
+.activity {
+    position: relative;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 3px;
+	background-color: #ffffff;
+}
+
+.activity_left {
+    width: 260px;
+    float: left;
+    margin-top: 15px;
+    padding: 10px;
+}
+
+.activity_right {
+    float: left;
+    width: 450px;
+}
+
+.activity_footer {
+    clear: both;
+}
+
+img.activity_image {
+    max-width: 250px;
+    max-height: 250px;
+}
+
+
+/*Participant List */
+.participant_list {
+    
+    float:left;
+}
+
+.activity_entry {
+    /*display: inline-block;*/
+    border-bottom: 1px solid grey;
+    padding: 5px;
+}
+
+.activity_entry p {
+    display: inline-block;
+}
+
+.activity_title {
+    font-weight: bold;
+}
+
+.participants_image {
+    float:right;
+}
+
+.activity_entry img {
+    margin-top:10px;
+    padding: 5px;
+    max-height: 150px;
+    max-width: 150px;
+}
+
+.activity_participant p {
+    width:200px;
+    margin: 0px;
+    padding-left: 10px;
+}
+
+/* Payment */
+
+.payment_options {
+    margin-left: 100px;
+    position: relative;
+}
+
+.payment_option {
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-right: 1px solid grey;
+    min-height: 150px;
+    max-width: 200px;
+}
+
+.payment_option_no_border {
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px;
+    min-height: 150px;
+    max-width: 200px;
+}
+
+.payment_header{
+    font-weight: bold;
+}
+
+/*Admin*/
+
+/* tab pane styling */
+.panes div {
+    display:none;
+    padding:15px 10px;
+    border:1px solid #999;
+    border-top:0;
+    min-height: 100px;
+    font-size:14px;
+    background-color:#fff;
+}

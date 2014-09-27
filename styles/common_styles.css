@@ -1,0 +1,270 @@
+/* 
+    Document   : styles
+    Created on : 23-Mar-2012, 15:53:58
+    Author     : James
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+html { 
+	font-family: calibri, verdana;
+	line-height: 20px;
+    margin: 0px;
+	padding: 0px;
+}
+
+body {
+    background-color: #333333;
+	padding: 0px;
+	margin: 0px;
+	min-width: 700px;
+}
+
+h2, h3 {
+	margin: 0px;
+	padding: 0px;
+}
+
+div.container {
+    width: 100%;
+    min-height: 1000px;
+	height: 100%;
+    margin: 0px;
+    padding: 0px;
+    background: #fff;    
+    line-height: 1.5em;
+	background-color: #333333;
+}
+
+div.content {
+	width: 70%;
+	min-height: 1000px;
+	margin-top: 0px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 0px;
+	padding-top: 15px;
+	padding-bottom: 5px;
+	background-color: rgb(233, 234, 237);
+	/*background-color: darkgreen; */
+	position: relative;
+}
+
+@media (max-width:1000px) {
+	div.content{ 
+		width: 100%;
+	}
+}
+
+div.header {
+	background-color: #FFFFFF;
+    margin: 0px;
+    padding: 0px;
+	width: 100%;
+    /*border-bottom: 1px solid;*/
+}
+
+.title_container {
+	width: 100%;
+	height: 175px;
+	position: relative;
+}
+
+.title_container > .logo {
+	float: left;
+}
+
+.title_container  > .event_title{
+	float :right;
+}
+
+div.event_title h2 {
+
+}
+
+#footer_info {
+	position: absolute;
+	bottom: 5px;
+	width: 100%;
+}
+
+#footer_info > p {
+	width: 100%;
+	text-align: center;
+	margin:auto;
+}
+
+.clear {
+    clear: both;
+}
+
+.account_signout {
+    width: 100%;
+	height: 50px;
+}
+
+.account_signout p  {
+	float: right;
+	margin: 0px;
+	padding: 0px;
+	margin-right: 5px;
+}
+
+.account_signout a{
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 12pt;
+    color: #424242;
+}
+
+/*Menu*/
+.menu {
+    width: 100%;
+    height: 30px;
+    background: url(main_menu.png);
+    background-repeat: repeat-x;
+	margin: 0;
+	padding 0;
+	text-align: center;
+}
+
+.menu ul{
+    margin: 0px;
+    padding: 0px;
+}
+
+.menu ul li {
+/*
+	width: 130px;
+    height: 30px;
+    float: left;
+    list-style: none;
+    margin-left: 55px;
+	*/
+	display: inline;
+}
+
+.menu li a{
+	display: inline-block;
+    color: #fff;
+    text-decoration: none;
+	padding-left: 35px;
+	padding-right: 35px;
+}
+
+.menu li a:hover {
+    text-decoration: underline;
+}
+
+/*Common Page Layout*/
+.page_title{
+    margin-left: 20px;
+    font-size: 16pt;
+}
+
+/*My account*/
+
+.account_page {
+   
+}
+
+.logged_out_page {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 40px;
+	width: 700px;
+}
+
+.login_details{
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 5px 10px 5px 10px;
+    border: 1px solid black;
+    border-radius: 8px;
+    /*background-color: #E5F533;*/
+}
+
+.personal_details {
+    margin-bottom: 20px;
+    padding: 5px 10px 5px 10px;
+    border-radius: 8px;
+    background-color: #33ECF5;
+}
+
+.other_details {
+    margin-bottom: 20px;
+    padding: 5px 10px 5px 10px;
+    border-radius: 8px;
+    background-color: #FF2A2A;
+}
+
+p.account_detail{
+
+}
+
+p.details_header {
+    font-size: 14pt;
+}
+
+a.details_header {
+    font-size: 12pt;
+}
+
+/*Authentication*/
+
+div.login_page {
+    position: relative;
+}
+
+div.login_form {
+    width: 300px;
+    float: left;
+    padding: 20px;
+    border-right: 1px solid grey;
+}
+
+div.create_account{
+    width: 300px;
+    float: left;
+    padding: 20px;
+}
+
+/*registration */
+
+div.registration_form p{
+    max-width: 200px;
+}
+
+
+/* jquery tabs */
+
+div.normalise_tabs #tabs{
+    font-family: calibri, verdana;
+}
+
+
+.ui-widget-content, .ui-widget-header {
+	border: none;
+	background: none;
+	background-color: #FFFFFF;
+}
+
+.ui-tabs{ 
+	padding: 0;
+}
+
+.ui-tabs-nav {
+	background-color: rgb(233, 234, 237);
+	padding: 0;
+	border-radius: 0;
+}
+
+.ui-tabs .ui-tabs-nav{
+ padding: 0;
+}
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+	background: #ffffff 50% 50% repeat-x;
+}
+
+
