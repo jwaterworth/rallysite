@@ -136,7 +136,6 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
 		$currVO = array();
 		
 		$isUpdate = false;
-		
         if($valueObject->getId() != "") {
             $currVO = $this->GetById($valueObject->getId());
         }

@@ -66,7 +66,9 @@
 				$token = self::hashData($token);
 					
 				//Setup sessions vars					
-				session_start();
+				if (session_status() == PHP_SESSION_NONE) {
+					session_start();
+				}
 				
 				//Set up the value object for committing to the database
 				$openSessionVO = OpenSessionFactory::CreateValueObject();
@@ -114,8 +116,7 @@
 		}	
 		
 		//Just destroy the current session
-		session_destroy();
-		
+		session_destroy();		
 	}
 	
 	public static function CheckAuthenticationLevel($userLevel) {
@@ -126,7 +127,6 @@
 			$dbAccounts = AccountFactory::GetDataAccessObject();
 			
 			$accountVO = $dbAccounts->GetById($accountId);
-			
 			return $userLevel & $accountVO->getAccountTypeID();
 		} else {
 			return false;

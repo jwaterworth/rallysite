@@ -45,7 +45,7 @@ class ClubRepAdminPageController extends PageController {
             try { 
                 $accountType = $accountData->GetMemberType($accountVO);
                 //If account type ID does not match any known account type then put on non approved list
-                if($accountType->getId() & ALLTYPES) { 
+                if($accountType->getId() & APPROVED) { 
                     $this->data['approved'][] = $this->SetAccountData($accountVO, $accountData);
                 } else {
                     $this->data['unapproved'][] = $this->SetAccountData($accountVO, $accountData);

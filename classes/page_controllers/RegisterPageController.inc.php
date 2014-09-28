@@ -47,6 +47,7 @@ class RegisterPageController extends PageController{
             $account['emergName'] = $accountVO->getEmergName();
             $account['emergPhone'] = $accountVO->getEmergPhone();
             $account['emergAddress'] = $accountVO->getEmergAddress();
+			$account['emergRelationship'] = $accountVO->getEmergRelationship();
             $account['dietaryReq'] = $accountVO->getDietaryReq();
             $account['medicalCond'] = $accountVO->getMedicalConditions();
             
@@ -81,27 +82,29 @@ class RegisterPageController extends PageController{
     }
     
     public function SaveAccount($name, $email, $password, $phone, $address, $dob, $medicalCond, $dietaryReq,
-            $emergName, $emergRel, $emergPhone, $emergAddress, $clubID) {
+            $emergName, $emergRel, $emergPhone, $emergAddress, $emergRelative, $clubID) {
         
         //Process date
-        $dateArray =  date_parse_from_format('d/m/Y', $dob);
-        $dob =  $dateArray['year'] . '-' . $dateArray['month'] . '-' . $dateArray['day'];
+		if($dob) {
+			$dateArray =  date_parse_from_format('d/m/Y', $dob);
+			$dob =  $dateArray['year'] . '-' . $dateArray['month'] . '-' . $dateArray['day'];
+		}       
         
         if($this->CheckAuth(ALLTYPES, false)) {
-            $id = $this->auth->getAuthData('id');
+            $id =Authentication::GetLoggedInId();
             $this->UpdateAccount($id, $name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
-            $emergName, $emergRel, $emergPhone, $emergAddress);
+            $emergName, $emergRel, $emergPhone, $emergAddress, $emergRelative);
             
         } else {
             $this->SaveNewAccount($name, $password, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
-                    $emergName, $emergRel, $emergPhone, $emergAddress, $clubID);
+                    $emergName, $emergRel, $emergPhone, $emergAddress, $emergRelative, $clubID);
         }
         
         return true;
     }
     
     private function UpdateAccount($id, $name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
-            $emergName, $emergRel, $emergPhone, $emergAddress) {
+            $emergName, $emergRel, $emergPhone, $emergAddress, $emergRelative) {
         
         $accountData = LogicFactory::CreateObject("Accounts");
         $account = AccountFactory::CreateValueObject();
@@ -117,6 +120,7 @@ class RegisterPageController extends PageController{
         $account->setEmergName($emergName);
         $account->setEmergPhone($emergPhone);
         $account->setEmergAddress($emergAddress);        
+		$account->setEmergRelationship($emergRelative);  
         
         try {
             $accountData->SaveAccount($account);
@@ -129,7 +133,7 @@ class RegisterPageController extends PageController{
     }
     
     private function SaveNewAccount($name, $password, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
-            $emergName, $emergRel, $emergPhone, $emergAddress, $clubId) {
+            $emergName, $emergRel, $emergPhone, $emergAddress, $emergRelative, $clubId) {
         
 		$accountVO = AccountFactory::CreateValueObject();
 		//No need to set password in the objet just yet as it needs hashing and salting
@@ -143,6 +147,7 @@ class RegisterPageController extends PageController{
 		$accountVO->setEmergName(htmlspecialchars($emergName));
 		$accountVO->setEmergPhone(htmlspecialchars($emergPhone));
 		$accountVO->setEmergAddress(htmlspecialchars($emergAddress));
+		$accountVO->setEmergAddress(htmlspecialchars($emergRelative));
 		$accountVO->setClubId(htmlspecialchars($clubId));	
 		//Default the account type id to 0 for unapproved
 		$accountVO->setAccountTypeID(UNAPPROVED);

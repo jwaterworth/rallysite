@@ -38,6 +38,7 @@ class AccountDAO extends DatabaseAccessObject{
         $valueObject->setEmergName($row[AccountVO::$dbEmergName]);
         $valueObject->setEmergPhone($row[AccountVO::$dbEmergPhone]);
         $valueObject->setEmergAddress($row[AccountVO::$dbEmergAddress]);
+		$valueObject->setEmergRelationship($row[AccountVO::$dbEmergRelationship]);
         $valueObject->setDietaryReq($row[AccountVO::$dbDietaryReq]);
         $valueObject->setMedicalConditions($row[AccountVO::$dbMedicalConditions]);
         $valueObject->setClubID($row[AccountVO::$dbClubID]);
@@ -59,6 +60,7 @@ class AccountDAO extends DatabaseAccessObject{
                 AccountVO::$dbEmergName.",".
                 AccountVO::$dbEmergPhone.",".
                 AccountVO::$dbEmergAddress.",".
+				AccountVO::$dbEmergRelationship.",".
                 AccountVO::$dbDietaryReq.",".
                 AccountVO::$dbMedicalConditions.",".
                 AccountVO::$dbClubID.",".
@@ -74,6 +76,7 @@ class AccountDAO extends DatabaseAccessObject{
                 $this->mysqli->real_escape_string($valueObject->getEmergName())."','".
                 $this->mysqli->real_escape_string($valueObject->getEmergPhone())."','".
                 $this->mysqli->real_escape_string($valueObject->getEmergAddress())."','".
+				$this->mysqli->real_escape_string($valueObject->getEmergRelationship())."','".
                 $this->mysqli->real_escape_string($valueObject->getDietaryReq())."','".
                 $this->mysqli->real_escape_string($valueObject->getMedicalConditions())."','".
                 $this->mysqli->real_escape_string($valueObject->getClubID())."','".
@@ -84,30 +87,57 @@ class AccountDAO extends DatabaseAccessObject{
 
     protected function GenerateUpdateSQL($valueObject) {
         $sql = "UPDATE ".$this->tableName." SET ".                
-                AccountVO::$dbName."='".
-                $this->mysqli->real_escape_string($valueObject->getName())."',".
-                AccountVO::$dbDateOfBirth."='".
-                $this->mysqli->real_escape_string($valueObject->getDateOfBirth())."',".
-                AccountVO::$dbEmail."='".
-                $this->mysqli->real_escape_string($valueObject->getEmail())."',".
-                AccountVO::$dbPhoneNumber."='".
-                $this->mysqli->real_escape_string($valueObject->getPhoneNumber())."',".
-                AccountVO::$dbAddress."='".
-                $this->mysqli->real_escape_string($valueObject->getAddress())."',".
-                AccountVO::$dbEmergName."='".
-                $this->mysqli->real_escape_string($valueObject->getEmergName())."',".
-                AccountVO::$dbEmergPhone."='".
-                $this->mysqli->real_escape_string($valueObject->getEmergPhone())."',".
-                AccountVO::$dbEmergAddress."='".
-                $this->mysqli->real_escape_string($valueObject->getEmergAddress())."',".
-                AccountVO::$dbDietaryReq."='".
-                $this->mysqli->real_escape_string($valueObject->getDietaryReq())."',".
-                AccountVO::$dbMedicalConditions."='".
-                $this->mysqli->real_escape_string($valueObject->getMedicalConditions())."',".
-                AccountVO::$dbClubID."='".
-                $this->mysqli->real_escape_string($valueObject->getClubID())."',".
-                AccountVO::$dbAccountTypeID."='".
-                $this->mysqli->real_escape_string($valueObject->getAccountTypeID())."' ".
+                ($valueObject->getName() ? AccountVO::$dbName."='".
+                $this->mysqli->real_escape_string($valueObject->getName())."'," : "") .
+				
+				($valueObject->getDateOfBirth() ?
+					AccountVO::$dbDateOfBirth."='".
+					$this->mysqli->real_escape_string($valueObject->getDateOfBirth())."'," : "" ).
+				
+				($valueObject->getEmail() ?
+					AccountVO::$dbEmail."='".
+					$this->mysqli->real_escape_string($valueObject->getEmail())."'," : "" ).
+				
+				($valueObject->getPhoneNumber() ?
+					AccountVO::$dbPhoneNumber."='".
+					$this->mysqli->real_escape_string($valueObject->getPhoneNumber())."'," : "" ).
+				
+				($valueObject->getAddress() ?
+					AccountVO::$dbAddress."='".
+					$this->mysqli->real_escape_string($valueObject->getAddress())."'," : "" ).
+				
+				($valueObject->getEmergName() ?
+					AccountVO::$dbEmergName."='".
+					$this->mysqli->real_escape_string($valueObject->getEmergName())."'," : "" ).
+				
+				($valueObject->getEmergPhone() ?
+					AccountVO::$dbEmergPhone."='".
+					$this->mysqli->real_escape_string($valueObject->getEmergPhone())."'," : "" ).
+				
+				($valueObject->getEmergAddress() ?
+					AccountVO::$dbEmergAddress."='".
+					$this->mysqli->real_escape_string($valueObject->getEmergAddress())."'," : "" ).
+				
+				($valueObject->getEmergRelationship() ?
+					AccountVO::$dbEmergRelationship."='".
+					$this->mysqli->real_escape_string($valueObject->getEmergRelationship())."'," : "" ).
+				
+				($valueObject->getDietaryReq() ?
+					AccountVO::$dbDietaryReq."='".
+					$this->mysqli->real_escape_string($valueObject->getDietaryReq())."'," : "" ).
+				
+				($valueObject->getMedicalConditions() ?
+					AccountVO::$dbMedicalConditions."='".
+					$this->mysqli->real_escape_string($valueObject->getMedicalConditions())."'," : "" ).
+				
+				($valueObject->getClubID() ?
+					AccountVO::$dbClubID."='".
+					$this->mysqli->real_escape_string($valueObject->getClubID())."'," : "" ).
+				
+				($valueObject->getName() ?
+					AccountVO::$dbAccountTypeID."='".
+					$this->mysqli->real_escape_string($valueObject->getAccountTypeID())."' " : "" ).
+								
                 "WHERE ".AccountVO::$dbId."=".
                 $this->mysqli->real_escape_string($valueObject->getId());
         return $sql;

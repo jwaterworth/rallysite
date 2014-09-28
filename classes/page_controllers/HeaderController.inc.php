@@ -24,22 +24,22 @@ class HeaderController extends PageController {
         }
         
         $this->data['loggedin'] = null;
-        
         if($this->CheckAuth(ALLTYPES, false)) {
             $userID = Authentication::GetLoggedInId();
             $accountData = LogicFactory::CreateObject("Accounts");
             try {
                 $account = $accountData->GetAccount($userID);
-                
                 if($accountData->GetMemberType($account)->getId() & CLUBREP) {
                     $club = $accountData->GetMemberClub($account);
                     $this->data['club'] = $club->getName();
                 }
             } catch(Exception $e) {
+			echo $e->getMessage();
                 $this->errorMessage = $e->getMessage();
                 return;
             }
             $this->data['loggedin'] = 'true';
+			
             $this->data['name'] = $account->getName();
         } else {
             $this->data['loggedin'] = null;

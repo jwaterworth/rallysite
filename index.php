@@ -171,13 +171,37 @@ function entry() {
             
             $result = $controller->SaveAccount($_POST['userName'], $_POST['userEmail'], $_POST['userPassword'], $_POST['userPhone'], $_POST['userAddress'], 
                     $_POST['userDOB'], $_POST['userMedicalCond'], $_POST['userDietaryReq'],
-                    $_POST['emergName'], $_POST['emergRel'], $_POST['emergPhone'], $_POST['emergAddress'], $_POST['clubID']);
+                    $_POST['emergName'], $_POST['emergRel'], $_POST['emergPhone'], $_POST['emergAddress'], $_POST['emergRelationship'], $_POST['clubID']);
 
             $_POST['confirmation_type'] = REGISTRATION;
             $_POST['confirmation_result'] = $result;
             $_POST['confirmation_error'] = $controller->errorMessage;
             confirmation();
             break;
+		case 'update_details':
+			require_once(PAGE_CONTROLLERS."/RegisterPageController.inc.php");
+			
+			$controller = new RegisterPageController($eventID);
+			
+			$result = $controller->SaveAccount(null, isset($_POST['userEmail']) ? $_POST['userEmail'] : null, 
+											isset($_POST['userPassword']) ? $_POST['userPassword'] : null, 
+											isset($_POST['userPhone']) ? $_POST['userPhone'] : null, 
+											isset($_POST['userAddress']) ? $_POST['userAddress'] : null, 
+											isset($_POST['userDOB']) ? $_POST['userDOB'] : null, 
+											isset($_POST['userMedicalCond']) ? $_POST['userMedicalCond'] : null, 
+											isset($_POST['userDietaryReq']) ? $_POST['userDietaryReq'] : null, 
+											isset($_POST['emergName']) ? $_POST['emergName'] : null, 
+											isset($_POST['emergRel']) ? $_POST['emergRel'] : null, 
+											isset($_POST['emergPhone']) ? $_POST['emergPhone'] : null, 
+											isset($_POST['emergAddress']) ? $_POST['emergAddress'] : null, 
+											isset($_POST['emergRelationship']) ? $_POST['emergRelationship'] : null, 
+											isset($_POST['clubID']) ? $_POST['clubID'] : null);
+
+			$_POST['confirmation_type'] = UPDATE_DETAILS;
+			$_POST['confirmation_result'] = $result;
+			$_POST['confirmation_error'] = $controller->errorMessage;
+			confirmation();
+			break;
 		case 'login':
 			$email = $_POST['username'];
 			$password = $_POST['password'];

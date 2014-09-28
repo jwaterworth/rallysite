@@ -51,6 +51,10 @@ class AccountVO implements IValueObject{
      * Account holder's emergency contact's phone number
      */
     private $emergPhone;
+	/*
+     * Account holder's relationship to emergency contact
+     */
+	private $emergRelationship;
     /*
      * Dietary requirements of account holder
      */
@@ -92,6 +96,8 @@ class AccountVO implements IValueObject{
     public static $dbEmergAddress = "emergAddress";
 
     public static $dbEmergPhone = "emergPhone";
+	
+	public static $dbEmergRelationship = "emergRel";
 
     public static $dbDietaryReq = "dietaryReq";
 
@@ -143,6 +149,10 @@ class AccountVO implements IValueObject{
 
     public function setEmergPhone($emergPhone) {
         $this->emergPhone = $emergPhone;
+    }
+	
+	public function setEmergRelationship($emergRel) {
+        $this->emergRelationship = $emergRel;
     }
 
     public function setDietaryReq($dietaryReq) {
@@ -201,6 +211,10 @@ class AccountVO implements IValueObject{
 
     public function getEmergAddress() {
         return $this->emergAddress;
+    }
+	
+	public function getEmergRelationship() {
+        return $this->emergRelationship;
     }
 
     public function getEmergPhone() {

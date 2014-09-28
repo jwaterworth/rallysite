@@ -9,17 +9,19 @@ define("DB_USERNAME", "james");
 define("DB_PASSWORD", "Bd82A4fp");
 
 //Account Types
-define('UNAPPROVED', 0);
+define('UNAPPROVED', 16);
 define('MEMBER', 1);
 define('CLUBREP', 2);
 define('EVENTEXEC', 4);
 define('SSAGOEXEC', 8);
-define('ALLTYPES', 15);
+define('APPROVED', 15); //Represents all approved types
+define('ALLTYPES', 31); //Repesents all types
 
 //Confirmation Types
 define('ERROR', 0);
 define('REGISTRATION', 1);
 define('BOOKING', 2);
+define('UPDATE_DETAILS', 3);
 
 //Download TYPES
 define('PARTICIPANT_LIST', 0);

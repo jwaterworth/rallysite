@@ -72,11 +72,18 @@ class BookingPageController extends PageController{
     
     private function GetPersonalBooking($accountData, $bookingData) {
 
-        if(!$this->CheckAuth(ALLTYPES, false)) {
-            $this->data['personalBooking'] = null;
+		$this->data['personalBooking'] = null;
+		$this->data['bookingAllowed'] = false;
+	
+        if(!$this->CheckAuth(ALLTYPES, false)) {            
             $this->data['reason'] = "Login to see your booking";
             return;
-        }
+        } else if(!$this->CheckAuth(MEMBER|CLUBREP|EVENTEXEC|SSAGOEXEC, false)) {
+			$this->data['reason'] = "Your account requires approval by a representative from your club. Please contact your club representative to approve your account or create your booking for you.";
+			return;
+		}
+		
+		$this->data['bookingAllowed'] = true;
 		
         //Personal booking data
         try {
@@ -85,9 +92,8 @@ class BookingPageController extends PageController{
             $booking = $bookingData->GetAccountBooking($this->event, $account);
 
             $this->data['personalBooking'] = $this->CreateSummary($bookingData, $account, $booking);
-
+			
         } catch (Exception $e) {
-            $this->data['personalBooking'] = null;
             $this->data['reason'] = $e->getMessage();
             return;
         }

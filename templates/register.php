@@ -1,7 +1,7 @@
 <?php
 include (COMMON_TEMPLATES."/header.php");
 require_once(PAGE_CONTROLLERS."/RegisterPageController.inc.php");
-$eventId = isset( $_GET['event'] ) ? $_GET['event'] : "";
+$eventId = isset( $_GET['event'] ) ? $_GET['event'] : "1";
 $controller = new RegisterPageController($eventId);
 $controller->GeneratePageData();
 ?>
@@ -28,7 +28,7 @@ $controller->GeneratePageData();
     </div>
     <?php endif; ?>
     <div id="registration_form" class="registration_form">
-        <form method="POST" action=".?event=<?php echo $controller->data['eventID']?>&action=entry&form=register">
+        <form method="POST" action=".?event=<?php echo $controller->data['eventID']?>&action=entry&form=<?php echo $controller->data['edit'] ? "update_details" : "register"?>">
             <fieldset class="form_details">
                 <legend class="form_details">Login Details</legend>
                 <div>

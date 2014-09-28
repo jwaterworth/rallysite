@@ -18,13 +18,11 @@ $controller = new HeaderController(1);
         <link href="jquery/facebox/facebox.css" media="screen" rel="stylesheet" type="text/css" />
         <script src="jquery/facebox/facebox.js" type="text/javascript"></script>
         <script type="text/javascript">
-            jQuery(document).ready(function($) {
-            $('a[rel*=facebox]').facebox({
-                loadingImage : 'jquery/facebox/loading.gif',
-                closeImage   : 'jquery/facebox/closelabel.png'
-            })
-            
-            
+            $(document).ready(function($) {
+				$('a[rel*=facebox]').facebox({
+					loadingImage : 'jquery/facebox/loading.gif',
+					closeImage   : 'jquery/facebox/closelabel.png'
+				})           
             })
         </script>
         <!-- end of facebox -->
