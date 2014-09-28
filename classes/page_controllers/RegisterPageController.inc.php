@@ -120,8 +120,7 @@ class RegisterPageController extends PageController{
         $account->setEmergName($emergName);
         $account->setEmergPhone($emergPhone);
         $account->setEmergAddress($emergAddress);        
-		$account->setEmergRelationship($emergRelative);  
-        
+		$account->setEmergRelationship($emergRelative); 
         try {
             $accountData->SaveAccount($account);
         } catch(Exception $e) {
@@ -149,7 +148,6 @@ class RegisterPageController extends PageController{
 		$accountVO->setEmergAddress(htmlspecialchars($emergAddress));
 		$accountVO->setEmergAddress(htmlspecialchars($emergRelative));
 		$accountVO->setClubId(htmlspecialchars($clubId));	
-		//Default the account type id to 0 for unapproved
 		$accountVO->setAccountTypeID(UNAPPROVED);
 		
 		$result = Authentication::CreateAccount($accountVO, $password);

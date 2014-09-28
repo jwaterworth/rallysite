@@ -194,7 +194,7 @@ function entry() {
 											isset($_POST['emergRel']) ? $_POST['emergRel'] : null, 
 											isset($_POST['emergPhone']) ? $_POST['emergPhone'] : null, 
 											isset($_POST['emergAddress']) ? $_POST['emergAddress'] : null, 
-											isset($_POST['emergRelationship']) ? $_POST['emergRelationship'] : null, 
+											isset($_POST['emergRel']) ? $_POST['emergRel'] : null, 
 											isset($_POST['clubID']) ? $_POST['clubID'] : null);
 
 			$_POST['confirmation_type'] = UPDATE_DETAILS;

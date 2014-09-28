@@ -86,62 +86,87 @@ class AccountDAO extends DatabaseAccessObject{
     }
 
     protected function GenerateUpdateSQL($valueObject) {
-        $sql = "UPDATE ".$this->tableName." SET ".                
-                ($valueObject->getName() ? AccountVO::$dbName."='".
-                $this->mysqli->real_escape_string($valueObject->getName())."'," : "") .
-				
-				($valueObject->getDateOfBirth() ?
-					AccountVO::$dbDateOfBirth."='".
-					$this->mysqli->real_escape_string($valueObject->getDateOfBirth())."'," : "" ).
-				
-				($valueObject->getEmail() ?
-					AccountVO::$dbEmail."='".
-					$this->mysqli->real_escape_string($valueObject->getEmail())."'," : "" ).
-				
-				($valueObject->getPhoneNumber() ?
-					AccountVO::$dbPhoneNumber."='".
-					$this->mysqli->real_escape_string($valueObject->getPhoneNumber())."'," : "" ).
-				
-				($valueObject->getAddress() ?
-					AccountVO::$dbAddress."='".
-					$this->mysqli->real_escape_string($valueObject->getAddress())."'," : "" ).
-				
-				($valueObject->getEmergName() ?
-					AccountVO::$dbEmergName."='".
-					$this->mysqli->real_escape_string($valueObject->getEmergName())."'," : "" ).
-				
-				($valueObject->getEmergPhone() ?
-					AccountVO::$dbEmergPhone."='".
-					$this->mysqli->real_escape_string($valueObject->getEmergPhone())."'," : "" ).
-				
-				($valueObject->getEmergAddress() ?
-					AccountVO::$dbEmergAddress."='".
-					$this->mysqli->real_escape_string($valueObject->getEmergAddress())."'," : "" ).
-				
-				($valueObject->getEmergRelationship() ?
-					AccountVO::$dbEmergRelationship."='".
-					$this->mysqli->real_escape_string($valueObject->getEmergRelationship())."'," : "" ).
-				
-				($valueObject->getDietaryReq() ?
-					AccountVO::$dbDietaryReq."='".
-					$this->mysqli->real_escape_string($valueObject->getDietaryReq())."'," : "" ).
-				
-				($valueObject->getMedicalConditions() ?
-					AccountVO::$dbMedicalConditions."='".
-					$this->mysqli->real_escape_string($valueObject->getMedicalConditions())."'," : "" ).
-				
-				($valueObject->getClubID() ?
-					AccountVO::$dbClubID."='".
-					$this->mysqli->real_escape_string($valueObject->getClubID())."'," : "" ).
-				
-				($valueObject->getName() ?
-					AccountVO::$dbAccountTypeID."='".
-					$this->mysqli->real_escape_string($valueObject->getAccountTypeID())."' " : "" ).
-								
-                "WHERE ".AccountVO::$dbId."=".
-                $this->mysqli->real_escape_string($valueObject->getId());
+		$colSet = false;
+	
+        $sql = "UPDATE ".$this->tableName." SET ";
+		
+		if($valueObject->getName()) { 
+			$sql = $sql . $this->AppendSql(AccountVO::$dbName, $valueObject->getName(), $colSet);
+			$colSet = true;
+		}
+		
+		if($valueObject->getDateOfBirth()) {
+			$sql = $sql . $this->AppendSql(AccountVO::$dbDateOfBirth, $valueObject->getDateOfBirth(), $colSet);
+			$colSet = true;
+		}
+					
+		if($valueObject->getEmail()) {		
+			$sql = $sql . $this->AppendSql(AccountVO::$dbEmail, $valueObject->getEmail(), $colSet);
+			$colSet = true;
+		}	
+		
+		if($valueObject->getPhoneNumber()) {		
+			$sql = $sql . $this->AppendSql(AccountVO::$dbPhoneNumber, $valueObject->getPhoneNumber(), $colSet);
+			$colSet = true;
+		}	
+		
+		if($valueObject->getAddress()) {		
+			$sql = $sql . $this->AppendSql(AccountVO::$dbAddress, $valueObject->getAddress(), $colSet);
+			$colSet = true;
+		}	
+		
+		if($valueObject->getEmergName()) {		
+			$sql = $sql . $this->AppendSql(AccountVO::$dbEmergName, $valueObject->getEmergName(), $colSet);
+			$colSet = true;
+		}		
+		
+		if($valueObject->getEmergPhone()) {		
+			$sql = $sql . $this->AppendSql(AccountVO::$dbEmergPhone, $valueObject->getEmergPhone(), $colSet);
+			$colSet = true;
+		}	
+		
+		if($valueObject->getEmergAddress()) {		
+			$sql = $sql . $this->AppendSql(AccountVO::$dbEmergAddress, $valueObject->getEmergAddress(), $colSet);
+			$colSet = true;
+		}	
+		
+		if($valueObject->getEmergRelationship()) {		
+			$sql = $sql . $this->AppendSql(AccountVO::$dbEmergRelationship, $valueObject->getEmergRelationship(), $colSet);
+			$colSet = true;
+		}	
+		
+		if($valueObject->getDietaryReq()) {		
+			$sql = $sql . $this->AppendSql(AccountVO::$dbDietaryReq, $valueObject->getDietaryReq(), $colSet);
+			$colSet = true;
+		}	
+		
+		if($valueObject->getMedicalConditions()) {		
+			$sql = $sql . $this->AppendSql(AccountVO::$dbMedicalConditions, $valueObject->getMedicalConditions(), $colSet);
+			$colSet = true;
+		}	
+		
+		if($valueObject->getMedicalConditions()) {		
+			$sql = $sql . $this->AppendSql(AccountVO::$dbMedicalConditions, $valueObject->getMedicalConditions(), $colSet);
+			$colSet = true;
+		}	
+		
+		if($valueObject->getAccountTypeID()) {		
+			$sql = $sql . $this->AppendSql(AccountVO::$dbAccountTypeID, $valueObject->getAccountTypeID(), $colSet);
+			$colSet = true;
+		}		
+		
+		$sql = $sql . "WHERE ".AccountVO::$dbId."=". $this->mysqli->real_escape_string($valueObject->getId());
         return $sql;
     }
+	
+	private function AppendSql($fieldName, $value, $colSet) {
+		$temp = $colSet ? "," : "";			
+		$temp = $temp . $fieldName ."='". $this->mysqli->real_escape_string($value) . "'";
+		$colSet = true;
+		
+		return $temp;
+	}
+	
 }
 
 ?>

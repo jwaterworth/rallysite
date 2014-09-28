@@ -147,7 +147,6 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
         } else {
             $sql = $this->GenerateInsertSQL($valueObject);			
         }
-		
 		 //new SQL Code
 		if(!$result = $this->mysqli->query($sql)) {		
 			throw new Exception("There was an error running the save query [" . $this->mysqli->error . "]");
