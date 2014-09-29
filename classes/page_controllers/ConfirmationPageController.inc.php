@@ -19,7 +19,7 @@ class ConfirmationPageController extends PageController{
             $event = $eventData->getEvent($eventID);
             $this->data['eventID'] = $event->getId();
         } catch (Exception $e) {
-            //$this->errorMessage = $e->getMessage();
+            $this->errorMessage = $e->getMessage();
         }
         
         switch($type) {

@@ -119,6 +119,15 @@
 		session_destroy();		
 	}
 	
+	public static function ChangePassword($newPassword) {
+		if(self::CheckAuthenticationLevel(ALLTYPES, false)) {
+			
+		
+		} else {
+			throw Exception("Cannot update password as you are not logged in");
+		}
+	}
+	
 	public static function CheckAuthenticationLevel($userLevel) {
 		//Now we need to check the session to make sure we're all good		
 		$accountId = isset($_SESSION['account_id']) ? $_SESSION['account_id'] : null;

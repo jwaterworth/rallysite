@@ -31,7 +31,7 @@ class AccountDAO extends DatabaseAccessObject{
         $valueObject->setName($row[AccountVO::$dbName]);
 		$valueObject->setUserSalt($row[AccountVO::$dbUserSalt]);
 		$valueObject->setPassword($row[AccountVO::$dbPassword]);
-        $valueObject->setDateOfBirth($row[AccountVO::$dbDateOfBirth]);
+		$valueObject->setDateOfBirth($row[AccountVO::$dbDateOfBirth]);
         $valueObject->setEmail($row[AccountVO::$dbEmail]);
         $valueObject->setPhoneNumber($row[AccountVO::$dbPhoneNumber]);
         $valueObject->setAddress($row[AccountVO::$dbAddress]);
@@ -95,7 +95,7 @@ class AccountDAO extends DatabaseAccessObject{
 			$colSet = true;
 		}
 		
-		if($valueObject->getDateOfBirth()) {
+		if($valueObject->getDateOfBirth()) {			
 			$sql = $sql . $this->AppendSql(AccountVO::$dbDateOfBirth, $valueObject->getDateOfBirth(), $colSet);
 			$colSet = true;
 		}

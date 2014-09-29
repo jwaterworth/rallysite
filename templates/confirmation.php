@@ -3,7 +3,7 @@ include (COMMON_TEMPLATES."/header.php");
 require_once(PAGE_CONTROLLERS."/ConfirmationPageController.inc.php");
 
 
-$eventID = isset( $_GET['event'] ) ? $_GET['event'] : "";
+$eventID = isset( $_GET['event'] ) ? $_GET['event'] : "1";
 $type = isset( $_POST['confirmation_type'] ) ? $_POST['confirmation_type'] : ERROR;
 $result = isset( $_POST['confirmation_result'] ) ? $_POST['confirmation_result'] : false;
 $errorMessage = isset( $_POST['confirmation_error'] ) ? $_POST['confirmation_error'] : null;

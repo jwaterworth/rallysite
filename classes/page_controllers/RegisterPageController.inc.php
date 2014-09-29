@@ -82,7 +82,7 @@ class RegisterPageController extends PageController{
     }
     
     public function SaveAccount($name, $email, $password, $phone, $address, $dob, $medicalCond, $dietaryReq,
-            $emergName, $emergRel, $emergPhone, $emergAddress, $emergRelative, $clubID) {
+            $emergName, $emergRel, $emergPhone, $emergAddress, $clubID) {
         
         //Process date
 		if($dob) {
@@ -93,18 +93,18 @@ class RegisterPageController extends PageController{
         if($this->CheckAuth(ALLTYPES, false)) {
             $id =Authentication::GetLoggedInId();
             $this->UpdateAccount($id, $name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
-            $emergName, $emergRel, $emergPhone, $emergAddress, $emergRelative);
+            $emergName, $emergRel, $emergPhone, $emergAddress);
             
         } else {
             $this->SaveNewAccount($name, $password, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
-                    $emergName, $emergRel, $emergPhone, $emergAddress, $emergRelative, $clubID);
+                    $emergName, $emergRel, $emergPhone, $emergAddress, $clubID);
         }
         
         return true;
     }
     
     private function UpdateAccount($id, $name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
-            $emergName, $emergRel, $emergPhone, $emergAddress, $emergRelative) {
+            $emergName, $emergRel, $emergPhone, $emergAddress) {
         
         $accountData = LogicFactory::CreateObject("Accounts");
         $account = AccountFactory::CreateValueObject();
@@ -120,7 +120,7 @@ class RegisterPageController extends PageController{
         $account->setEmergName($emergName);
         $account->setEmergPhone($emergPhone);
         $account->setEmergAddress($emergAddress);        
-		$account->setEmergRelationship($emergRelative); 
+		$account->setEmergRelationship($emergRel); 
         try {
             $accountData->SaveAccount($account);
         } catch(Exception $e) {
@@ -132,7 +132,7 @@ class RegisterPageController extends PageController{
     }
     
     private function SaveNewAccount($name, $password, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
-            $emergName, $emergRel, $emergPhone, $emergAddress, $emergRelative, $clubId) {
+            $emergName, $emergRel, $emergPhone, $emergAddress, $clubId) {
         
 		$accountVO = AccountFactory::CreateValueObject();
 		//No need to set password in the objet just yet as it needs hashing and salting
@@ -146,7 +146,7 @@ class RegisterPageController extends PageController{
 		$accountVO->setEmergName(htmlspecialchars($emergName));
 		$accountVO->setEmergPhone(htmlspecialchars($emergPhone));
 		$accountVO->setEmergAddress(htmlspecialchars($emergAddress));
-		$accountVO->setEmergAddress(htmlspecialchars($emergRelative));
+		$accountVO->setEmergAddress(htmlspecialchars($emergRel));
 		$accountVO->setClubId(htmlspecialchars($clubId));	
 		$accountVO->setAccountTypeID(UNAPPROVED);
 		

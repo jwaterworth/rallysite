@@ -29,9 +29,9 @@ define('ACTIVITY_LIST', 1);
 define('CATERING_LIST', 2);
 
 //Paths
-define("IMAGE_PATH" , "http://co-project.lboro.ac.uk/users/cojw3/ssago/images/");
-define("ACTIVITY_IMAGES", "http://co-project.lboro.ac.uk/users/cojw3/ssago/images/activities/");
-define('DOWNLOADS_PATH', '/disks/diskh/zco/cojw3/ssago_downloads/');
+define("IMAGE_PATH" , "/images/");
+define("ACTIVITY_IMAGES", "images/activities/");
+define('DOWNLOADS_PATH', 'download/');
 define("INTERNAL_IMAGE_PATH", "/disks/diskh/zco/cojw3/public_html/ssago/");
 define("CLASS_PATH", "classes");
 define("VO_PATH", "classes/value_objects");

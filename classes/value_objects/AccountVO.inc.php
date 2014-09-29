@@ -188,9 +188,8 @@ class AccountVO implements IValueObject{
     }
 
     public function getDateOfBirth() {
-        $dateArray =  date_parse_from_format('Y-m-d', $this->dateOfBirth);
-        $date =  $dateArray['day'] . '/' . $dateArray['month'] . '/' . $dateArray['year'];
-        return $date;
+       
+        return $this->dateOfBirth;
     }
 
     public function getEmail() {

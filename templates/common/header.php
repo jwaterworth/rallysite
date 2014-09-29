@@ -70,10 +70,22 @@ $controller = new HeaderController(1);
 			//}
 			});
                 
-			//date picker for registration
-			$( "#datepicker" ).datepicker({ defaultDate: '-22y'});
 			//setter
-			$( "#datepicker" ).datepicker( "option", "dateFormat", "dd/mm/yy" );
+			var tempDate = $('#altDate').val();
+			var tempDateString = "";
+			if(tempDate) {				
+				tempDate = new Date(tempDate);
+				tempDateString = tempDate.getDay() + "/" + (tempDate.getMonth()+1) + "/" + tempDate.getFullYear();
+				$('#datePicker').val(tempDateString);				
+			}		
+			
+			$( "#datepicker" ).datepicker({
+				dateFormat: "dd/mm/yy",
+				defaultDate: '-22y',
+				altFormat: 'yy-mm-dd',
+				altField: '#altDate',
+				setDate: tempDateString
+			});
         });
         </script>
         <title>SSAGO Events Home</title>

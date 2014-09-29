@@ -168,10 +168,10 @@ function entry() {
             require_once(PAGE_CONTROLLERS."/RegisterPageController.inc.php");
             
             $controller = new RegisterPageController($eventID);
-            
+			
             $result = $controller->SaveAccount($_POST['userName'], $_POST['userEmail'], $_POST['userPassword'], $_POST['userPhone'], $_POST['userAddress'], 
                     $_POST['userDOB'], $_POST['userMedicalCond'], $_POST['userDietaryReq'],
-                    $_POST['emergName'], $_POST['emergRel'], $_POST['emergPhone'], $_POST['emergAddress'], $_POST['emergRelationship'], $_POST['clubID']);
+                    $_POST['emergName'], $_POST['emergRel'], $_POST['emergPhone'], $_POST['emergAddress'], $_POST['clubID']);
 
             $_POST['confirmation_type'] = REGISTRATION;
             $_POST['confirmation_result'] = $result;
