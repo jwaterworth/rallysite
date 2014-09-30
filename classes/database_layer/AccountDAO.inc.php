@@ -31,7 +31,9 @@ class AccountDAO extends DatabaseAccessObject{
         $valueObject->setName($row[AccountVO::$dbName]);
 		$valueObject->setUserSalt($row[AccountVO::$dbUserSalt]);
 		$valueObject->setPassword($row[AccountVO::$dbPassword]);
-		$valueObject->setDateOfBirth($row[AccountVO::$dbDateOfBirth]);
+		if($row[AccountVO::$dbDateOfBirth]) {
+			$valueObject->setDateOfBirth($this->setDate($row[AccountVO::$dbDateOfBirth]));
+		}		
         $valueObject->setEmail($row[AccountVO::$dbEmail]);
         $valueObject->setPhoneNumber($row[AccountVO::$dbPhoneNumber]);
         $valueObject->setAddress($row[AccountVO::$dbAddress]);
@@ -69,7 +71,7 @@ class AccountDAO extends DatabaseAccessObject{
                 $this->mysqli->real_escape_string($valueObject->getName())."','".
 				$this->mysqli->real_escape_string($valueObject->getPassword())."','".
 				$this->mysqli->real_escape_string($valueObject->getUserSalt())."','".
-                $this->mysqli->real_escape_string($valueObject->getDateOfBirth())."','".
+                $this->mysqli->real_escape_string($valueObject->getDateOfBirth() ? $this->GetDate($valueObject->getDateOfBirth()) : "")."','".
                 $this->mysqli->real_escape_string($valueObject->getEmail())."','".
                 $this->mysqli->real_escape_string($valueObject->getPhoneNumber())."','".
                 $this->mysqli->real_escape_string($valueObject->getAddress())."','".
@@ -84,6 +86,8 @@ class AccountDAO extends DatabaseAccessObject{
 				
         return $sql;
     }
+	
+	
 
     protected function GenerateUpdateSQL($valueObject) {
 		$colSet = false;
@@ -95,8 +99,8 @@ class AccountDAO extends DatabaseAccessObject{
 			$colSet = true;
 		}
 		
-		if($valueObject->getDateOfBirth()) {			
-			$sql = $sql . $this->AppendSql(AccountVO::$dbDateOfBirth, $valueObject->getDateOfBirth(), $colSet);
+		if($valueObject->getDateOfBirth()) {	
+			$sql = $sql . $this->AppendSql(AccountVO::$dbDateOfBirth, $this->getDate($valueObject->getDateOfBirth()), $colSet);
 			$colSet = true;
 		}
 					
@@ -156,6 +160,7 @@ class AccountDAO extends DatabaseAccessObject{
 		}		
 		
 		$sql = $sql . "WHERE ".AccountVO::$dbId."=". $this->mysqli->real_escape_string($valueObject->getId());
+		
         return $sql;
     }
 	
@@ -167,6 +172,16 @@ class AccountDAO extends DatabaseAccessObject{
 		return $temp;
 	}
 	
+	private function SetDate($rawDate) {
+		$newDate = date('d/m/Y', strtotime($rawDate));
+		return $newDate;
+	}
+	
+	private function GetDate($date) {		
+		$dateParsed = date_parse_from_format('d/m/Y', $date);
+		
+		return sprintf("%s-%02s-%02s", $dateParsed["year"], $dateParsed["month"], $dateParsed["day"]);
+	}
 }
 
 ?>

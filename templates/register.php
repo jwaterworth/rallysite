@@ -72,8 +72,7 @@ $controller->GeneratePageData();
                 </div>
                 <div>
                     <label>Date of birth</label>
-                    <input type="text" id="datepicker" name="userDOB" required placeholder="dd/mm/yyyy"/>
-                    <input type="hidden" id="altDate" name="userDOB" value="<?php echo $account['dob'] ?>"/>
+                    <input type="text" id="datepicker" name="userDOB" required placeholder="dd/mm/yyyy" value="<?php echo $account['dob'] ?>"/>
                 </div>
                 <div>
                     <label>Medical Conditions</label>

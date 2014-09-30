@@ -84,12 +84,6 @@ class RegisterPageController extends PageController{
     public function SaveAccount($name, $email, $password, $phone, $address, $dob, $medicalCond, $dietaryReq,
             $emergName, $emergRel, $emergPhone, $emergAddress, $clubID) {
         
-        //Process date
-		if($dob) {
-			$dateArray =  date_parse_from_format('d/m/Y', $dob);
-			$dob =  $dateArray['year'] . '-' . $dateArray['month'] . '-' . $dateArray['day'];
-		}       
-        
         if($this->CheckAuth(ALLTYPES, false)) {
             $id =Authentication::GetLoggedInId();
             $this->UpdateAccount($id, $name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
@@ -127,8 +121,6 @@ class RegisterPageController extends PageController{
             $this->errorMessage = $e->getMessage();
             return false;
         }
-        
-
     }
     
     private function SaveNewAccount($name, $password, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,

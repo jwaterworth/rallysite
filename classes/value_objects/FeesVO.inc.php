@@ -49,9 +49,7 @@ class FeesVO implements IValueObject{
     }
 
     public function getDeadline() {
-        $dateArray =  date_parse_from_format('Y-m-d', $this->deadline);
-        $date =  $dateArray['day'] . '/' . $dateArray['month'] . '/' . $dateArray['year'];
-        return $date;
+        return $this->deadline;
     }
 
     public function getBookingInfoID() {

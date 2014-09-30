@@ -18,6 +18,8 @@ class HeaderController extends PageController {
             $this->event = $event;
             $this->data['eventID'] = $event->getId();
             $this->data['eventName'] = $event->getName();
+			$this->data['eventStartDate'] = $event->getStartDate();
+			$this->data['eventEndDate'] = $event->getEndDate();
         } catch (Exception $e) {
             $this->errorMessage = $e->getMessage();
             return;

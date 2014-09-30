@@ -19,6 +19,10 @@ class EventVO implements IValueObject{
     private $logoLoc;
     
     private $bookingInfoID;
+	
+	private $startDate;
+	
+	private $endDate;
     
     private $activityPageID;
     
@@ -33,6 +37,10 @@ class EventVO implements IValueObject{
     public static $dbLogoLoc = "eventLogoLoc";
     
     public static $dbBookingInfoID = 'bookingInfoID';
+	
+	public static $dbStartDate = 'startDate';
+	
+	public static $dbEndDate = 'endDate';
     
     public static $dbActivityPageID = 'activityPageID';
     
@@ -54,6 +62,14 @@ class EventVO implements IValueObject{
 
     public function setLogoLoc($logoLoc) {
         $this->logoLoc = $logoLoc;
+    }
+	
+	public function setStartDate($startDate) {
+        $this->startDate = $startDate;
+    }
+	
+	public function setEndDate($endDate) {
+        $this->endDate = $endDate;
     }
     
     public function setBookingInfoID($bookingInfoID) {
@@ -82,6 +98,14 @@ class EventVO implements IValueObject{
 
     public function getLogoLoc() {
         return $this->logoLoc;
+    }
+	
+	public function getStartDate() {
+        return $this->startDate;
+    }
+	
+	public function getEndDate() {
+        return $this->endDate;
     }
     
     public function getBookingInfoID() {

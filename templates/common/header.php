@@ -70,21 +70,9 @@ $controller = new HeaderController(1);
 			//}
 			});
                 
-			//setter
-			var tempDate = $('#altDate').val();
-			var tempDateString = "";
-			if(tempDate) {				
-				tempDate = new Date(tempDate);
-				tempDateString = tempDate.getDay() + "/" + (tempDate.getMonth()+1) + "/" + tempDate.getFullYear();
-				$('#datePicker').val(tempDateString);				
-			}		
-			
 			$( "#datepicker" ).datepicker({
 				dateFormat: "dd/mm/yy",
 				defaultDate: '-22y',
-				altFormat: 'yy-mm-dd',
-				altField: '#altDate',
-				setDate: tempDateString
 			});
         });
         </script>
@@ -120,8 +108,11 @@ $controller = new HeaderController(1);
 					</div>
 					<div class="event_title">
 						<h2><?php echo $controller->data['eventName'] ?></h2>
-					</div>				
-				</div>               
+					</div>	
+					<div class="event_date">
+						<h4><?php echo sprintf("%s - %s", $controller->data['eventStartDate'], $controller->data['eventEndDate']) ?></h4>
+					</div>
+				</div>              
             
 				<div class="clear"></div>
 				<div class="menu">

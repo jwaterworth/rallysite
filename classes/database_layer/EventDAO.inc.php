@@ -24,6 +24,8 @@ class EventDAO extends DatabaseAccessObject{
         $valueObject->setInformation($row[EventVO::$dbInformation]);
         $valueObject->setLogoLoc($row[EventVO::$dbLogoLoc]);
         $valueObject->setBookingInfoID($row[EventVO::$dbBookingInfoID]);
+		$valueObject->setStartDate($this->SetDate($row[EventVO::$dbStartDate]));
+		$valueObject->setEndDate($this->SetDate($row[EventVO::$dbEndDate]));
         $valueObject->setActivityPageID($row[EventVO::$dbActivityPageID]);
         
         return $valueObject;
@@ -37,6 +39,8 @@ class EventDAO extends DatabaseAccessObject{
                 EventVO::$dbInformation.",".
                 EventVO::$dbLogoLoc.",".
                 EventVO::$dbBookingInfoID.",".
+				EventVO::$dbStartDate.",".
+				EventVO::$dbEndDate.",".
                 EventVO::$dbActivityPageID.",".
                 ") VALUES ('".
                 $this->mysqli->real_escape_string($valueObject->getId())."','".
@@ -45,6 +49,8 @@ class EventDAO extends DatabaseAccessObject{
                 $this->mysqli->real_escape_string($valueObject->getInformation())."','".
                 $this->mysqli->real_escape_string($valueObject->getLogoLoc())."','".
                 $this->mysqli->real_escape_string($valueObject->getBookingInfoID())."','".
+				$this->mysqli->real_escape_string($this->GetDate($valueObject->getStartDate()))."','".
+				$this->mysqli->real_escape_string($this->GetDate($valueObject->getEndDate()))."','".
                 $this->mysqli->real_escape_string($valueObject->getActivityPageID())."')"; 
         
         return $sql;
@@ -52,8 +58,6 @@ class EventDAO extends DatabaseAccessObject{
 
     protected function GenerateUpdateSQL($valueObject) {
         $sql = "UPDATE ".$this->tableName." SET ".
-                    //EventVO::$dbId."='".
-                    //$valueObject->getId()."',".
                     EventVO::$dbName."='".
                     $this->mysqli->real_escape_string($valueObject->getName())."',".
                     EventVO::$dbSummary."='".
@@ -64,11 +68,26 @@ class EventDAO extends DatabaseAccessObject{
                     $this->mysqli->real_escape_string($valueObject->getLogoLoc())."',".
                     EventVO::$dbBookingInfoID."='".
                     $this->mysqli->real_escape_string($valueObject->getBookingInfoID())."',".
+					EventVO::$dbStartDate."='".
+                    $this->mysqli->real_escape_string($this->GetDate($valueObject->getStartDate()))."',".
+					EventVO::$dbEndDate."='".
+                    $this->mysqli->real_escape_string($this->GetDate($valueObject->getEndDate()))."',".					
                     EventVO::$dbActivityPageID."='".
                     $this->mysqli->real_escape_string($valueObject->getActivityPageID())."' ".
                     "WHERE ".EventVO::$dbId."=".$this->mysqli->real_escape_string($valueObject->getId());
         return $sql;
     }
+	
+	private function SetDate($rawDate) {
+		$newDate = date('d/m/Y', strtotime($rawDate));
+		return $newDate;
+	}
+	
+	private function GetDate($date) {		
+		$dateParsed = date_parse_from_format('d/m/Y', $date);
+		
+		return sprintf("%s-%02s-%02s", $dateParsed["year"], $dateParsed["month"], $dateParsed["day"]);
+	}
 }
 
 ?>
