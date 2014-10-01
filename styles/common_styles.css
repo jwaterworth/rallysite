@@ -51,19 +51,20 @@ div.content {
 	margin-bottom: 0px;
 	padding-top: 15px;
 	padding-bottom: 5px;
-	background-color: rgb(233, 234, 237);
-	/*background-color: darkgreen; */
+	/*background-color: rgb(233, 234, 237);*/
+	background-color: rgba(0, 137, 45, 1);
 	position: relative;
 }
 
-@media (max-width:1000px) {
+@media (max-width:1100px) {
 	div.content{ 
 		width: 100%;
 	}
 }
 
 div.header {
-	background-color: #FFFFFF;
+	background-color: rgba(0, 137, 45, 1);
+/*	background-color: #FFFFFF;*/
     margin: 0px;
     padding: 0px;
 	width: 100%;
@@ -72,20 +73,24 @@ div.header {
 
 .title_container {
 	width: 100%;
-	height: 175px;
+	height: 275px;
 	position: relative;
 }
 
-.title_container > .logo {
+.left_logo {
 	float: left;
 }
 
-.title_container  > .event_title{
-	float :right;
+.right_logo {
+	float: right;	
 }
 
-div.event_title h2 {
+.left_logo img, .right_logo img {
+	height: 250px;
+}
 
+.event_title{
+	float: left;
 }
 
 #footer_info {
@@ -106,7 +111,7 @@ div.event_title h2 {
 
 .account_signout {
     width: 100%;
-	height: 50px;
+	height: 30px;
 }
 
 .account_signout p  {
@@ -119,19 +124,22 @@ div.event_title h2 {
 .account_signout a{
     text-decoration: none;
     font-weight: bold;
-    font-size: 12pt;
-    color: #424242;
+    font-size: 14pt;
+    color: #000000;
 }
 
 /*Menu*/
 .menu {
     width: 100%;
     height: 30px;
-    background: url(main_menu.png);
-    background-repeat: repeat-x;
+	background-color: rgba(143, 34, 113, 1);
 	margin: 0;
-	padding 0;
-	text-align: center;
+	padding: 0;
+	text-align: center;	
+	/* Old menu
+	height: 30px;
+	background-repeat: repeat-x;
+	background: url(main_menu.png);*/
 }
 
 .menu ul{
@@ -140,13 +148,6 @@ div.event_title h2 {
 }
 
 .menu ul li {
-/*
-	width: 130px;
-    height: 30px;
-    float: left;
-    list-style: none;
-    margin-left: 55px;
-	*/
 	display: inline;
 }
 
@@ -154,12 +155,27 @@ div.event_title h2 {
 	display: inline-block;
     color: #fff;
     text-decoration: none;
+	font-size: 16pt;
+	/*
 	padding-left: 35px;
-	padding-right: 35px;
+	padding-right: 35px; */
+	padding-left: 4%;
+	padding-right: 4%;
+	padding-top: 2px;
+	height: 28px;
+}
+
+@media (max-width:1100px) {
+
+.menu li a{
+	padding-left: 2%;
+	padding-right: 2%;
+	font-size: 15pt;
+	}
 }
 
 .menu li a:hover {
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 /*Common Page Layout*/
@@ -260,7 +276,8 @@ div.normalise_tabs #tabs{
 }
 
 .ui-tabs-nav {
-	background-color: rgb(233, 234, 237);
+	/*background-color: rgb(233, 234, 237);*/
+	background-color: rgba(0, 137, 45, 1);
 	padding: 0;
 	border-radius: 0;
 }
@@ -271,6 +288,14 @@ div.normalise_tabs #tabs{
 
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
 	background: #ffffff 50% 50% repeat-x;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+	background: rgba(143, 34, 113, 1);
+}
+
+.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {
+	color: #ffffff;
 }
 
 

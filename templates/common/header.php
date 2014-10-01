@@ -76,22 +76,12 @@ $controller = new HeaderController(1);
 			});
         });
         </script>
-        <title>SSAGO Events Home</title>
+        <title><?php echo $controller->data['eventName'] ?></title>
     </head>
     <body>
         <div class="container">
            <div class="header">
                 <div class="account_signout">
-                     <?php /*
-                    <form action="index.php?action=homepage" method="POST">
-                        <select name="event">
-                            <option value="1">Summer Rally</option>
-                            <option value="2">Autumn Rally</option>
-                            <option value="3">Camping Barn</option>
-                        </select>
-                        <input type="submit"/>
-                    </form>*/ ?>
-                    
                     <?php if($controller->data['loggedin'] != null) : ?>
                         <?php if(isset($controller->data['club']) && $controller->data['club'] != null) :?>
                             <p class="account_link"><a href=".?action=clubrepadmin"><?php echo $controller->data['club'] ?></a> | <a href=".?action=myaccount"><?php echo $controller->data['name'] ?></a> | <a href=".?event=<?php echo $controller->data['eventID']?>&action=logout">Logout</a></p>
@@ -103,15 +93,20 @@ $controller = new HeaderController(1);
                     <?php endif; ?>
                 </div>
 				<div class="title_container">
-					<div class="logo">
-						<a href="index.php?event=<?php echo $controller->data['eventID']?>"><img src="images/ssago_logo.jpg" alt="SSAGO Logo"/></a>
+					<div class="left_logo">
+						<a href="index.php?event=<?php echo $controller->data['eventID']?>"><img src="images/badge_purple.png" alt="SSAGO Logo"/></a>
 					</div>
 					<div class="event_title">
-						<h2><?php echo $controller->data['eventName'] ?></h2>
+						<h1><?php echo $controller->data['eventName'] ?></h1>
+						<h4><?php echo sprintf("%s - %s", $controller->data['eventStartDate'], $controller->data['eventEndDate']) ?></h4>
 					</div>	
 					<div class="event_date">
-						<h4><?php echo sprintf("%s - %s", $controller->data['eventStartDate'], $controller->data['eventEndDate']) ?></h4>
+						
 					</div>
+					<div class="right_logo">
+						<a href="index.php?event=<?php echo $controller->data['eventID']?>"><img src="images/badge_green.png" alt="SSAGO Logo"/></a>
+					</div>
+					<div class="clear"></div>
 				</div>              
             
 				<div class="clear"></div>
