@@ -88,6 +88,7 @@ p.news_author {
 }
 
 .side_bar_clear {
+	display: none;
     background: #FFF;
 }
 

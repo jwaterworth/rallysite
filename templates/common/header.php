@@ -97,12 +97,11 @@ $controller = new HeaderController(1);
 						<a href="index.php?event=<?php echo $controller->data['eventID']?>"><img src="images/badge_purple.png" alt="SSAGO Logo"/></a>
 					</div>
 					<div class="event_title">
-						<h1><?php echo $controller->data['eventName'] ?></h1>
-						<h4><?php echo sprintf("%s - %s", $controller->data['eventStartDate'], $controller->data['eventEndDate']) ?></h4>
-					</div>	
-					<div class="event_date">
-						
-					</div>
+						<h1><?php echo $controller->data['eventName'] ?></h1>						
+						<div class="event_date">
+							<h4><?php echo sprintf("%s - %s", $controller->data['eventStartDate'], $controller->data['eventEndDate']) ?></h4>
+						</div>
+					</div>						
 					<div class="right_logo">
 						<a href="index.php?event=<?php echo $controller->data['eventID']?>"><img src="images/badge_green.png" alt="SSAGO Logo"/></a>
 					</div>

@@ -22,7 +22,8 @@ $controller->GetPageData();
                             <li><a href="#tabs-2">Event Information</a></li> 
                             <li><a href="#tabs-3">Booking Information</a></li>
                             <li><a href="#tabs-4">Activities</a></li>
-                            <li><a href="#tabs-5">Downloads</a></li>
+							<li><a href="#tabs-5">Manage Bookings</a></li>
+                            <li><a href="#tabs-6">Downloads</a></li>
                         </ul>
                         <div id="tabs-1">
                             <div class="admin_entry">
@@ -138,7 +139,18 @@ $controller->GetPageData();
                                 </form>
                             </div>
                         </div>
-                        <div id="tabs-5">
+						<div id="tabs-5">
+                            <h3>Manage Bookings</h3>
+							
+							<h4>Update a booking</h4>
+							<div>
+								<label for="sltClubs">Club:</label><select id="sltClubs"></select>
+							</div>
+							<div>
+								<label for="sltClubBookings">Club Bookings:</label><select id="sltClubBookings"></select>
+							</div>							
+                        </div>
+                        <div id="tabs-6">
                             <p><?php echo $controller->data['eventName'] ?> Participants</p>
                             <ul>
                                 <li><a href=".?event=<?php echo $controller->data['eventID']?>&action=download&type=<?php echo PARTICIPANT_LIST ?>">Download Participants</a></li>
@@ -154,6 +166,7 @@ $controller->GetPageData();
                 </div>
             <?php endif; endif;?>
         </div>
+		<script type="text/javascript" src="scripts/event_admin.js"></script>
 <?php       
     include (COMMON_TEMPLATES."/footer.php");
 ?>

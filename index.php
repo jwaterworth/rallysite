@@ -240,8 +240,8 @@ function ajax() {
         $ajaxHandler->GetActivityDetails($activityID);
     } else if(isset($_GET['getClubs'])) {
 		$ajaxHandler->GetClubs();
-	} else if(isset($_GET['getClubAccounts']) && isset($_GET['clubId'])) {
-		$ajaxHandler->GetClubMembers($_GET['clubId']);
+	} else if(isset($_GET['getClubBookings']) && isset($_GET['clubId'])) {
+		$ajaxHandler->GetClubBookings($_GET['eventId'], $_GET['clubId']);
 	}
 }
 

@@ -90,9 +90,17 @@ div.header {
 }
 
 .event_title{
+	min-width: 250px;
+	height: 250px;
 	float: left;
+	position: relative
 }
 
+.event_date {
+	position: absolute;
+	bottom: 10px;
+	
+}
 #footer_info {
 	position: absolute;
 	bottom: 5px;
@@ -297,5 +305,4 @@ div.normalise_tabs #tabs{
 .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {
 	color: #ffffff;
 }
-
 

@@ -72,7 +72,7 @@ class AJAXHandler {
 				$clubResponseArray[] = $temp;
 			}
 			
-			$post_data = json_encode($clubResponseArray, JSON_FORCE_OBJECT);
+			$post_data = json_encode($clubResponseArray);
 		} catch(Exception $e) {
 			$post_data = "Error: " . $e;
 		}
@@ -82,6 +82,8 @@ class AJAXHandler {
 	
 	public function GetClubBookings($eventId, $clubId) {
 		$accountData = LogicFactory::CreateObject("Accounts");
+		$bookingData = LogicFactory::CreateObject("Bookings");
+		$eventData = LogicFactory::CreateObject("Event");
 		
 		$postData = "";
 		
@@ -90,33 +92,48 @@ class AJAXHandler {
 			$club->setId($clubId);
 			$clubAccounts = $accountData->GetClubAccounts($club);
 			
-			$clubBookings = $accountData->GetClubBookings($eventId, $club);
+			$event = $eventData->GetEvent($eventId);
+			$clubBookings = $bookingData->GetClubBookings($event, $club);
 			
 			 //Create a summary for each booking
-            foreach($bookings as $booking) {
+            foreach($clubBookings as $booking) {
                 //Get account for booking
                 $account = $bookingData->GetBookingAccount($booking);
                 $clubBookings[] = $this->CreateSummary($bookingData, $account, $booking);   
             }
             
-			
-			$clubAccountsResponse = array();
-			
-			foreach($clubAccounts as $account) {
-				$temp = array();
-				$temp["id"] = $account->getId();
-				$temp["name"] = $account->getName();
-				
-				$clubAccountsResponse[] = $temp;
-			}
-			
-			$post_data = json_encode($clubAccountsResponse, JSON_FORCE_OBJECT);
+			$post_data = json_encode($clubBookings);
 		} catch(Exception $e) {
 			$post_data = "Error: " . $e;
 		}
 		
 		echo $post_data;
 	}
+	
+	private function CreateSummary($bookingData, AccountVO $account, BookingVO $booking) {
+		$bookingData = LogicFactory::CreateObject("Bookings");
+	
+        //Get user's booking summary
+        $activity = $bookingData->GetBookingActivity($booking);
+
+        $summary = array();
+        
+        $summary['userID'] = $account->getId();
+        $summary['userName'] = $account->getName();
+        $summary['bookingID'] = $booking->getId();
+        $summary['fee'] = '£' . $booking->getBookingFee();
+        $summary['activityID'] = $activity->getId();
+        $summary['activityName'] = $activity->getActivityName();
+        
+        //If statement because paid variable is integer 1 or 0 rather than a boolean
+        if($booking->getPaid()) {
+            $summary['paid'] = true;
+        } else {
+            $summary['paid'] = false;
+        }
+
+        return $summary;
+    }
 }
 
 ?>
