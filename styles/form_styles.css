@@ -156,6 +156,110 @@ label{
     font-weight: normal;
 }
 
+/*Event admin */
+
+#newsTitle {
+	width: 500px;
+	min-width: 150px;
+}
+
+#newsBody {
+	width: 90%;
+	min-width: 300px;
+	overflow:scroll; 
+	height: 300px;
+	max-height:300px
+}
+
+.clubBookings {
+	width: 100%;
+}
+
+.clubBooking {
+	height: 75px;
+	width: 100%;
+}
+
+.bookingsHeader {
+	text-align: center;
+}
+
+.bookingField {
+	float: left;
+	max-width: 225px;
+}
+
+.bookingField > label{
+	width: 100%;
+}
+
+.col1 {
+	width: 250px;
+}
+
+.col2 {
+	width: 225px;
+}
+
+.col3 {
+	width:75px;
+}
+
+.col4 {
+	width: 75px;
+}
+
+.col5 {
+	width: 175px;
+}
+
+.bookingsTable {
+	margin-top: 25px;
+	border: 1px solid #666666;
+	border-radius: 3px;
+	padding: 5px;
+}
+
+.bookingField {
+	margin: 5px;
+}
+
+.bookingField > input[type="checkbox"] {
+	min-width: 15px; /* Override standard min-width on inputs */
+	width: 15px;
+	height: 15px;
+	margin-left: 30px;
+}
+
+.bookingField > input[type="submit"] {
+	margin-left: 38px;
+	border-radius: 5px;
+	background: rgb(143, 34, 113);
+	border: none;
+	text-decoration: none;
+	font-family: calibri, verdana;
+	font-weight: bold;
+	color: #FFFFFF;
+	cursor: pointer;
+	min-width: 100px;
+	width: 100px;
+	height: 30px;
+}
+
+.bookingField  > select{
+	border: none;	
+}
+
+.bookingField  > select:focus{
+	-webkit-appearance:none;
+	box-shadow: 0px 0px 5px rgb(143, 34, 113);
+}
+
+.short  {
+	min-width: 30px;
+	width: 60px;
+}
+
 /*
 Jquery UI override
 */

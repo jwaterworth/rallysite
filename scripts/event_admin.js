@@ -4,11 +4,16 @@ EventAdmin = {}
 EventAdmin.ClubBookings = [];
 
 $(document).ready(function() {
+	//Apply wysiwyg editors
+	$('#newsBody').wysiwyg();
+
 	EventAdmin.getClubs();
 	
 	$("#sltClubs").change(function() {
 		EventAdmin.refreshClubBookings();
 	});
+	
+	EventAdmin.refreshClubBookings();
 });
 
 EventAdmin.getClubs = function() {
@@ -26,20 +31,28 @@ EventAdmin.getClubBookings = function(clubId) {
 			dataType: "JSON"
 		}).done(function(clubBookings) {
 			EventAdmin.ClubBookings = clubBookings;
-			EventAdmin.setClubBookingsDropdown(clubBookings);
+			EventAdmin.setClubBookingsTable(clubBookings);
 		});
 }
 
-EventAdmin.setClubBookingsDropdown = function(clubBookings) {
-	//Clear the options	
-	$("#sltClubBookings")
-		.find('option')
-		.remove();
-		
-	if(clubBookings && clubBookings.length) {
-		for(var i=0; i< clubBookings.length; i++) {		
-			$("#sltClubBookings").append($("<option></option>").attr("value", "test").text("test"));
-		}
+EventAdmin.setClubBookingsTable = function(clubBookings) {	
+	//Clear table
+	if(!$(".clubBookings").is(":empty"))
+		$(".clubBookings").empty();
+
+	if(clubBookings && clubBookings.length)  {
+		for(var i=0; i<clubBookings.length; i++) {
+			var $form = $(".clubBookings").append('<form action=".?event=1&action=admin&type=updateBooking#tabs-5" method="POST"></form>');
+			$form.append('<div class="bookingField col1"><span>' + clubBookings[i].userName + '</span></div>');
+			$form.append('<div class="bookingField col2"><select id="updateBookingActivity" name="updateBookingActivity"><option>Gin Distillery</option></select></div>');
+			$form.append('<div class="bookingField col3"><span>£</span><input class="short" id="updateBookingFee" name="updateBookingFee" value=' + clubBookings[i].fee + ' type="number" step="any" min="0"/></div>');
+			$form.append('<div class="bookingField col4"><input type="checkbox"/></div>');
+			$form.append('<div class="bookingField col5"><input type="hidden" name="bookingId" value=' + clubBookings[i].bookingId + '/><input type="submit" value="Update"/></div><div class="clear"></div>');									
+			
+			//Set the activity select option
+			
+			//Set the paid flag
+		}	
 	}
 }
 

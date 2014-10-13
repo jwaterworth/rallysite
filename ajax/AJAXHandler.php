@@ -95,14 +95,16 @@ class AJAXHandler {
 			$event = $eventData->GetEvent($eventId);
 			$clubBookings = $bookingData->GetClubBookings($event, $club);
 			
+			$clubBookingSummaries = array();
+			
 			 //Create a summary for each booking
             foreach($clubBookings as $booking) {
                 //Get account for booking
                 $account = $bookingData->GetBookingAccount($booking);
-                $clubBookings[] = $this->CreateSummary($bookingData, $account, $booking);   
+                $clubBookingSummaries[] = $this->CreateSummary($bookingData, $account, $booking);   
             }
             
-			$post_data = json_encode($clubBookings);
+			$post_data = json_encode($clubBookingSummaries);
 		} catch(Exception $e) {
 			$post_data = "Error: " . $e;
 		}
@@ -121,7 +123,7 @@ class AJAXHandler {
         $summary['userID'] = $account->getId();
         $summary['userName'] = $account->getName();
         $summary['bookingID'] = $booking->getId();
-        $summary['fee'] = '£' . $booking->getBookingFee();
+        $summary['fee'] = $booking->getBookingFee();
         $summary['activityID'] = $activity->getId();
         $summary['activityName'] = $activity->getActivityName();
         

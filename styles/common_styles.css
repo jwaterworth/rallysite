@@ -11,6 +11,7 @@ html {
 	line-height: 20px;
     margin: 0px;
 	padding: 0px;
+	min-width: 900px;
 }
 
 body {
@@ -52,7 +53,7 @@ div.content {
 	padding-top: 15px;
 	padding-bottom: 5px;
 	/*background-color: rgb(233, 234, 237);*/
-	background-color: rgba(0, 137, 45, 1);
+	background-color: rgba(0, 177, 45, 1);
 	position: relative;
 }
 
@@ -63,7 +64,7 @@ div.content {
 }
 
 div.header {
-	background-color: rgba(0, 137, 45, 1);
+	background-color: rgba(0, 177, 45, 1);
 /*	background-color: #FFFFFF;*/
     margin: 0px;
     padding: 0px;
@@ -285,7 +286,7 @@ div.normalise_tabs #tabs{
 
 .ui-tabs-nav {
 	/*background-color: rgb(233, 234, 237);*/
-	background-color: rgba(0, 137, 45, 1);
+	background-color: rgba(0, 177, 45, 1);
 	padding: 0;
 	border-radius: 0;
 }

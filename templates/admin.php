@@ -30,11 +30,11 @@ $controller->GetPageData();
                                 <form name="newsPost" action=".?event=<?php echo $controller->data['eventID'] ?>&action=adminentry&form=news" method="POST">
                                     <div>
                                         <label for="newsTitle">Title</label>
-                                        <input type="text" name="newsTitle"/><br/>
+                                        <input type="text" id="newsTitle" name="newsTitle"/><br/>
                                     </div>
                                     <div>
                                         <label for="newsBody">Body</label>
-                                        <textarea cols="80" rows="20" name="newsBody"></textarea>
+                                        <div cols="80" rows="20" id="newsBody" name="newsBody"></div>
                                     </div>
                                     
                                     <input type="hidden" name="timestamp" value="2012-05-13"/>
@@ -143,11 +143,52 @@ $controller->GetPageData();
                             <h3>Manage Bookings</h3>
 							
 							<h4>Update a booking</h4>
-							<div>
+							<div class="clubSelection">
 								<label for="sltClubs">Club:</label><select id="sltClubs"></select>
-							</div>
-							<div>
-								<label for="sltClubBookings">Club Bookings:</label><select id="sltClubBookings"></select>
+							</div>							
+							<div class="bookingsTable">	
+								<div class="bookingsHeader">
+									<div class="bookingField col1">
+										<label>Name</label>
+									</div>
+									<div class="bookingField col2">
+										<label>Activity</label>
+									</div>
+									<div class="bookingField col3">
+										<label>Fee</label>
+									</div>
+									<div class="bookingField col4">
+										<label>Paid?</label>
+									</div>
+									<div class="bookingField col5">
+										<label>Update Booking</label>
+									</div>
+									<div class="clear"></div>
+								</div>		
+								<div class="clubBookings">
+									<!--
+									<div class="clubBooking">				
+										<form action=".?event=<?php echo $controller->data['eventID'] ?>&action=admin&type=updateBooking#tabs-5" method="POST" >
+										<div class="bookingField col1">
+											<span>James Waterworth</span>
+										</div>
+										<div class="bookingField col2">
+											<select id="updateBookingActivity"><option>Gin Distillery</option></select>
+										</div>
+										<div class="bookingField col3">
+											<span>£</span><input class="short" id="updateBookingFee" type="text"/>
+										</div>
+										<div class="bookingField col4">
+											<input type="radio" name="paidRadioGroup" value="0"/>Yes<input type="radio" name="paidRadioGroup" value="1"/>No
+										</div>
+										<div class="bookingField col5">
+											<input type="submit" value="Update"/>
+										</div>
+										<div class="clear"></div>
+										</form>
+									</div>
+									-->
+								</div>
 							</div>							
                         </div>
                         <div id="tabs-6">
@@ -166,6 +207,7 @@ $controller->GetPageData();
                 </div>
             <?php endif; endif;?>
         </div>
+		<script type="text/javascript" src="scripts/bootstrap-wysiwyg.js"></script>
 		<script type="text/javascript" src="scripts/event_admin.js"></script>
 <?php       
     include (COMMON_TEMPLATES."/footer.php");

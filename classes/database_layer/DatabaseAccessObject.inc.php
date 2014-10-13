@@ -77,7 +77,7 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
      * Get all records from database table specified in sub class constructor
      */
     public function GetAll() {
-        $sql = sprintf("SELECT * FROM %s ORDER BY id DESC",$this->tableName);
+        $sql = sprintf("SELECT * FROM %s ORDER BY id ASC",$this->tableName);
         return $this->ExecuteQuery($sql);
     }
     
@@ -86,9 +86,8 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
      */
     public function GetById($id) {
         $valueObjectArray = array();
-        $sql = sprintf("SELECT * FROM %s WHERE id='%s'", $this->tableName, $id);
+        $sql = sprintf("SELECT * FROM %s WHERE id='%s' ORDER BY id ASC", $this->tableName, $id);
         $valueObjectArray = $this->ExecuteQuery($sql);
-		
         return count($valueObjectArray) > 0 ? $valueObjectArray[0] : null;
     }
     
@@ -117,7 +116,7 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
         //Attempt to get records if foreign key is set
         if($this->foreignKey != null){
             $valueObjectArray = array();
-            $sql = sprintf("SELECT * FROM %s WHERE %s = '%s' ORDER BY id DESC", $this->tableName, $this->foreignKey, $param);
+            $sql = sprintf("SELECT * FROM %s WHERE %s = '%s' ORDER BY id ASC", $this->tableName, $this->foreignKey, $param);
             $valueObjectArray = $this->ExecuteQuery($sql);
         } else {
             $valueObjectArray = null;
