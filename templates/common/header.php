@@ -97,7 +97,11 @@ $controller = new HeaderController(1);
 						<a href="index.php?event=<?php echo $controller->data['eventID']?>"><img src="images/badge_purple.png" alt="SSAGO Logo"/></a>
 					</div>
 					<div class="event_title">
-						<h1><?php echo $controller->data['eventName'] ?></h1>						
+						<div class="title_image">
+							<img class="longImage" src="images/long_title.png"/>
+							<img class="questionMark" src="images/question_mark.png"/>
+						</div>
+						<!--h1><?php echo $controller->data['eventName'] ?></h1-->						
 						<div class="event_date">
 							<h4><?php echo sprintf("%s - %s", $controller->data['eventStartDate'], $controller->data['eventEndDate']) ?></h4>
 						</div>

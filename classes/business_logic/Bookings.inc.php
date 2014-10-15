@@ -125,10 +125,30 @@ class Bookings extends BusinessLogic {
             }
         }
         //If no activities match the booking activity we know there are no bookings
-        throw new Exception("No " . $event->getName() . " bookings found for this account");
-  
+        throw new Exception("No " . $event->getName() . " bookings found for this account");  
     }
     
+	public function GetBookingActivityRecord($bookingId) {
+		//Data access objects
+        $dbBookingActivities = BookingActivityFactory::GetDataAccessObject();
+        $dbActivities = ActivityFactory::GetDataAccessObject();
+        
+        $bookingActivities = $dbBookingActivities->GetByAttribute(
+                BookingActivityVO::$dbBookingID, $bookingId);
+        
+        //As there may be multiple booking activities per booking, each with 
+        //different priorities. For now we will pick priority 1 only NEEDS ATTENTION
+        foreach($bookingActivities as $bookingActivityVO) {
+            if($bookingActivityVO->getPriority() == 1){
+                $bookingActivity = $bookingActivityVO;
+                break;
+            }
+        }
+		
+		return $bookingActivity;
+	}
+	
+	
     public function GetBookingActivity(BookingVO $booking) {
         $activity = null;
         $bookingActivity = null;
@@ -312,12 +332,43 @@ class Bookings extends BusinessLogic {
         
         return true;
     }
+	
+	public function UpdateBooking($booking, $bookingActivity, $foodChoices) {
+		$dbBookings = BookingFactory::GetDataAccessObject();
+        $dbBookingActivities = BookingActivityFactory::GetDataAccessObject();
+        $dbBookingFoodChoices = BookingFoodChoiceFactory::GetDataAccessObject();
+		
+		$activityData = LogicFactory::CreateObject("Activities");
+        $activityData = new Activities();
+             
+		
+		if($dbBookings->Save($booking) < 1) {
+			throw new Exception("An error occurred updating the booking");
+		}
+		
+		if($bookingActivity) {
+			 //Check for space on activity
+			if($bookingActivity->getActivityId()){
+				$activity = $activityData->GetActivity($bookingActivity->getActivityId());
+				if(!$activityData->CheckSpace($activity)) {
+					throw new Exception("There is no space left on this activity");
+				}
+			}
+			
+			if($dbBookingActivities->Save($bookingActivity) < 1) {
+				$this->RemoveBooking($booking);
+				throw new Exception("An error occurred saving booking activity");
+			}	
+		}
+		
+		//Need to process food choices at some point
+        
+		return true;
+	}
     
     public function SaveBooking(BookingVO $booking, $activityID, $priority, $foodChoices) {
         $this->CheckParam($booking, "SaveBooking - booking");
         $this->CheckParam($activityID, "SaveBooking - activityID");
-        $this->CheckParam($priority, "SaveBooking - priority");
-        $this->CheckParam($foodChoices, "SaveBooking - foodChoiceID");
         
         $dbBookings = BookingFactory::GetDataAccessObject();
         $dbBookingActivities = BookingActivityFactory::GetDataAccessObject();
@@ -334,8 +385,9 @@ class Bookings extends BusinessLogic {
         
         //Check user does not already have a booking for this event
         
-        //Set booking to unpaid
-        $booking->setPaid(0);
+        //Set booking to unpaid if nothing is set
+		if(!$booking->getPaid())
+			$booking->setPaid(0);
          
         $bookingID = $dbBookings->Save($booking);
         
@@ -350,7 +402,9 @@ class Bookings extends BusinessLogic {
         $bookingActivity = BookingActivityFactory::CreateValueObject();
         $bookingActivity->setBookingID($booking->getId());
         $bookingActivity->setActivityID($activityID);
-        $bookingActivity->setPriority($priority);
+		
+		if($priority)
+			$bookingActivity->setPriority($priority);
         
         if($dbBookingActivities->Save($bookingActivity) < 1) {
             $this->RemoveBooking($booking);
@@ -358,18 +412,19 @@ class Bookings extends BusinessLogic {
         }
         
         //Booking Food Choice
-        foreach($foodChoices as $foodChoiceID) {
-            $bookingFoodChoice = BookingFoodChoiceFactory::CreateValueObject();
-            $bookingFoodChoice->setBookingID($booking->getId());
-            $bookingFoodChoice->setFoodChoiceID($foodChoiceID);
+		if($foodChoices) {
+			foreach($foodChoices as $foodChoiceID) {
+				$bookingFoodChoice = BookingFoodChoiceFactory::CreateValueObject();
+				$bookingFoodChoice->setBookingID($booking->getId());
+				$bookingFoodChoice->setFoodChoiceID($foodChoiceID);
 
-            if($dbBookingFoodChoices->Save($bookingFoodChoice) < 1) {
-                $this->RemoveBooking($booking);
-                throw new Exception("An error occured saving booking food choice");
-            }
-        }
-        
-        
+				if($dbBookingFoodChoices->Save($bookingFoodChoice) < 1) {
+					$this->RemoveBooking($booking);
+					throw new Exception("An error occured saving booking food choice");
+				}
+			}
+		}
+		
         return $bookingID;
     }
     

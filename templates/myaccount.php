@@ -32,7 +32,7 @@ $error = isset($_POST['login_error']) ? $_POST['login_error'] : null;
 		<div class="create_account">
 				<p class="login_header">Create an Account</p>
 				<p>Once you have created an account your may access restricted pages and create bookings.</p>
-				<a href=".?event=<?php echo $controller->data['eventID']?>&action=register">Create</a>
+				<a class="booking_button" href=".?event=<?php echo $controller->data['eventID']?>&action=register"><span>Create</span></a>
 		</div>
 		<div class="clear"></div>
 		<div class="error">

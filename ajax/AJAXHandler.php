@@ -55,6 +55,8 @@ class AJAXHandler {
         echo $responseString;
     }
 	
+	//Start of new web service methods
+	
 	public function GetClubs() {
 		$accountData = LogicFactory::CreateObject("Accounts");
 		
@@ -112,6 +114,89 @@ class AJAXHandler {
 		echo $post_data;
 	}
 	
+	public function GetActivities($eventId) {
+		$post_data = "";
+	
+		$eventData = LogicFactory::CreateObject("Event");
+		$activityData = LogicFactory::CreateObject("Activities");
+		try {
+			$event = $eventData->GetEvent($eventId);
+			
+			//Get the activity page containing all activities for this event
+			$activityPage = $activityData->GetActivitiesPage($event);
+			
+			$activities = $activityData->GetAllActivities($activityPage);
+			
+			$activityResponseArray = array();
+			
+			foreach($activities as $activity) {
+				$noBooked = $activityData->GetActivityNumber($activity);				
+				$capacity = $activity->getActivityCapacity();
+				$placesLeft = $capacity > 0 ? $capacity - $noBooked : "Unlimited";				
+				
+				$temp = array();
+				$temp["activityId"] = $activity->getId();
+				$temp["activityName"] = $activity->getActivityName();
+				$temp["placesRemaining"] = $placesLeft;
+				
+				$activityResponseArray[] = $temp;
+			}
+		
+			$post_data = json_encode($activityResponseArray);
+		} catch(Exception $e) {
+			$post_data = "Error: " . $e;
+		}
+		
+		echo $post_data;
+	}
+	
+	public function UpdateBooking($bookingId, $activityId, $fee, $paid) {		
+		//The parameters will not be null if they have been updated
+		$bookingData = LogicFactory::CreateObject("Bookings");
+		
+		$responseArray = array();
+		
+		try {
+			if($bookingId != null) {
+				//Process the booking related changes
+				$booking = BookingFactory::CreateValueObject();
+				$booking->setId($bookingId);
+				
+				if($fee != null)
+					$booking->setBookingFee($fee);
+
+				if($paid != null ) {
+					$booking->setPaid(!!$paid);//Ensure we get the boolean value here
+				}
+								
+				//Now we can process activity changes
+				$bookingActivity = $bookingData->GetBookingActivityRecord($bookingId);
+				
+				$tempBookingActivity = null;
+				
+				if($bookingActivity && $activityId != $bookingActivity->getActivityId()) {	
+					//Update the activity
+					$tempBookingActivity = BookingActivityFactory::CreateValueObject();
+					$tempBookingActivity->setId($bookingActivity->getId());
+					$tempBookingActivity->setActivityId($activityId);
+				}
+				
+				if($bookingData->UpdateBooking($booking, $tempBookingActivity, null)) {
+					$responseArray["result"] = "success";
+					$responseArray["messsage"] = "";
+				}
+				
+			}			
+		} catch(Exception $e) {
+				$responseArray["result"] = "failure";
+				$responseArray["messsage"] = $e;			
+		}
+		
+		$post_data = json_encode($responseArray);
+				
+		echo $post_data;
+	}
+	
 	private function CreateSummary($bookingData, AccountVO $account, BookingVO $booking) {
 		$bookingData = LogicFactory::CreateObject("Bookings");
 	
@@ -122,8 +207,9 @@ class AJAXHandler {
         
         $summary['userID'] = $account->getId();
         $summary['userName'] = $account->getName();
-        $summary['bookingID'] = $booking->getId();
+        $summary['bookingId'] = $booking->getId();
         $summary['fee'] = $booking->getBookingFee();
+		$summary['paid'] = $booking->getPaid();
         $summary['activityID'] = $activity->getId();
         $summary['activityName'] = $activity->getActivityName();
         

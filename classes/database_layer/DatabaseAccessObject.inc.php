@@ -90,6 +90,12 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
         $valueObjectArray = $this->ExecuteQuery($sql);
         return count($valueObjectArray) > 0 ? $valueObjectArray[0] : null;
     }
+	
+	public function RecordExists($id) {
+		$sql = sprintf("SELECT id FROM %s WHERE id='%s' ORDER BY id ASC", $this->tableName, $id);
+		$result = $this->mysqli->query($sql);
+		return mysqli_num_rows($result) > 0;
+	}
     
     public function GetByAttribute($attribute, $param) {
         $valueObjectArray = array();
@@ -135,12 +141,9 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
 		$currVO = array();
 		
 		$isUpdate = false;
-        if($valueObject->getId() != "") {
-            $currVO = $this->GetById($valueObject->getId());
-        }
         
         //If entry exists update, otherwise insert new user
-        if(sizeof($currVO) > 0) {
+        if($valueObject->getId() != "" && $this->RecordExists($valueObject->getId())) {
             $sql = $this->GenerateUpdateSQL($valueObject);
 			$isUpdate = true;	
         } else {

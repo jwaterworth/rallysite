@@ -40,10 +40,9 @@ class BookingActivityDAO extends DatabaseAccessObject{
         return $sql;
     }
     
+	/*
     protected function GenerateUpdateSQL($valueObject) {
         $sql = "UPDATE ".$this->tableName." SET ".
-                /*BookingInfoVO::$dbId."='".
-                $this->mysqli->real_escape_string($valueObject->getId())."',".*/
                 BookingActivityVO::$dbBookingID."='".
                 $this->mysqli->real_escape_string($valueObject->getBookingID())."',".
                 BookingActivityVO::$dbActivityID."='".
@@ -53,6 +52,40 @@ class BookingActivityDAO extends DatabaseAccessObject{
                 "WHERE ".BookingInfoVO::$dbId."=".$this->mysqli->real_escape_string($valueObject->getId());
         return $sql;
     }
+	*/
+	
+	protected function GenerateUpdateSQL($valueObject) {
+		$colSet = false;
+	
+        $sql = "UPDATE ".$this->tableName." SET ";
+		
+		if($valueObject->getBookingID()) { 
+			$sql = $sql . $this->AppendSql(BookingActivityVO::$dbUserID, $valueObject->getBookingID(), $colSet);
+			$colSet = true;
+		}
+		
+		if($valueObject->getActivityID()) {	
+			$sql = $sql . $this->AppendSql(BookingActivityVO::$dbActivityID, $valueObject->getActivityID(), $colSet);
+			$colSet = true;
+		}
+					
+		if($valueObject->getPriority()) {		
+			$sql = $sql . $this->AppendSql(BookingActivityVO::$dbPriority, $valueObject->getPriority(), $colSet);
+			$colSet = true;
+		}	
+		
+		$sql = $sql . "WHERE ".BookingActivityVO::$dbId."=". $this->mysqli->real_escape_string($valueObject->getId());
+		
+        return $sql;
+	}
+	
+	private function AppendSql($fieldName, $value, $colSet) {
+		$temp = $colSet ? "," : "";			
+		$temp = $temp . $fieldName ."='". $this->mysqli->real_escape_string($value) . "'";
+		$colSet = true;
+		
+		return $temp;
+	}
 }
 
 ?>

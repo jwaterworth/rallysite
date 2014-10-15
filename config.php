@@ -22,6 +22,7 @@ define('ERROR', 0);
 define('REGISTRATION', 1);
 define('BOOKING', 2);
 define('UPDATE_DETAILS', 3);
+define('CLUB_REGISTRATON', 4);
 
 //Download TYPES
 define('PARTICIPANT_LIST', 0);

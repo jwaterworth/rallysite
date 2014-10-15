@@ -58,6 +58,9 @@ switch($action) {
     case 'register':
         register();
         break;
+	case 'newclubmember':
+		newclubmember();
+		break;
     case 'entry':
         entry();
         break;
@@ -202,6 +205,20 @@ function entry() {
 			$_POST['confirmation_error'] = $controller->errorMessage;
 			confirmation();
 			break;
+		case'newclubmember':
+			require_once(PAGE_CONTROLLERS."/NewClubMemberPageController.inc.php");
+            
+            $controller = new NewClubMemberPageController($eventID);
+			
+            $result = $controller->SaveNewAccount($_POST['userName'], $_POST['userEmail'], $_POST['userPassword'], $_POST['userPhone'], $_POST['userAddress'], 
+                    $_POST['userDOB'], $_POST['userMedicalCond'], $_POST['userDietaryReq'],
+                    $_POST['emergName'], $_POST['emergRel'], $_POST['emergPhone'], $_POST['emergAddress']);
+
+            $_POST['confirmation_type'] = CLUB_REGISTRATON;
+            $_POST['confirmation_result'] = $result;
+            $_POST['confirmation_error'] = $controller->errorMessage;
+            confirmation();
+			break;
 		case 'login':
 			$email = $_POST['username'];
 			$password = $_POST['password'];
@@ -232,17 +249,28 @@ function downloads() {
 }
 
 function ajax() {
-    require_once('ajax/AJAXHandler.php');
-    $ajaxHandler = new AJAXHandler();
-    if($accountID = isset( $_GET['accountID'] ) ? $_GET['accountID'] : "") {
-        $ajaxHandler->GetAccountDetails($accountID);
-    } else if( $activityID = isset( $_GET['activityID'] ) ? $_GET['activityID'] : "") {
-        $ajaxHandler->GetActivityDetails($activityID);
-    } else if(isset($_GET['getClubs'])) {
-		$ajaxHandler->GetClubs();
-	} else if(isset($_GET['getClubBookings']) && isset($_GET['clubId'])) {
-		$ajaxHandler->GetClubBookings($_GET['eventId'], $_GET['clubId']);
-	}
+	//if(Authentication::CheckAuthenticationLevel(CLUBREP|EVENTEXEC|SSAGOEXEC)) {
+		require_once('ajax/AJAXHandler.php');
+		$ajaxHandler = new AJAXHandler();
+		if($accountID = isset( $_GET['accountID'] ) ? $_GET['accountID'] : "") {
+			$ajaxHandler->GetAccountDetails($accountID);
+		} else if( $activityID = isset( $_GET['activityID'] ) ? $_GET['activityID'] : "") {
+			$ajaxHandler->GetActivityDetails($activityID);
+		} else if(isset($_GET['getClubs'])) {
+			$ajaxHandler->GetClubs();
+		} else if(isset($_GET['getClubBookings']) && isset($_GET['clubId'])) {
+			$ajaxHandler->GetClubBookings($_GET['event'], $_GET['clubId']);
+		} else if(isset($_GET['getActivities']) && isset($_GET['event'])) {
+			$ajaxHandler->GetActivities($_GET['event']);
+		} else if(isset($_GET['updateBooking'])) {
+			$bookingId = isset($_POST['bookingId']) ? $_POST['bookingId'] : null;
+			$activityId = isset($_POST['activityId']) ? $_POST['activityId'] : null;
+			$fee = isset($_POST['fee']) ? $_POST['fee'] : null;
+			$paid = isset($_POST['paid']) ? $_POST['paid'] : null;
+			$ajaxHandler->UpdateBooking($bookingId, $activityId, $fee, $paid);
+		}
+	//}	
+    
 }
 
 function confirmation() {
@@ -251,6 +279,10 @@ function confirmation() {
 
 function register() {
     require(TEMPLATE_PATH."/register.php");
+}
+
+function newclubmember() {
+	require(TEMPLATE_PATH."/new_club_member.php");
 }
 
 function login() {

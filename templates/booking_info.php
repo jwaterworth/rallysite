@@ -95,6 +95,7 @@
                 <?php else : ?>
                     <p class="booking_header">Club Bookings </p>
                     <a class="booking_button" href=".?event=<?php echo $controller->data['eventID'] ?>&action=bookingform&clubbooking=true"><span id="buttonText">Create a club booking</span></a> 
+					<a class="booking_button" href=".?event=<?php echo $controller->data['eventID'] ?>&action=newclubmember"><span id="buttonText">Add a new club member</span></a> 
                     <div class="clear"></div>
                     <?php foreach($controller->data['clubBookings'] as $booking) : ?>
                         <div class="booking">

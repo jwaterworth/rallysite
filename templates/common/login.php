@@ -14,7 +14,7 @@
     <div class="create_account">
             <p class="login_header">Create an Account</p>
             <p>Once you have created an account your may access restricted pages and create bookings.</p>
-            <a href=".?action=register">Create</a>
+            <a class="booking_button" href=".?action=register">Create</a>
     </div>
     <div class="clear"></div>
 </div>

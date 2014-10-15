@@ -97,6 +97,15 @@ div.header {
 	position: relative
 }
 
+.longImage {
+	position:relative;
+	top: -110px;
+}
+
+.questionMark { 
+	height: 250px;
+}
+
 .event_date {
 	position: absolute;
 	bottom: 10px;
