@@ -17,6 +17,7 @@ $controller = new HeaderController(1);
         <!-- facebox -->
         <link href="jquery/facebox/facebox.css" media="screen" rel="stylesheet" type="text/css" />
         <script src="jquery/facebox/facebox.js" type="text/javascript"></script>
+		
         <script type="text/javascript">
             $(document).ready(function($) {
 				$('a[rel*=facebox]').facebox({
@@ -59,7 +60,8 @@ $controller = new HeaderController(1);
 						getActivityDetails(index);
 						$('#activityInput').val(index);
 					}); 
-				}                        
+				},
+				tolerance: "fit"				
 			});
 			
 			// Tabs

@@ -129,8 +129,8 @@ class AdminPageController extends PageController {
         $newsPost = NewsPostFactory::CreateValueObject();
         
         //Save values into value object after sanitation
-        $newsPost->setNewsTitle(htmlspecialchars($title, ENT_NOQUOTES));
-        $newsPost->setNewsBody(htmlspecialchars($body, ENT_NOQUOTES));
+        $newsPost->setNewsTitle($title);
+        $newsPost->setNewsBody($body);
         //Get date
         $arrDate = getdate();
         $newsPost->setNewsTimeStamp($arrDate['year'] . '-' . $arrDate['mon'] . '-' . $arrDate['mday']);
@@ -163,8 +163,8 @@ class AdminPageController extends PageController {
         //Use current event ID
         $event->setId(htmlspecialchars($id, ENT_NOQUOTES));
         $event->setName(htmlspecialchars($name, ENT_NOQUOTES));
-        $event->setSummary(htmlspecialchars($summary, ENT_NOQUOTES));
-        $event->setInformation(htmlspecialchars($info, ENT_NOQUOTES));
+        $event->setSummary($summary);
+        $event->setInformation($info);
         $event->setLogoLoc(htmlspecialchars($imagePath, ENT_NOQUOTES));
         $event->setActivityPageID(htmlspecialchars($activityPageID, ENT_NOQUOTES));
         $event->setBookingInfoID(htmlspecialchars($bookingInfoID, ENT_NOQUOTES));

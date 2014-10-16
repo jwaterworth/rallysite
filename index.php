@@ -217,7 +217,7 @@ function entry() {
             $_POST['confirmation_type'] = CLUB_REGISTRATON;
             $_POST['confirmation_result'] = $result;
             $_POST['confirmation_error'] = $controller->errorMessage;
-            confirmation();
+            bookings();
 			break;
 		case 'login':
 			$email = $_POST['username'];

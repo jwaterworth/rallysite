@@ -6,7 +6,12 @@ EventAdmin.EventActivites = [];
 
 $(document).ready(function() {
 	//Apply wysiwyg editors
-	$('#newsBody').wysiwyg();
+	$('#newsBody').ckeditor();
+	$('#eventSummary').ckeditor();
+	$('#eventInfo').ckeditor();
+	$('#bookingSummary').ckeditor();
+	$('#bookingInformation').ckeditor();
+	$('#activityPageBrief').ckeditor();	
 
 	EventAdmin.getClubs();
 	EventAdmin.getActivities();
@@ -125,3 +130,4 @@ EventAdmin.setClubDropdown = function(clubs) {
 		EventAdmin.refreshClubBookings()		
 	}	
 }
+

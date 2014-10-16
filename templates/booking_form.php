@@ -60,14 +60,12 @@ $controller->GeneratePageData();
 			<?php endif; ?>
             <div class="booking_form_section">
                 <h3>Activity Choice</h3>
-                <div class="normalise_grid">
-                    <ol id="selectable">
-                        <?php foreach($controller->data['activities'] as $activity) : ?>
+                <div class="activity_choices">
+					<?php foreach($controller->data['activities'] as $activity) : ?>
                         <?php if($activity['enabled']) : ?>
-                        <li class="ui-state-default" activityID="<?php echo $activity['id']?>"><p><?php echo $activity['name'] ?></p><img style="max-height: 50px; max-width: 50px;" src="<?php echo $activity['imageLoc'] ?>"/></li>
+                        <button class="activityButton" data-activityId="<?php echo $activity['id']?>"><?php echo $activity['name'] ?><!--img style="max-height: 50px; max-width: 50px;" src="<?php echo $activity['imageLoc'] ?>"/--></button>
                         <?php endif; ?>
                         <?php endforeach ?>
-                    </ol>
                 </div>
                 <div class="clear"></div>
 				<input type="hidden" id="activityInput" name="activityID" value=""/>
@@ -103,7 +101,8 @@ $controller->GeneratePageData();
     </div>
 
 <?php endif; ?>
-
+	
+	<script type="text/javascript" src="scripts/booking_script.js"></script>
 <?php      
     include (COMMON_TEMPLATES."/footer.php");
 ?>

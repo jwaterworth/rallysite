@@ -138,7 +138,7 @@ class RegisterPageController extends PageController{
 		$accountVO->setEmergName(htmlspecialchars($emergName));
 		$accountVO->setEmergPhone(htmlspecialchars($emergPhone));
 		$accountVO->setEmergAddress(htmlspecialchars($emergAddress));
-		$accountVO->setEmergAddress(htmlspecialchars($emergRel));
+		$accountVO->setEmergRelationship(htmlspecialchars($emergRel));
 		$accountVO->setClubId(htmlspecialchars($clubId));	
 		$accountVO->setAccountTypeID(UNAPPROVED);
 		

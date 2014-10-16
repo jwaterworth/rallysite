@@ -34,7 +34,7 @@ $controller->GetPageData();
                                     </div>
                                     <div>
                                         <label for="newsBody">Body</label>
-                                        <div cols="80" rows="20" id="newsBody" name="newsBody"></div>
+                                        <textarea cols="80" rows="20" id="newsBody" name="newsBody"></textarea>
                                     </div>
                                     
                                     <input type="hidden" name="timestamp" value="2012-05-13"/>
@@ -57,11 +57,11 @@ $controller->GetPageData();
                                     </div>
                                     <div>
                                         <label for="eventSummary">Event Summary</label>
-                                        <textarea cols="100" rows="10" name="eventSummary"><?php echo $controller->data['eventSummary'] ?></textarea>
+                                        <textarea cols="100" rows="10" id="eventSummary" name="eventSummary"><?php echo $controller->data['eventSummary'] ?></textarea>
                                     </div>
                                     <div> 
                                         <label for="eventInfo">Event Information</label>
-                                        <textarea cols="100" rows="20" name="eventInfo"><?php echo $controller->data['eventInfo'] ?></textarea>
+                                        <textarea cols="100" rows="20" id="eventInfo" name="eventInfo"><?php echo $controller->data['eventInfo'] ?></textarea>
                                     </div>
                                     <img src="<?php $controller->data['eventLogo'] ?>"/>
                                     <input type="hidden" name="currLogo" value="<?php $controller->data['eventLogo']?>"/> 
@@ -86,12 +86,12 @@ $controller->GetPageData();
                                     <input type="hidden" name="bookingInfoID" value="<?php echo $controller->data['bookingInfoID'] ?>"/>
                                     <div>
                                         <label for="bookingSummary">Booking Summary</label>
-                                        <textarea cols="80" rows="10" name="bookingSummary"><?php echo $controller->data['bookingSummary'] ?></textarea>
+                                        <textarea cols="80" rows="10" id="bookingSummary" name="bookingSummary"><?php echo $controller->data['bookingSummary'] ?></textarea>
                                     </div>
 
                                     <div>
                                         <label for="bookingInformation">Booking Information</label>
-                                        <textarea cols="80" rows="20" name="bookingInformation"><?php echo $controller->data['bookingInfo'] ?></textarea>
+                                        <textarea cols="80" rows="20" id="bookingInformation"  name="bookingInformation"><?php echo $controller->data['bookingInfo'] ?></textarea>
                                     </div>
                                     <input type="submit" value="Update"/>
                                 </form>
@@ -103,10 +103,11 @@ $controller->GetPageData();
                                     <input type="hidden" name="activityPageID" value="<?php echo $controller->data['activityPageID'] ?>"/>
                                     <div>
                                         <label>Activity Page Brief:</label>
-                                        <textarea cols="80" rows="10" name="activityPageBrief"><?php echo $controller->data['activityPageBrief'] ?></textarea>
+                                        <textarea cols="80" rows="10" id="activityPageBrief" name="activityPageBrief"><?php echo $controller->data['activityPageBrief'] ?></textarea>
                                     </div>
                                     <input type="submit" value="Update" />
                                 </form>
+								<!--
                                 <form class="activity_form" action=".?event=<?php echo $controller->data['eventID'] ?>&action=adminentry&form=activity" enctype="multipart/form-data" method="POST">
                                     <fieldset>
                                         <legend>New Activity</legend>
@@ -137,6 +138,7 @@ $controller->GetPageData();
                                         <input type="submit" value="Create" />
                                     </fieldset>
                                 </form>
+								-->
                             </div>
                         </div>
 						<div id="tabs-5">
@@ -207,7 +209,8 @@ $controller->GetPageData();
                 </div>
             <?php endif; endif;?>
         </div>
-		<script type="text/javascript" src="scripts/bootstrap-wysiwyg.js"></script>
+		<script type="text/javascript" src="scripts/ckeditor/ckeditor.js"></script>
+		<script type="text/javascript" src="scripts/ckeditor/adapters/jquery.js"></script>
 		<script type="text/javascript" src="scripts/event_admin.js"></script>
 <?php       
     include (COMMON_TEMPLATES."/footer.php");

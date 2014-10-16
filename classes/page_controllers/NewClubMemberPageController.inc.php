@@ -8,7 +8,7 @@ require_once(PAGE_CONTROLLERS."/PageController.inc.php");
  */
 class NewClubMemberPageController extends PageController {
 		
-	function __construct($eventId) {
+	function __construct($eventId, $userId = null) {
         
 		//Even though account manipulation is agnostic of event id. We need to maintain the event the user is on
 		$eventData = LogicFactory::CreateObject("Event");
@@ -39,12 +39,12 @@ class NewClubMemberPageController extends PageController {
 		$this->data['clubId'] = $club->getId();
 		$this->data['clubName'] = $club->getName();
 		
-        
-        $this->data['edit'] = false;
-        /*
-        try {
+        if($userId) {
+			$this->data['edit'] = true;
+			
+			try {
             $accountVO = AccountFactory::CreateValueObject();
-            $accountVO = $accountData->GetAccount(Authentication::GetLoggedInId());
+            $accountVO = $accountData->GetAccount($userId);
             
             $account['id'] = $accountVO->getId();
             $account['name'] = $accountVO->getName();
@@ -63,7 +63,11 @@ class NewClubMemberPageController extends PageController {
         } catch (Exception $e) {
             $this->errorMessage = $e->getMessage();
         }
-		*/
+		
+		} else {
+			$this->data['edit'] = false;
+		}
+        
     }
 	
 	public function GeneratePageData() {
@@ -107,7 +111,7 @@ class NewClubMemberPageController extends PageController {
 			$accountVO->setEmergName(htmlspecialchars($emergName));
 			$accountVO->setEmergPhone(htmlspecialchars($emergPhone));
 			$accountVO->setEmergAddress(htmlspecialchars($emergAddress));
-			$accountVO->setEmergAddress(htmlspecialchars($emergRel));
+			$accountVO->setEmergRelationship(htmlspecialchars($emergRel));
 			$accountVO->setClubId(htmlspecialchars($this->data['clubId']));	
 			$accountVO->setAccountTypeID(APPROVED);
 			

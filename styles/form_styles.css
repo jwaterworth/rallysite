@@ -12,13 +12,20 @@ input,textarea,select{
 
 
 
-fieldset.form_details {
-    border-radius: 8px;
+.form_details {
+    border-radius: 3px;
+	padding: 5px;
     margin-bottom: 20px;
+	background-color: #FFFFFF;
 }
 
-legend.form_details {
-    font-size: 14pt;
+.left_form_column {
+	float: left;
+}
+
+.right_form_column {
+	float: left;
+	margin-left: 30px
 }
 
 .registration_form {
@@ -145,6 +152,16 @@ a.booking_button:hover span{
 
 .booking_form_section  span {
 	margin: 3px;
+}
+
+.activityButton {
+	height: 125px;
+	width: 175px;
+	background-color: rgb(143, 34, 113);
+	color: white;
+	font-weight: bold;
+	font-size: 12pt;
+	font-family: calibri, verdanna;
 }
 
 label{
