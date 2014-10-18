@@ -27,23 +27,51 @@ class AccountTypeDAO extends DatabaseAccessObject{
     
     protected function GenerateInsertSQL($valueObject) {
         $sql = "INSERT INTO ".$this->tableName." (".
-                AccountTypeVO::$dbId.",".
                 AccountTypeVO::$dbAccountTypeName.") VALUES ('".
-                $this->mysqli->real_escape_string($valueObject->getId())."','".
                 $this->mysqli->real_escape_string($valueObject->getAccountTypeName())."')"; 
 
         return $sql;
     }
+	
+	protected function GeneratePDOInsertSQL($valueObject) {
+        //Init values
+		$colSql = "";
+		$valSql = "";
+		$this->valueArray = array();
+		
+		if($valueObject->getAccountTypeName()) { 
+			$this->BuildInsertSql(AccountTypeVO::$dbAccountTypeName, $valueObject->getAccountTypeName(), $colSql, $valSql);
+		}			
+			
+		$preparedSql = sprintf("INSERT INTO %s (%s) VALUES (%s)", $this->tableName, $colSql, $valSql);
+		
+        return $preparedSql;
+    }
     
     protected function GenerateUpdateSQL($valueObject) {
         $sql = "UPDATE ".$this->tableName." SET ".
-                    /*AccountTypeVO::$dbId."='".
-                    $this->mysqli->real_escape_string($valueObject->getId())."',".*/
                     AccountTypeVO::$dbAccountTypeName."='".
                     $this->mysqli->real_escape_string($valueObject->getAccountTypeName())."' ".
                     "WHERE ".AccountTypeVO::$dbId."=".$this->mysqli->real_escape_string($valueObject->getId());
         return $sql;
     }
+	
+	protected function GeneratePDOUpdateSQL($valueObject) {	
+		//Init values
+		$sql = "";
+		$this->valueArray = array();
+		
+		if($valueObject->getAccountTypeName()) { 
+			$this->BuildUpdateSql(AccountTypeVO::$dbAccountTypeName, $valueObject->getAccountTypeName(), $sql);
+		}
+				
+		$whereClauseSql = "";
+		$this->AppendToWhereClause(AccountTypeVO::$dbId, $valueObject->getId(), $whereClauseSql, $this->valueArray);
+		
+		$preparedSql = sprintf("Update %s SET %s WHERE %s", $this->tableName, $sql, $whereClauseSql);
+		
+        return $preparedSql;
+    }	
 }
 
 ?>

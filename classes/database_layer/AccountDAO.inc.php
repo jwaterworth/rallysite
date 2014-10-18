@@ -17,7 +17,6 @@ class AccountDAO extends DatabaseAccessObject{
     }
 	
 	public function GetByEmail($email) {
-		$valueObjectArray = array();
         $sql = sprintf("SELECT * FROM %s WHERE email='%s'", $this->tableName, $email);
         $valueObjectArray = $this->ExecuteQuery($sql);
 		
@@ -97,12 +96,21 @@ class AccountDAO extends DatabaseAccessObject{
 			$this->BuildInsertSql(AccountVO::$dbName, $valueObject->getName(), $colSql, $valSql);
 		}
 		
+		
+		if($valueObject->getPassword()) { 
+			$this->BuildInsertSql(AccountVO::$dbPassword, $valueObject->getPassword(), $colSql, $valSql);
+		}
+				
+		if($valueObject->getUserSalt()) { 
+			$this->BuildInsertSql(AccountVO::$dbUserSalt, $valueObject->getUserSalt(), $colSql, $valSql);
+		}
+		
 		if($valueObject->getDateOfBirth()) {	
 			$this->BuildInsertSql(AccountVO::$dbDateOfBirth, $this->GetDate($valueObject->getDateOfBirth()), $colSql, $valSql);
 		}
 					
 		if($valueObject->getEmail()) {		
-			$this->BuildInsertSql(AccountVO::$dbNdbEmailame, $valueObject->getEmail(), $colSql, $valSql);
+			$this->BuildInsertSql(AccountVO::$dbEmail, $valueObject->getEmail(), $colSql, $valSql);
 		}	
 		
 		if($valueObject->getPhoneNumber()) {		
@@ -144,15 +152,10 @@ class AccountDAO extends DatabaseAccessObject{
 		if($valueObject->getAccountTypeID()) {		
 			$this->BuildInsertSql(AccountVO::$dbAccountTypeID, $valueObject->getAccountTypeID(), $colSql, $valSql);
 		}		
+			
+		$preparedSql = sprintf("INSERT INTO %s (%s) VALUES (%s)", $this->tableName, $colSql, $valSql);
 		
-		$whereClauseSql = "";
-		$this->AppendToWhereClause(AccountVO::$dbId, $valueObject->getId(), $whereClauseSql, $this->valueArray);
-		
-		$preparedSql = sprintf("Update %s SET %s WHERE %s", $this->tableName, $sql, $whereClauseSql);
-		echo $preparedSql;
         return $preparedSql;
-				
-        return $sql;
     }
 	
     protected function GenerateUpdateSQL($valueObject) {
@@ -291,7 +294,7 @@ class AccountDAO extends DatabaseAccessObject{
 		$this->AppendToWhereClause(AccountVO::$dbId, $valueObject->getId(), $whereClauseSql, $this->valueArray);
 		
 		$preparedSql = sprintf("Update %s SET %s WHERE %s", $this->tableName, $sql, $whereClauseSql);
-		echo $preparedSql;
+		
         return $preparedSql;
     }	
 	

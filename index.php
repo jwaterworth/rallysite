@@ -179,7 +179,7 @@ function entry() {
             $_POST['confirmation_type'] = REGISTRATION;
             $_POST['confirmation_result'] = $result;
             $_POST['confirmation_error'] = $controller->errorMessage;
-            confirmation();
+            //confirmation();
             break;
 		case 'update_details':
 			require_once(PAGE_CONTROLLERS."/RegisterPageController.inc.php");

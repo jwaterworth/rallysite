@@ -134,7 +134,7 @@ class Accounts extends BusinessLogic {
     public function SaveAccount(AccountVO $account) {
         $dbAccounts = AccountFactory::GetDataAccessObject();
         
-        $result = $dbAccounts->SavePDO($account);
+        $result = $dbAccounts->Save($account);
         
         if($result < 1) {
             throw new Exception("An error occured saving account for " . $account->getName());

@@ -36,6 +36,25 @@ class BookingFoodChoiceDAO extends DatabaseAccessObject{
         
         return $sql;
     }
+	
+	protected function GeneratePDOInsertSQL($valueObject) {
+        //Init values
+		$colSql = "";
+		$valSql = "";
+		$this->valueArray = array();
+		
+		if($valueObject->getBookingID()) { 
+			$this->BuildInsertSql(BookingFoodChoiceVO::$dbBookingID, $valueObject->getBookingID(), $colSql, $valSql);
+		}	
+
+		if($valueObject->getFoodChoiceID()) { 
+			$this->BuildInsertSql(BookingFoodChoiceVO::$dbFoodChoiceID, $valueObject->getFoodChoiceID(), $colSql, $valSql);
+		}		
+			
+		$preparedSql = sprintf("INSERT INTO %s (%s) VALUES (%s)", $this->tableName, $colSql, $valSql);
+		
+        return $preparedSql;
+    }
     
     protected function GenerateUpdateSQL($valueObject) {
         $sql = "UPDATE ".$this->tableName." SET ".
@@ -47,6 +66,27 @@ class BookingFoodChoiceDAO extends DatabaseAccessObject{
                 $this->mysqli->real_escape_string($valueObject->getFoodChoiceID())."' ".
                 "WHERE ".BookingInfoVO::$dbId."=".$this->mysqli->real_escape_string($valueObject->getId());
         return $sql;
+    }
+	
+	protected function GeneratePDOUpdateSQL($valueObject) {	
+		//Init values
+		$sql = "";
+		$this->valueArray = array();
+				
+		if($valueObject->getBookingID()) { 
+			$this->BuildUpdateSql(BookingFoodChoiceVO::$dbBookingID, $valueObject->getBookingID(), $sql);
+		}
+		
+		if($valueObject->getFoodChoiceID() !== null) { 
+			$this->BuildUpdateSql(BookingFoodChoiceVO::$dbFoodChoiceID, $valueObject->getFoodChoiceID(), $sql);
+		}
+				
+		$whereClauseSql = "";
+		$this->AppendToWhereClause(BookingFoodChoiceVO::$dbId, $valueObject->getId(), $whereClauseSql, $this->valueArray);
+		
+		$preparedSql = sprintf("Update %s SET %s WHERE %s", $this->tableName, $sql, $whereClauseSql);
+		
+        return $preparedSql;
     }
 }
 

@@ -39,18 +39,29 @@ class BookingDAO extends DatabaseAccessObject{
         
         return $sql;
     }
-    
-	/*	
-    protected function GenerateUpdateSQL($valueObject) {
-        $sql = "UPDATE ".$this->tableName." SET ".
-                BookingVO::$dbUserID."='".
-                $this->mysqli->real_escape_string($valueObject->getUserID())."' ".
-                $this->mysqli->real_escape_string($valueObject->getBookingFee())."' ".
-                $this->mysqli->real_escape_string($valueObject->getPaid())."' ".
-                "WHERE ".BookingInfoVO::$dbId."=".$this->mysqli->real_escape_string($valueObject->getId());
-        return $sql;
+	
+	protected function GeneratePDOInsertSQL($valueObject) {
+        //Init values
+		$colSql = "";
+		$valSql = "";
+		$this->valueArray = array();
+		
+		if($valueObject->getUserID()) { 
+			$this->BuildInsertSql(BookingVO::$dbUserID, $valueObject->getUserID(), $colSql, $valSql);
+		}		
+
+		if($valueObject->getBookingFee()) { 
+			$this->BuildInsertSql(BookingVO::$dbBookingFee, $valueObject->getBookingFee(), $colSql, $valSql);
+		}	
+
+		if($valueObject->getPaid()) { 
+			$this->BuildInsertSql(BookingVO::$dbPaid, $valueObject->getPaid(), $colSql, $valSql);
+		}		
+			
+		$preparedSql = sprintf("INSERT INTO %s (%s) VALUES (%s)", $this->tableName, $colSql, $valSql);
+		
+        return $preparedSql;
     }
-	*/
 	
 	protected function GenerateUpdateSQL($valueObject) {
 		$colSet = false;
@@ -77,6 +88,31 @@ class BookingDAO extends DatabaseAccessObject{
 		
         return $sql;
 	}
+	
+	protected function GeneratePDOUpdateSQL($valueObject) {	
+		//Init values
+		$sql = "";
+		$this->valueArray = array();
+				
+		if($valueObject->getUserID()) { 
+			$this->BuildUpdateSql(BookingVO::$dbUserID, $valueObject->getUserID(), $sql);
+		}
+		
+		if($valueObject->getBookingFee()) { 
+			$this->BuildUpdateSql(BookingVO::$dbBookingFee, $valueObject->getBookingFee(), $sql);
+		}
+		
+		if($valueObject->getPaid() !== null) { 
+			$this->BuildUpdateSql(BookingVO::$dbPaid, $valueObject->getPaid(), $sql);
+		}
+				
+		$whereClauseSql = "";
+		$this->AppendToWhereClause(BookingVO::$dbId, $valueObject->getId(), $whereClauseSql, $this->valueArray);
+		
+		$preparedSql = sprintf("Update %s SET %s WHERE %s", $this->tableName, $sql, $whereClauseSql);
+		
+        return $preparedSql;
+    }
 	
 	private function AppendSql($fieldName, $value, $colSet) {
 		$temp = $colSet ? "," : "";					

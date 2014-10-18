@@ -59,6 +59,29 @@ class OpenSessionDAO extends DatabaseAccessObject{
 				
         return $sql;
     }
+	
+	protected function GeneratePDOInsertSQL($valueObject) {
+        //Init values
+		$colSql = "";
+		$valSql = "";
+		$this->valueArray = array();
+		
+		if($valueObject->getAccountId()) { 
+			$this->BuildInsertSql(OpenSessionVO::$dbAccountId, $valueObject->getAccountId(), $colSql, $valSql);
+		}	
+
+		if($valueObject->getSessionId()) { 
+			$this->BuildInsertSql(OpenSessionVO::$dbSessionId, $valueObject->getSessionId(), $colSql, $valSql);
+		}	
+
+		if($valueObject->getToken()) { 
+			$this->BuildInsertSql(OpenSessionVO::$dbToken, $valueObject->getToken(), $colSql, $valSql);
+		}	
+			
+		$preparedSql = sprintf("INSERT INTO %s (%s) VALUES (%s)", $this->tableName, $colSql, $valSql);
+		
+        return $preparedSql;
+    }
 
     protected function GenerateUpdateSQL($valueObject) {
         $sql = "UPDATE ".$this->tableName." SET ".                
@@ -71,6 +94,31 @@ class OpenSessionDAO extends DatabaseAccessObject{
                 "WHERE ".OpenSessionVO::$dbId."=".
                 $this->mysqli->real_escape_string($valueObject->getId());
         return $sql;
+    }
+	
+	protected function GeneratePDOUpdateSQL($valueObject) {	
+		//Init values
+		$sql = "";
+		$this->valueArray = array();
+				
+		if($valueObject->getAccountId()) { 
+			$this->BuildUpdateSql(OpenSessionVO::$dbAccountId, $valueObject->getAccountId(), $sql);
+		}
+		
+		if($valueObject->getSessionId() !== null) { 
+			$this->BuildUpdateSql(OpenSessionVO::$dbSessionId, $valueObject->getSessionId(), $sql);
+		}
+		
+		if($valueObject->getToken() !== null) { 
+			$this->BuildUpdateSql(OpenSessionVO::$dbToken, $valueObject->getToken(), $sql);
+		}
+				
+		$whereClauseSql = "";
+		$this->AppendToWhereClause(OpenSessionVO::$dbId, $valueObject->getId(), $whereClauseSql, $this->valueArray);
+		
+		$preparedSql = sprintf("Update %s SET %s WHERE %s", $this->tableName, $sql, $whereClauseSql);
+		
+        return $preparedSql;
     }
 }
 

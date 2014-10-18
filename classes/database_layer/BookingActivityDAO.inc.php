@@ -39,30 +39,34 @@ class BookingActivityDAO extends DatabaseAccessObject{
         
         return $sql;
     }
-    
-	/*
-    protected function GenerateUpdateSQL($valueObject) {
-        $sql = "UPDATE ".$this->tableName." SET ".
-                BookingActivityVO::$dbBookingID."='".
-                $this->mysqli->real_escape_string($valueObject->getBookingID())."',".
-                BookingActivityVO::$dbActivityID."='".
-                $this->mysqli->real_escape_string($valueObject->getActivityID())."',".
-                BookingActivityVO::$dbPriority."='".
-                $this->mysqli->real_escape_string($valueObject->getPriority())."' ".
-                "WHERE ".BookingInfoVO::$dbId."=".$this->mysqli->real_escape_string($valueObject->getId());
-        return $sql;
+	
+	protected function GeneratePDOInsertSQL($valueObject) {
+        //Init values
+		$colSql = "";
+		$valSql = "";
+		$this->valueArray = array();
+		
+		if($valueObject->getBookingID()) { 
+			$this->BuildInsertSql(BookingActivityVO::$dbBookingID, $valueObject->getBookingID(), $colSql, $valSql);
+		}		
+
+		if($valueObject->getActivityID()) { 
+			$this->BuildInsertSql(BookingActivityVO::$dbActivityID, $valueObject->getActivityID(), $colSql, $valSql);
+		}	
+
+		if($valueObject->getPriority()) { 
+			$this->BuildInsertSql(BookingActivityVO::$dbPriority, $valueObject->getPriority(), $colSql, $valSql);
+		}		
+			
+		$preparedSql = sprintf("INSERT INTO %s (%s) VALUES (%s)", $this->tableName, $colSql, $valSql);
+		
+        return $preparedSql;
     }
-	*/
 	
 	protected function GenerateUpdateSQL($valueObject) {
 		$colSet = false;
 	
         $sql = "UPDATE ".$this->tableName." SET ";
-		
-		if($valueObject->getBookingID()) { 
-			$sql = $sql . $this->AppendSql(BookingActivityVO::$dbUserID, $valueObject->getBookingID(), $colSet);
-			$colSet = true;
-		}
 		
 		if($valueObject->getActivityID()) {	
 			$sql = $sql . $this->AppendSql(BookingActivityVO::$dbActivityID, $valueObject->getActivityID(), $colSet);
@@ -78,6 +82,27 @@ class BookingActivityDAO extends DatabaseAccessObject{
 		
         return $sql;
 	}
+	
+	protected function GeneratePDOUpdateSQL($valueObject) {	
+		//Init values
+		$sql = "";
+		$this->valueArray = array();
+				
+		if($valueObject->getActivityID()) { 
+			$this->BuildUpdateSql(BookingActivityVO::$dbActivityID, $valueObject->getActivityID(), $sql);
+		}
+		
+		if($valueObject->getPriority()) { 
+			$this->BuildUpdateSql(BookingActivityVO::$dbPriority, $valueObject->getPriority(), $sql);
+		}
+				
+		$whereClauseSql = "";
+		$this->AppendToWhereClause(BookingActivityVO::$dbId, $valueObject->getId(), $whereClauseSql, $this->valueArray);
+		
+		$preparedSql = sprintf("Update %s SET %s WHERE %s", $this->tableName, $sql, $whereClauseSql);
+		
+        return $preparedSql;
+    }
 	
 	private function AppendSql($fieldName, $value, $colSet) {
 		$temp = $colSet ? "," : "";			

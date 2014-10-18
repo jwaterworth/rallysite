@@ -39,6 +39,29 @@ class FoodChoiceDAO extends DatabaseAccessObject{
         
         return $sql;
     }
+	
+	protected function GeneratePDOInsertSQL($valueObject) {
+        //Init values
+		$colSql = "";
+		$valSql = "";
+		$this->valueArray = array();
+		
+		if($valueObject->getName()) { 
+			$this->BuildInsertSql(FoodChoiceVO::$dbName, $valueObject->getName(), $colSql, $valSql);
+		}	
+
+		if($valueObject->getNotes()) { 
+			$this->BuildInsertSql(FoodChoiceVO::$dbNotes, $valueObject->getNotes(), $colSql, $valSql);
+		}
+
+		if($valueObject->getFoodTypeID()) { 
+			$this->BuildInsertSql(FoodChoiceVO::$dbFoodTypeID, $valueObject->getFoodTypeID(), $colSql, $valSql);
+		}	
+			
+		$preparedSql = sprintf("INSERT INTO %s (%s) VALUES (%s)", $this->tableName, $colSql, $valSql);
+		
+        return $preparedSql;
+    }
     
     protected function GenerateUpdateSQL($valueObject) {
         $sql = "UPDATE ".$this->tableName." SET ".
@@ -52,6 +75,31 @@ class FoodChoiceDAO extends DatabaseAccessObject{
                 $this->mysqli->real_escape_string($valueObject->getFoodTypeID())."' ".
                 "WHERE ".FoodChoiceVO::$dbId."=".$this->mysqli->real_escape_string($valueObject->getId());
         return $sql;
+    }
+	
+	protected function GeneratePDOUpdateSQL($valueObject) {	
+		//Init values
+		$sql = "";
+		$this->valueArray = array();
+				
+		if($valueObject->getName()) { 
+			$this->BuildUpdateSql(FoodChoiceVO::$dbName, $valueObject->getName(), $sql);
+		}
+		
+		if($valueObject->getNotes() !== null) { 
+			$this->BuildUpdateSql(FoodChoiceVO::$dbNotes, $valueObject->getNotes(), $sql);
+		}
+		
+		if($valueObject->getFoodTypeID() !== null) { 
+			$this->BuildUpdateSql(FoodChoiceVO::$dbFoodTypeID, $valueObject->getFoodTypeID(), $sql);
+		}
+				
+		$whereClauseSql = "";
+		$this->AppendToWhereClause(FoodChoiceVO::$dbId, $valueObject->getId(), $whereClauseSql, $this->valueArray);
+		
+		$preparedSql = sprintf("Update %s SET %s WHERE %s", $this->tableName, $sql, $whereClauseSql);
+		
+        return $preparedSql;
     }
 }
 

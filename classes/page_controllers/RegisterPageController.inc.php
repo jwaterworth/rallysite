@@ -84,17 +84,19 @@ class RegisterPageController extends PageController{
     public function SaveAccount($name, $email, $password, $phone, $address, $dob, $medicalCond, $dietaryReq,
             $emergName, $emergRel, $emergPhone, $emergAddress, $clubID) {
         
+		$result = false;
+		
         if($this->CheckAuth(ALLTYPES, false)) {
             $id =Authentication::GetLoggedInId();
-            $this->UpdateAccount($id, $name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
+            $result = $this->UpdateAccount($id, $name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
             $emergName, $emergRel, $emergPhone, $emergAddress);
             
         } else {
-            $this->SaveNewAccount($name, $password, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
+            $result = $this->SaveNewAccount($name, $password, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
                     $emergName, $emergRel, $emergPhone, $emergAddress, $clubID);
         }
         
-        return true;
+        return $result;
     }
     
     private function UpdateAccount($id, $name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
@@ -121,6 +123,8 @@ class RegisterPageController extends PageController{
             $this->errorMessage = $e->getMessage();
             return false;
         }
+		
+		return true;
     }
     
     private function SaveNewAccount($name, $password, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,

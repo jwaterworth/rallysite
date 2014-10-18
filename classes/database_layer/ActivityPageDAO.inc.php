@@ -33,6 +33,22 @@ class ActivityPageDAO extends DatabaseAccessObject{
         
         return $sql;
     }
+	
+	protected function GeneratePDOInsertSQL($valueObject) {
+        //Init values
+		$colSql = "";
+		$valSql = "";
+		$this->valueArray = array();
+		
+		if($valueObject->getActivitiesBrief()) { 
+			$this->BuildInsertSql(ActivityPageVO::$dbActivitiesBrief, $valueObject->getActivitiesBrief(), $colSql, $valSql);
+		}			
+			
+		$preparedSql = sprintf("INSERT INTO %s (%s) VALUES (%s)", $this->tableName, $colSql, $valSql);
+		
+        return $preparedSql;
+    }
+	
     protected function GenerateUpdateSQL($valueObject) {
         $sql = "UPDATE ".$this->tableName." SET ".
                 /*ActivityPageVO::$dbId."='".
@@ -42,6 +58,23 @@ class ActivityPageDAO extends DatabaseAccessObject{
                 "WHERE ".AccountVO::$dbId."=".$this->mysqli->real_escape_string($valueObject->getId());
         return $sql;
     }
+	
+	protected function GeneratePDOUpdateSQL($valueObject) {	
+		//Init values
+		$sql = "";
+		$this->valueArray = array();
+		
+		if($valueObject->getActivitiesBrief()) { 
+			$this->BuildUpdateSql(ActivityPageVO::$dbActivitiesBrief, $valueObject->getActivitiesBrief(), $sql);
+		}
+				
+		$whereClauseSql = "";
+		$this->AppendToWhereClause(ActivityPageVO::$dbId, $valueObject->getId(), $whereClauseSql, $this->valueArray);
+		
+		$preparedSql = sprintf("Update %s SET %s WHERE %s", $this->tableName, $sql, $whereClauseSql);
+		
+        return $preparedSql;
+    }	
 }
 
 ?>

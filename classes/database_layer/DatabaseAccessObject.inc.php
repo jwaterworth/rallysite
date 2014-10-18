@@ -151,7 +151,7 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
      * 
      * Returns number of affected rows in table
      */
-    public function Save(IValueObject $valueObject) {
+    public function SaveMySQLI(IValueObject $valueObject) {
         $affectedRows = 0;
         $lastInsertID = 0;
 		$currVO = array();
@@ -179,24 +179,21 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
 	/*
      * Executes an PDO save or update statement
      */
-	public function SavePDO(IValueObject $valueObject) {
+	public function Save(IValueObject $valueObject) {
 		$affectedRows = 0;
         $lastInsertID = 0;
 		$currVO = array();
 		
 		$isUpdate = false;
-        
         //If entry exists update, otherwise insert new user
         if($valueObject->getId() != "" && $this->RecordExists($valueObject->getId())) {
             $sql = $this->GeneratePDOUpdateSQL($valueObject);
 			$isUpdate = true;	
         } else {
-            $sql = $this->GenerateInsertSQL($valueObject);			
+            $sql = $this->GeneratePDOInsertSQL($valueObject);			
         }
 		
 		$stmt = $this->pdoConnection->prepare($sql);	
-		//This array will have been set up in the insert/update sql
-		$stmt->execute($this->valueArray);
 		
 		 //new SQL Code
 		if(!$stmt->execute($this->valueArray)) {		

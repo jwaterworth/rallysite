@@ -55,6 +55,49 @@ class EventDAO extends DatabaseAccessObject{
         
         return $sql;
     }
+	
+	protected function GeneratePDOInsertSQL($valueObject) {
+        //Init values
+		$colSql = "";
+		$valSql = "";
+		$this->valueArray = array();
+		
+		if($valueObject->getName()) { 
+			$this->BuildInsertSql(EventVO::$dbName, $valueObject->getName(), $colSql, $valSql);
+		}	
+
+		if($valueObject->getSummary()) { 
+			$this->BuildInsertSql(EventVO::$dbSummary, $valueObject->getSummary(), $colSql, $valSql);
+		}	
+
+		if($valueObject->getInformation()) { 
+			$this->BuildInsertSql(EventVO::$dbInformation, $valueObject->getInformation(), $colSql, $valSql);
+		}	
+
+		if($valueObject->getLogoLoc()) { 
+			$this->BuildInsertSql(EventVO::$dbLogoLoc, $valueObject->getLogoLoc(), $colSql, $valSql);
+		}		
+
+		if($valueObject->getBookingInfoID()) { 
+			$this->BuildInsertSql(EventVO::$dbBookingInfoID, $valueObject->getBookingInfoID(), $colSql, $valSql);
+		}	
+
+		if($valueObject->getStartDate()) { 
+			$this->BuildInsertSql(EventVO::$dbStartDate, $this->GetDate($valueObject->getStartDate()), $colSql, $valSql);
+		}	
+
+		if($valueObject->getEndDate()) { 
+			$this->BuildInsertSql(EventVO::$dbEndDate, $this->GetDate($valueObject->getEndDate()), $colSql, $valSql);
+		}	
+
+		if($valueObject->getActivityPageID()) { 
+			$this->BuildInsertSql(EventVO::$dbActivityPageID, $valueObject->getActivityPageID(), $colSql, $valSql);
+		}	
+			
+		$preparedSql = sprintf("INSERT INTO %s (%s) VALUES (%s)", $this->tableName, $colSql, $valSql);
+		
+        return $preparedSql;
+    }
 
     protected function GenerateUpdateSQL($valueObject) {
         $sql = "UPDATE ".$this->tableName." SET ".
@@ -76,6 +119,51 @@ class EventDAO extends DatabaseAccessObject{
                     $this->mysqli->real_escape_string($valueObject->getActivityPageID())."' ".
                     "WHERE ".EventVO::$dbId."=".$this->mysqli->real_escape_string($valueObject->getId());
         return $sql;
+    }
+	
+	protected function GeneratePDOUpdateSQL($valueObject) {	
+		//Init values
+		$sql = "";
+		$this->valueArray = array();
+				
+		if($valueObject->getName()) { 
+			$this->BuildUpdateSql(EventVO::$dbName, $valueObject->getName(), $sql);
+		}
+		
+		if($valueObject->getSummary() !== null) { 
+			$this->BuildUpdateSql(EventVO::$dbSummary, $valueObject->getSummary(), $sql);
+		}
+		
+		if($valueObject->getInformation() !== null) { 
+			$this->BuildUpdateSql(EventVO::$dbInformation, $valueObject->getInformation(), $sql);
+		}
+		
+		if($valueObject->getLogoLoc() !== null) { 
+			$this->BuildUpdateSql(EventVO::$dbLogoLoc, $valueObject->getLogoLoc(), $sql);
+		}
+					
+		if($valueObject->getBookingInfoID() !== null) { 
+			$this->BuildUpdateSql(EventVO::$dbBookingInfoID, $valueObject->getBookingInfoID(), $sql);
+		}
+		
+		if($valueObject->getLogoLoc() !== null) { 
+			$this->BuildUpdateSql(EventVO::$dbStartDate, $this->GetDate($valueObject->getStartDate()), $sql);
+		}
+		
+		if($valueObject->getLogoLoc() !== null) { 
+			$this->BuildUpdateSql(EventVO::$dbEndDate, $this->GetDate($valueObject->getEndDate()), $sql);
+		}
+		
+		if($valueObject->getActivityPageID() !== null) { 
+			$this->BuildUpdateSql(EventVO::$dbActivityPageID, $valueObject->getActivityPageID(), $sql);
+		}
+			
+		$whereClauseSql = "";
+		$this->AppendToWhereClause(EventVO::$dbId, $valueObject->getId(), $whereClauseSql, $this->valueArray);
+		
+		$preparedSql = sprintf("Update %s SET %s WHERE %s", $this->tableName, $sql, $whereClauseSql);
+		
+        return $preparedSql;
     }
 	
 	private function SetDate($rawDate) {

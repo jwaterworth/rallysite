@@ -13,13 +13,12 @@
 	private static $_siteKey = 'rallysite';
  
 	public static function CreateAccount($accountVO, $password) {		
-		$result = false;
+		$result = 0;
 		
 		$dbAccounts = AccountFactory::GetDataAccessObject();   
 		
 		//First check the account doesn't already exist
 		$accountVOTest = $dbAccounts->GetByEmail($accountVO->getEmail());
-		
 		if(count($accountVOTest) == 0) {
 			//Generate a salt		
 			$userSalt = self::RandomString();
