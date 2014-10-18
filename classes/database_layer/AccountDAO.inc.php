@@ -87,8 +87,74 @@ class AccountDAO extends DatabaseAccessObject{
         return $sql;
     }
 	
+	protected function GeneratePDOInsertSQL($valueObject) {
+        //Init values
+		$colSql = "";
+		$valSql = "";
+		$this->valueArray = array();
+		
+		if($valueObject->getName()) { 
+			$this->BuildInsertSql(AccountVO::$dbName, $valueObject->getName(), $colSql, $valSql);
+		}
+		
+		if($valueObject->getDateOfBirth()) {	
+			$this->BuildInsertSql(AccountVO::$dbDateOfBirth, $this->GetDate($valueObject->getDateOfBirth()), $colSql, $valSql);
+		}
+					
+		if($valueObject->getEmail()) {		
+			$this->BuildInsertSql(AccountVO::$dbNdbEmailame, $valueObject->getEmail(), $colSql, $valSql);
+		}	
+		
+		if($valueObject->getPhoneNumber()) {		
+			$this->BuildInsertSql(AccountVO::$dbPhoneNumber, $valueObject->getPhoneNumber(), $colSql, $valSql);
+		}	
+		
+		if($valueObject->getAddress()) {		
+			$this->BuildInsertSql(AccountVO::$dbAddress, $valueObject->getAddress(), $colSql, $valSql);
+		}	
+		
+		if($valueObject->getEmergName()) {		
+			$this->BuildInsertSql(AccountVO::$dbEmergName, $valueObject->getEmergName(), $colSql, $valSql);
+		}		
+		
+		if($valueObject->getEmergPhone()) {		
+			$this->BuildInsertSql(AccountVO::$dbEmergPhone, $valueObject->getEmergPhone(), $colSql, $valSql);
+		}	
+		
+		if($valueObject->getEmergAddress()) {		
+			$this->BuildInsertSql(AccountVO::$dbEmergAddress, $valueObject->getEmergAddress(), $colSql, $valSql);
+		}	
+		
+		if($valueObject->getEmergRelationship()) {		
+			$this->BuildInsertSql(AccountVO::$dbEmergRelationship, $valueObject->getEmergRelationship(), $colSql, $valSql);
+		}	
+		
+		if($valueObject->getDietaryReq()) {		
+			$this->BuildInsertSql(AccountVO::$dbDietaryReq, $valueObject->getDietaryReq(), $colSql, $valSql);
+		}	
+		
+		if($valueObject->getMedicalConditions()) {		
+			$this->BuildInsertSql(AccountVO::$dbMedicalConditions, $valueObject->getMedicalConditions(), $colSql, $valSql);
+		}	
+		
+		if($valueObject->getClubId()) {		
+			$this->BuildInsertSql(AccountVO::$dbClubID, $valueObject->getClubId(), $colSql, $valSql);
+		}	
+		
+		if($valueObject->getAccountTypeID()) {		
+			$this->BuildInsertSql(AccountVO::$dbAccountTypeID, $valueObject->getAccountTypeID(), $colSql, $valSql);
+		}		
+		
+		$whereClauseSql = "";
+		$this->AppendToWhereClause(AccountVO::$dbId, $valueObject->getId(), $whereClauseSql, $this->valueArray);
+		
+		$preparedSql = sprintf("Update %s SET %s WHERE %s", $this->tableName, $sql, $whereClauseSql);
+		echo $preparedSql;
+        return $preparedSql;
+				
+        return $sql;
+    }
 	
-
     protected function GenerateUpdateSQL($valueObject) {
 		$colSet = false;
 	
@@ -100,7 +166,7 @@ class AccountDAO extends DatabaseAccessObject{
 		}
 		
 		if($valueObject->getDateOfBirth()) {	
-			$sql = $sql . $this->AppendSql(AccountVO::$dbDateOfBirth, $this->getDate($valueObject->getDateOfBirth()), $colSet);
+			$sql = $sql . $this->AppendSql(AccountVO::$dbDateOfBirth, $this->getDate($valueObject->getDate()), $colSet);
 			$colSet = true;
 		}
 					
@@ -163,6 +229,71 @@ class AccountDAO extends DatabaseAccessObject{
 		
         return $sql;
     }
+	
+	protected function GeneratePDOUpdateSQL($valueObject) {	
+		//Init values
+		$sql = "";
+		$this->valueArray = array();
+		
+		if($valueObject->getName()) { 
+			$this->BuildUpdateSql(AccountVO::$dbName, $valueObject->getName(), $sql);
+		}
+		
+		if($valueObject->getDateOfBirth()) {	
+			$this->BuildUpdateSql(AccountVO::$dbDateOfBirth, $this->GetDate($valueObject->getDateOfBirth()), $sql);
+		}
+					
+		if($valueObject->getEmail()) {		
+			$this->BuildUpdateSql(AccountVO::$dbEmail, $valueObject->getEmail(), $sql);
+		}	
+		
+		if($valueObject->getPhoneNumber()) {		
+			$this->BuildUpdateSql(AccountVO::$dbPhoneNumber, $valueObject->getPhoneNumber(), $sql);
+		}	
+		
+		if($valueObject->getAddress()) {		
+			$this->BuildUpdateSql(AccountVO::$dbAddress, $valueObject->getAddress(), $sql);
+		}	
+		
+		if($valueObject->getEmergName()) {		
+			$this->BuildUpdateSql(AccountVO::$dbEmergName, $valueObject->getEmergName(), $sql);
+		}		
+		
+		if($valueObject->getEmergPhone()) {		
+			$this->BuildUpdateSql(AccountVO::$dbEmergPhone, $valueObject->getEmergPhone(), $sql);
+		}	
+		
+		if($valueObject->getEmergAddress()) {		
+			$this->BuildUpdateSql(AccountVO::$dbEmergAddress, $valueObject->getEmergAddress(), $sql);
+		}	
+		
+		if($valueObject->getEmergRelationship()) {		
+			$this->BuildUpdateSql(AccountVO::$dbEmergRelationship, $valueObject->getEmergRelationship(), $sql);
+		}	
+		
+		if($valueObject->getDietaryReq()) {		
+			$this->BuildUpdateSql(AccountVO::$dbDietaryReq, $valueObject->getDietaryReq(), $sql);
+		}	
+		
+		if($valueObject->getMedicalConditions()) {		
+			$this->BuildUpdateSql(AccountVO::$dbMedicalConditions, $valueObject->getMedicalConditions(), $sql);
+		}	
+		
+		if($valueObject->getClubId()) {		
+			$this->BuildUpdateSql(AccountVO::$dbClubID, $valueObject->getClubId(), $sql);
+		}	
+		
+		if($valueObject->getAccountTypeID()) {		
+			$this->BuildUpdateSql(AccountVO::$dbAccountTypeID, $valueObject->getAccountTypeID(), $sql);
+		}		
+		
+		$whereClauseSql = "";
+		$this->AppendToWhereClause(AccountVO::$dbId, $valueObject->getId(), $whereClauseSql, $this->valueArray);
+		
+		$preparedSql = sprintf("Update %s SET %s WHERE %s", $this->tableName, $sql, $whereClauseSql);
+		echo $preparedSql;
+        return $preparedSql;
+    }	
 	
 	private function AppendSql($fieldName, $value, $colSet) {
 		$temp = $colSet ? "," : "";			

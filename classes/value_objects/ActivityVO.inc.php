@@ -37,7 +37,7 @@ class ActivityVO implements IValueObject {
     public static $dbActivityPageID = "activityPageID";
     
     public function setId($id) {
-        $this->id = $id;
+        $this->id = (int)$id;
     }
 
     public function setActivityName($activityName) {
@@ -61,7 +61,7 @@ class ActivityVO implements IValueObject {
     }
 
     public function setActivityPageID($activityPageID) {
-        $this->activityPageID = $activityPageID;
+        $this->activityPageID = (int)$activityPageID;
     }
 
     public function getId() {

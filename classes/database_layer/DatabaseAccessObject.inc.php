@@ -26,10 +26,21 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
 	* MySQL Improved extension object
 	*/
 	protected $mysqli;
+	
+	/*
+	* PDO connection object
+	*/
+	protected $pdoConnection;
+	
     /*
      * Optional foreign key for table
      */
     protected $foreignKey;
+	
+	/*
+     * Value array for bound
+     */
+	protected $valueArray;
     
     /*
      * Constructor
@@ -42,6 +53,8 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
         //$this->db = mysql_select_db(DB_NAME);
 		
 		$this->mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
+		
+		$this->pdoConnection = new PDO("mysql:host=".DB_HOST .";dbname=". DB_NAME,DB_USERNAME,DB_PASSWORD);
 		
 		if($this->mysqli->connect_errno > 0) {
 			throw new Exception("Unable to connect to database [" . $this->mysqli->connect_error . "]");
@@ -72,7 +85,7 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
 		
         return $valueObjects;
     }
-    
+	    
     /*
      * Get all records from database table specified in sub class constructor
      */
@@ -85,9 +98,12 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
      * Get a particular record from database table, using it's primary key as an identifier
      */
     public function GetById($id) {
+		//Cast id to an int to ensure nothing malicious gets through
+		
         $valueObjectArray = array();
         $sql = sprintf("SELECT * FROM %s WHERE id='%s' ORDER BY id ASC", $this->tableName, $id);
         $valueObjectArray = $this->ExecuteQuery($sql);
+		
         return count($valueObjectArray) > 0 ? $valueObjectArray[0] : null;
     }
 	
@@ -158,6 +174,39 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
          
          return $lastInsertID;
     }
+	
+	
+	/*
+     * Executes an PDO save or update statement
+     */
+	public function SavePDO(IValueObject $valueObject) {
+		$affectedRows = 0;
+        $lastInsertID = 0;
+		$currVO = array();
+		
+		$isUpdate = false;
+        
+        //If entry exists update, otherwise insert new user
+        if($valueObject->getId() != "" && $this->RecordExists($valueObject->getId())) {
+            $sql = $this->GeneratePDOUpdateSQL($valueObject);
+			$isUpdate = true;	
+        } else {
+            $sql = $this->GenerateInsertSQL($valueObject);			
+        }
+		
+		$stmt = $this->pdoConnection->prepare($sql);	
+		//This array will have been set up in the insert/update sql
+		$stmt->execute($this->valueArray);
+		
+		 //new SQL Code
+		if(!$stmt->execute($this->valueArray)) {		
+			throw new Exception("There was an error running the save query [" . $this->pdoConnection->errorInfo() . "]");
+		}
+		
+		$lastInsertID = $isUpdate ? $valueObject->getId() : $this->pdoConnection->lastInsertId();
+         
+         return $lastInsertID;
+	}	
     
     /*
      * Deletes a value object from the database table specified by $valueObject parameter
@@ -185,6 +234,33 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
         }
         return $affectedRows;
     }
+	
+	function BuildInsertSql($fieldName, $value, &$colSql, &$valSql) {
+		$temp = $colSql != "" ? "," : "";			
+		$valName = ":" . $fieldName;
+		$col = $temp . $fieldName;
+		
+		$colSql .= $col;
+		$valSql .= $temp . $valName;
+		$this->valueArray[$valName] = $value;
+	}
+	
+	protected function BuildUpdateSql($fieldName, $value, &$sql) {
+		$prefix = $sql != "" ? "," : "";
+		$valName = ":" . $fieldName;
+		$sql .= sprintf("%s %s = %s", $prefix, $fieldName, $valName);
+		
+		$this->valueArray[$valName] = $value;
+	}
+
+    protected function AppendToWhereClause($fieldName, $value, &$whereClauseSql, $grouping = "AND") {
+		$prefix = $whereClauseSql != "" ? " " . $grouping : "";
+		$valName = ":" . $fieldName;
+		
+		$whereClauseSql .= sprintf("%s %s = %s", $prefix, $fieldName, $valName);
+		
+		$this->valueArray[$valName] = $value;
+	}
     
     /*
      * Abstract function called by ExecuteQuery for assiging values in $row variable

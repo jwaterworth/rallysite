@@ -186,7 +186,8 @@ function entry() {
 			
 			$controller = new RegisterPageController($eventID);
 			
-			$result = $controller->SaveAccount(null, isset($_POST['userEmail']) ? $_POST['userEmail'] : null, 
+			$result = $controller->SaveAccount(isset($_POST['userName']) ? $_POST['userName'] : null,
+											isset($_POST['userEmail']) ? $_POST['userEmail'] : null, 
 											isset($_POST['userPassword']) ? $_POST['userPassword'] : null, 
 											isset($_POST['userPhone']) ? $_POST['userPhone'] : null, 
 											isset($_POST['userAddress']) ? $_POST['userAddress'] : null, 

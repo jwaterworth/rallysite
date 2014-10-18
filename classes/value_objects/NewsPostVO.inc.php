@@ -36,7 +36,7 @@ class NewsPostVO implements IValueObject{
     public static $dbEventID = "eventID";
         
     public function setId($id) {
-        $this->id = $id;
+        $this->id = (int)$id;
     }
 
     public function setNewsTitle($newsTitle) {

@@ -1,5 +1,5 @@
 <?php
-require_once("classes/upload/class/upload_class.inc.php");
+require_once(CLASS_PATH."/upload/class/upload_class.inc.php");
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
