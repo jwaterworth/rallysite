@@ -9,6 +9,8 @@ require_once(PAGE_CONTROLLERS."/PageController.inc.php");
 class ParticipantsPageController extends PageController{
     
     private $event;
+	
+	private $totalBooked = 0;
     
     function __construct($eventID) {
         $this->data = array();
@@ -43,6 +45,7 @@ class ParticipantsPageController extends PageController{
             
             $this->data['activities'] = $this->GetActivityDetails($activities, $activityData, $bookingData, $accountData);            
             
+			$this->data['total'] = $this->totalBooked;
         } catch (Exception $e) {
             $this->errorMessage = $e->getMessage();
         }
@@ -63,7 +66,7 @@ class ParticipantsPageController extends PageController{
                 $activity['imgLoc'] = $activityVO->getActivityImageLoc();
                 $activity['capacity'] = $activityVO->getActivityCapacity();
                 $activity['number'] = $activityData->GetActivityNumber($activityVO);
-
+				$this->totalBooked += $activityData->GetActivityNumber($activityVO);
                 //Get activity participants
                 $activityBookings = $activityData->GetActivityParticipants($activityVO);
 

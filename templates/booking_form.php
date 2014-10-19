@@ -48,14 +48,21 @@ $controller->GeneratePageData();
 			<?php else : ?>
 				<div class="booking_form_section">
 					<h3>Club Member</h3>
+					<input type=hidden id="clubBookingFlag" value="true"/>
 					<select id="accountID"  name="userID" onLoad="getAccountDetails()" onChange="getAccountDetails()">
 						<?php foreach($controller->data['clubMembers'] as $clubMember) : ?>
 							<option value="<?php echo $clubMember['id'] ?>"><?php echo $clubMember['name'] ?></option>
 						<?php endforeach; ?>
 					</select>
-					<label>Member Name</label><span id="memberName"></span>
-					<label>Member Email</label><span id="memberEmail"></span>
-					<label>Member Phone</label><span id="memberPhone"></span>
+					<div>
+						<label>Member Name</label><span id="memberName"></span>
+					</div>
+					<div>
+						<label>Member Email</label><span id="memberEmail"></span>
+					</div>
+					<div>
+						<label>Member Phone</label><span id="memberPhone"></span>
+					</div>
 				</div>
 			<?php endif; ?>
             <div class="booking_form_section">
@@ -95,7 +102,7 @@ $controller->GeneratePageData();
                         <?php endif; ?>
                     </p>
                 <?php endforeach; ?>
-				<input type="submit" value="Create Booking"/>
+				<input type="submit" id="bookingSubmit" value="Create Booking"/>
 			</div>
         </form>
     </div>

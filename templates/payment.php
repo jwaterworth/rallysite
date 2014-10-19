@@ -34,16 +34,14 @@ $booking = $controller->data['booking'];
         </div>
         <?php if(!$booking['paid']) : ?>
         <div class="payment_options">
-            <div class="payment_option">
                 <p class="payment_header">Pay by cheque</p>
                 <p>Payable to: <?php echo $controller->data['paymentName'] ?></p>
                 <p>Address: <?php echo $controller->data['paymentAddress'] ?></p>
-            </div>
-            <div class="payment_option_no_border">
+				<p>Notes: Write your name and club on the back of the cheque, so we know it's you! Include your initial, surname and club (or as much will fit) as the reference</p>
                 <p class="payment_header">Bank Transfer</p>
                 <p>Transfer details available by email...</p>
-                <p><a href=".?event=<?php echo $controller->data['eventID']?>&action=payment&paymentid=<?php echo $booking['userID']?>&id=<?php echo $booking['bookingID'] ?>">Request bank details</a></p>
-            </div>
+                <!--<p><a href=".?event=<?php echo $controller->data['eventID']?>&action=payment&paymentid=<?php echo $booking['userID']?>&id=<?php echo $booking['bookingID'] ?>">Request bank details</a></p>-->
+				<p><a href="mailto:ssagopuzzlerally@gmail.com?subject=Please send me rally payment details"/a>Request bank details</p>
             <div class="clear"></div>
         </div>
         <?php endif; ?>

@@ -365,8 +365,7 @@ class Bookings extends BusinessLogic {
         $dbBookingFoodChoices = BookingFoodChoiceFactory::GetDataAccessObject();
 		
 		$activityData = LogicFactory::CreateObject("Activities");
-        $activityData = new Activities();
-             
+        $activityData = new Activities();         
 		
 		if($dbBookings->Save($booking) < 1) {
 			throw new Exception("An error occurred updating the booking");

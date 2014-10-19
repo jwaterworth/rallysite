@@ -54,14 +54,16 @@
                     <div class="booking_summary">
                         <p class="booking_header">Your Booking</p>
                         <div class="booking">
+							<div class="booking_actions">	
                             <p><?php echo $controller->data['personalBooking']['userName'] ?></p>
                             <p class="short_attribute"><?php echo $controller->data['personalBooking']['fee'] ?></p>
                             <p><?php echo $controller->data['personalBooking']['activityName'] ?></p>
-                            <?php if(!$controller->data['personalBooking']['paid']) : ?>
-                                <p><a href=".?event=<?php echo $controller->data['eventID'] ?>&action=bookingsummary" rel="facebox">view</a>|<a href=".?event=<?php echo $controller->data['eventID'] ?>&action=payment">payment</a>|<a href=".?event=<?php echo $controller->data['eventID'] ?>&action=entry&form=removebooking&id=<?php echo $controller->data['personalBooking']['bookingID'] ?>">remove</a></p>
-                            <?php else:  ?>
-                                <p><a href=".?event=<?php echo $controller->data['eventID'] ?>&action=bookingsummary" rel="facebox">view</a>|<a href=".?event=<?php echo $controller->data['eventID'] ?>&action=entry&form=removebooking&id=<?php echo $controller->data['personalBooking']['bookingID'] ?>">remove</a></p>
-                            <?php endif; ?>
+							</div>
+							<div class="booking_actions">					
+                                <a class="booking_button" href=".?event=<?php echo $controller->data['eventID'] ?>&action=bookingsummary" rel="facebox"><span>view</span></a>
+								<a class="booking_button" href=".?event=<?php echo $controller->data['eventID'] ?>&action=payment"><span>payment</span></a>
+								<a class="booking_button remove_button" href=".?event=<?php echo $controller->data['eventID'] ?>&action=entry&form=removebooking&id=<?php echo $controller->data['personalBooking']['bookingID'] ?>"><span>remove</span></a>
+							</div>
                         </div>
                         <p class="club_header"></p>
                     </div>
@@ -99,14 +101,16 @@
                     <div class="clear"></div>
                     <?php foreach($controller->data['clubBookings'] as $booking) : ?>
                         <div class="booking">
+							<div class="booking_actions">	
                             <p><?php echo $booking['userName'] ?></p>
                             <p class="short_attribute"><?php echo $booking['fee'] ?></p>
                             <p><?php echo $booking['activityName'] ?></p>
-                            <?php if(!$booking['paid']) : ?>
-                                <p><a href=".?event=<?php echo $controller->data['eventID'] ?>&action=bookingsummary&id=<?php echo $booking['bookingID'] ?>" rel="facebox">view</a>|<a href=".?event=<?php echo $controller->data['eventID'] ?>&action=payment&id=<?php echo $booking['bookingID'] ?>">payment</a>|<a href=".?event=<?php echo $controller->data['eventID'] ?>&action=entry&form=removebooking&id=<?php echo $booking['bookingID'] ?>">remove</a></p>
-                            <?php else :?>
-                                <p><a href=".?event=<?php echo $controller->data['eventID'] ?>&action=bookingsummary" rel="facebox">view</a>|<a href=".?event=<?php echo $controller->data['eventID'] ?>&action=entry&form=removebooking&id=<?php echo $booking['bookingID'] ?>">remove</a></p>
-                            <?php endif; ?>
+							</div>
+							<div class="booking_actions">	
+                                <a class="booking_button" href=".?event=<?php echo $controller->data['eventID'] ?>&action=bookingsummary&id=<?php echo $booking['bookingID'] ?>" rel="facebox"><span>view</span></a>
+								<a class="booking_button" href=".?event=<?php echo $controller->data['eventID'] ?>&action=payment&id=<?php echo $booking['bookingID'] ?>"><span>payment</span></a>
+								<a class="booking_button remove_button" href=".?event=<?php echo $controller->data['eventID'] ?>&action=entry&form=removebooking&id=<?php echo $booking['bookingID'] ?>"><span>remove</span></a>
+							</div>
                         </div>
                     <?php endforeach; //Club bookings ?>
                 <?php endif; //Club booking null check?>
@@ -115,7 +119,7 @@
 			<?php endif; ?>
         </div>
     </div>
-         
+	 <script type="text/javascript" src="scripts/booking_info_script.js"></script>
 <?php endif; //Error message ?>
 </div>
 <?php

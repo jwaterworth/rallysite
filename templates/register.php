@@ -29,8 +29,8 @@ $controller->GeneratePageData();
     <?php endif; ?>
     <div id="registration_form" class="registration_form">
         <form method="POST" action=".?event=<?php echo $controller->data['eventID']?>&action=entry&form=<?php echo $controller->data['edit'] ? "update_details" : "register"?>">
-            <fieldset class="form_details">
-                <legend class="form_details">Login Details</legend>
+            <div class="form_details">
+                <h3 class="form_details">Login Details</h3>
                 <div>
                     <label for="email">Email</label>
                     <input type="text" id="email" name="userEmail" required value="<?php if($account) echo $account['email'] ?>"/>
@@ -53,9 +53,9 @@ $controller->GeneratePageData();
                     <a href="#">Change Password</a>
                 </div>
                 <?php endif; ?>
-            </fieldset>
-            <fieldset class="form_details">
-                <legend class="form_details">Personal Details</legend>
+            </div>
+            <div class="form_details">
+                <h3 class="form_details">Personal Details</h3>
                 <div>
                     <label>Name</label>
                     <input type="text" id="name" name="userName" required value="<?php echo $account['name'] ?>"/>
@@ -83,9 +83,9 @@ $controller->GeneratePageData();
                     <label>Dietary Requirements</label>
                     <textarea cols="20" rows="5" id="dietaryReq" name="userDietaryReq"><?php echo $account['dietaryReq'] ?></textarea>
                 </div>
-            </fieldset>
-            <fieldset class="form_details">
-                <legend class="form_details">Emergency Contact Details</legend>
+            </div>
+            <div class="form_details">
+                <h3 class="form_details">Emergency Contact Details</h3>
                 <div>
                     <label>Name</label>
                     <input type="text" id="emergName" name="emergName" required value="<?php echo $account['emergName'] ?>"/>
@@ -105,16 +105,16 @@ $controller->GeneratePageData();
                     <label>Address</label>
                     <textarea cols="20" rows="5" id="emergAddress" required name="emergAddress"><?php echo $account['emergAddress'] ?></textarea>
                 </div>
-            </fieldset>
+            </div>
             <?php if(!$controller->data['edit']) :?>
-            <fieldset class="form_details">
-                <legend class="form_details">Club</legend>
+            <div class="form_details">
+                <h3 class="form_details">Club</h3>
                 <select name="clubID">
                     <?php foreach($controller->data['clubs'] as $club) : ?>
                     <option value="<?php echo $club['id']?>"><?php echo $club['name'] ?></option>
                     <?php endforeach; ?>
                 </select>
-            </fieldset>
+            </div>
             <input type="submit" value="Register"/>
             <input type="reset" value="Reset"/>
             <?php else : ?>

@@ -15,6 +15,9 @@
     </div>
 <?php else : ?>
     <div class="event_participants">
+		<div class="activity_entry" >    
+			<p><?php echo $controller->data['total']?> participants signed up so far!</p>
+		</div>
         <div class="activity_list" >
         <?php foreach($controller->data['activities'] as $activity) : ?>
             <div class="activity_entry" >      
@@ -29,8 +32,7 @@
                             <p><?php echo $participant['error'] ?></p>
                         <?php else : ?>
                             <div class="activity_participant">
-                                <p><?php echo $participant['accountName'] ?></p>
-                                <p><?php echo $participant['clubName'] ?></p>
+                                <p><?php echo $participant['accountName'] ?> - <?php echo $participant['clubName'] ?></p>
                             </div>
                         <?php endif; ?>
                         <?php endforeach; ?>

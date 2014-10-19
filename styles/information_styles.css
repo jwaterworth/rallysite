@@ -30,7 +30,8 @@
 }
 
 .news_post a {
-	text-decoration: underline;
+	text-decoration: underline;	
+	font-weight: bold;
 	color: #000;	
 }
 
@@ -44,7 +45,7 @@ p.news_title {
 }
 
 p.news_author {
-    color: #D6B92A;
+    color: #000000;
     line-height: 0.5em;
 }
 
@@ -340,9 +341,12 @@ img.activity_image {
 }
 
 .activity_entry {
+	background-color: #ffffff;
     /*display: inline-block;*/
     border-bottom: 1px solid grey;
     padding: 5px;
+	margin-bottom: 10px;
+	border-radius: 3px;
 }
 
 .activity_entry p {
@@ -365,7 +369,6 @@ img.activity_image {
 }
 
 .activity_participant p {
-    width:200px;
     margin: 0px;
     padding-left: 10px;
 }

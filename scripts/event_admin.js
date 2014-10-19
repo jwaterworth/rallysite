@@ -87,7 +87,7 @@ EventAdmin.setClubBookingsTable = function(clubBookings) {
 				var bookingId = $(this).find(".bookingId").val();
 				var activityId = $(this).find(".updateBookingActivity").val();
 				var fee = $(this).find(".fee").val();
-				var paid = $(this).find(".paid").prop('checked');
+				var paid = $(this).find(".paid").prop('checked') ? 1 : 0;
 				
 				$.ajax({
 					type: "POST",

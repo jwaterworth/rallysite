@@ -32,16 +32,7 @@ $controller = new ConfirmationPageController($eventID, $type, $result, $errorMes
                 <p>An error occurred creating club member booking: <?php echo $controller->errorMessage ?></p>
             <?php else: ?>
                 <p>Club member booking created.</p>
-                <p>If you wish to view payment details for this booking, please continue to payment view</p>
-                <a href=".?event=<?php echo $controller->data['eventID'] ?>&action=payment">Continue to payment</a>
-            <?php endif; ?>
-		<?php elseif($controller->confirmationType == BOOKING) : ?>
-            <?php if($controller->errorMessage != null) : ?>
-                <p>An error occurred creating booking: <?php echo $controller->errorMessage ?></p>
-            <?php else: ?>
-                <p>Congratulations, booking confirmed</p>
-                <p>If you wish to pay for your booking now, please continue to site payment</p>
-                <a href=".?event=<?php echo $controller->data['eventID'] ?>&action=payment">Continue to payment</a>
+                <a href=".?event=<?php echo $controller->data['eventID'] ?>&action=bookinginfo">Return to bookings page.</a>
             <?php endif; ?>
 		<?php elseif($controller->confirmationType == UPDATE_DETAILS) : ?>
             <?php if($controller->errorMessage != null) : ?>
@@ -54,7 +45,7 @@ $controller = new ConfirmationPageController($eventID, $type, $result, $errorMes
                 <p>An error occurred registering the club member account: <?php echo $controller->errorMessage ?></p>
             <?php else: ?>
                 <p>Club member account created.</p>
-				<a href=".?event=<?php echo $controller->data['eventID'] ?>&action=bookingInfo">Return to bookings page?</a>
+				<a href=".?event=<?php echo $controller->data['eventID'] ?>&action=bookinginfo">Return to bookings page.</a>
             <?php endif; ?>
 		<?php elseif($controller->confirmationType == CLUB_MEMBER_UPDATE) : ?>
             <?php if($controller->errorMessage != null) : ?>

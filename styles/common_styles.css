@@ -98,8 +98,16 @@ div.header {
 }
 
 .longImage {
-	position:relative;
-	top: -110px;
+}
+
+@media (max-width:1300px) {
+	.right_logo, .left_logo {
+		display: none;
+	}
+	
+	.title_container {
+		height: 240px;
+	}
 }
 
 .questionMark { 
@@ -108,9 +116,10 @@ div.header {
 
 .event_date {
 	position: absolute;
-	bottom: 10px;
-	
+	bottom: -10px;
+	left: 20px;
 }
+
 #footer_info {
 	position: absolute;
 	bottom: 5px;
@@ -205,7 +214,7 @@ div.header {
 /*My account*/
 
 .account_page {
-   
+   padding: 10px;
 }
 
 .logged_out_page {

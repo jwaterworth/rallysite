@@ -40,24 +40,24 @@ $error = isset($_POST['login_error']) ? $_POST['login_error'] : null;
 		</div>
 	</div>
 <?php else : ?>
-        <fieldset class="form_details">
-            <legend class="form_details">Login Details <a class="details_header" href='.?action=editaccount'>edit</a></legend>
+        <div class="form_details">
+            <h3 class="form_details">Login Details <a class="details_header" href='.?action=editaccount'>edit</a></h3>
             <p class="account_detail">Email: <?php echo $controller->data['email'] ?></p>
             <p class="account_detail">Password: ****** <a href="#">Change Password</a></p>
-        </fieldset>
-        <fieldset class="form_details">
-            <legend class="form_details">Personal Details <a class="details_header" href='.?action=editaccount'>edit</a></legend>
+        </div>
+        <div class="form_details">
+            <h3 class="form_details">Personal Details <a class="details_header" href='.?action=editaccount'>edit</a></h3>
             <p class="account_detail">Name: <?php echo $controller->data['name'] ?></p>
             <p class="account_detail">Phone: <?php echo $controller->data['phone'] ?></p>
             <p class="account_detail">Address: <?php echo $controller->data['address'] ?></p>
             <p class="account_detail">Dietary Requirements: <?php echo $controller->data['dietaryReq'] ?></p>
             <p class="account_detail">Medical Details: <?php echo $controller->data['medicalCond'] ?></p>
-        </fieldset>
-        <fieldset class="form_details">
-            <legend class="form_details">Account Information</legend>
+        </div>
+        <div class="form_details">
+            <h3 class="form_details">Account Information</h3>
             <p class="account_detail">Club: <?php echo $controller->data['clubName'] ?></p>
             <p class="account_detail">Account Type: <?php echo $controller->data['accountTypeName'] ?></p>
-        </fieldset>
+        </div>
     </div>
 <?php endif; ?>
 

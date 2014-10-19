@@ -70,10 +70,10 @@
 				}
 				
 				//Set up the value object for committing to the database
-				$openSessionVO = OpenSessionFactory::CreateValueObject();
-				$openSessionVO->setAccountId($accountVO->getId());
-				$openSessionVO->setSessionId(session_id());
-				$openSessionVO->setToken($token);		
+				//$openSessionVO = OpenSessionFactory::CreateValueObject();
+				//$openSessionVO->setAccountId($accountVO->getId());
+				//$openSessionVO->setSessionId(session_id());
+				//$openSessionVO->setToken($token);		
 				//Now actually set up the session
 				$_SESSION['token'] = $token;
 				$_SESSION['account_id'] = $accountVO->getId();
@@ -86,12 +86,12 @@
 				}					
 				
 				//Insert new logged_in_member record for user
-				$insertedId = $dbOpenSessions->Save($openSessionVO);
+				//$insertedId = $dbOpenSessions->Save($openSessionVO);
 
 				//Logged in
-				if($insertedId != null) {
+				//if($insertedId != null) {
 					$result = true;
-				} 
+				//} 
 			}
 		}	
 		
@@ -131,7 +131,8 @@
 		//Now we need to check the session to make sure we're all good		
 		$accountId = isset($_SESSION['account_id']) ? $_SESSION['account_id'] : null;
 			
-		if(self::CheckSession($accountId)) {
+		//if(self::CheckSession($accountId)) {
+		if($accountId) {
 			$dbAccounts = AccountFactory::GetDataAccessObject();
 			
 			$accountVO = $dbAccounts->GetById($accountId);

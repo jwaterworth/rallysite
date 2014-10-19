@@ -58,6 +58,13 @@ class ConfirmationPageController extends PageController{
                     $this->errorMessage = $errorMessage;
                 }
                 break;
+			case CLUB_BOOKING:
+				$this->data['title'] = "Club Booking";
+                $this->confirmationType = CLUB_BOOKING;
+                if(!$result) {
+                    $this->errorMessage = $errorMessage;
+                }
+                break;
             default:
                 $this->data['title'] = 'Confirmations Page';
                 $this->errorMessage = 'No activities requiring confirmation detected';

@@ -21,7 +21,7 @@ class BookingInfoDAO extends DatabaseAccessObject{
         $valueObject->setId($row[BookingInfoVO::$dbId]);
         $valueObject->setBookingSummary($row[BookingInfoVO::$dbBookingSummary]);
         $valueObject->setBookingInfo($row[BookingInfoVO::$dbBookingInfo]);
-        //$valueObject->setPaymentAddress($row[BookingInfoVO::$dbPaymentAddress]);
+        $valueObject->setPaymentAddress($row[BookingInfoVO::$dbPaymentAddress]);
         //$valueObject->setPaymentMemberID($row[BookingInfoVO::$dbPaymentMemberID]);
         
         return $valueObject;

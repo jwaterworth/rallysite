@@ -168,7 +168,7 @@ class AJAXHandler {
 				if($paid != null ) {
 					$booking->setPaid($paid);//Ensure we get the boolean value here
 				}
-								
+							
 				//Now we can process activity changes
 				$bookingActivity = $bookingData->GetBookingActivityRecord($bookingId);
 				

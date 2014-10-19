@@ -78,8 +78,10 @@ class BookingDAO extends DatabaseAccessObject{
 			$colSet = true;
 		}
 		
-		//This is a bool so have to check null
-		if($valueObject->getPaid() !== null) {
+		//This is a bool so have to check null		
+		echo $valueObject->getPaid() ? "paid" :"nopaid";
+		if($valueObject->getPaid() != null) {
+			
 			$sql = $sql . ($colSet ? "," : "") . BookingVO::$dbPaid ."='". $valueObject->getPaid() . "'";
 			$colSet = true;
 		}	

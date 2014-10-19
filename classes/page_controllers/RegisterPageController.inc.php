@@ -120,12 +120,12 @@ class RegisterPageController extends PageController{
 			$account->setEmergRelationship($emergRel); 
 			try {
 				$accountData->SaveAccount($account);
-				return false;
+				return true;
 			} catch(Exception $e) {
 				$this->errorMessage = $e->getMessage();
 				return false;
 			}
-			
+		}
 		 else {
 			$this->errorMessage = "You are not logged in.";
 		 }

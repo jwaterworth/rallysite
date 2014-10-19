@@ -11,7 +11,6 @@ $controller = new HeaderController(1);
         
         
         <script src="jquery/jquery.js" type="text/javascript"></script>
-        <script src="ajax_functions.js" type="text/javascript"></script>
         <script src="validation.js" type="text/javascript"></script>
         
         <!-- facebox -->
@@ -50,19 +49,6 @@ $controller = new HeaderController(1);
         <script type="text/javascript">
         // perform JavaScript after the document is scriptable.
         $(function() {
-            // setup ul.tabs to work as tabs for each div directly under div.panes
-            //$("ul.tabs").tabs("div.panes > div.pane");
-            $( "#selectable" ).selectable({
-				stop: function() {
-					$( ".ui-selected", this ).each(function() {
-						var index = $(this).attr("activityID");
-						//$( "#activityID" ).val(index);
-						getActivityDetails(index);
-						$('#activityInput').val(index);
-					}); 
-				},
-				tolerance: "fit"				
-			});
 			
 			// Tabs
 			$( "#tabs" ).tabs({
@@ -100,8 +86,7 @@ $controller = new HeaderController(1);
 					</div>
 					<div class="event_title">
 						<div class="title_image">
-							<img class="longImage" src="images/long_title.png"/>
-							<img class="questionMark" src="images/question_mark.png"/>
+							<img class="longImage" src="images/full_title.png"/>
 						</div>
 						<!--h1><?php echo $controller->data['eventName'] ?></h1-->						
 						<div class="event_date">

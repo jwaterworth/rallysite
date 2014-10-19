@@ -93,7 +93,7 @@ class PaymentPageController extends PageController{
             $bookingInfo = $bookingData->GetBookingInfo($this->event);
 
             $this->data['paymentAddress'] = $bookingInfo->getPaymentAddress();
-            $this->data['paymentName'] = $this->event->getName();
+            $this->data['paymentName'] = "SSAGO Autumn Rally";
             $this->data['paymentMemberID'] = $bookingInfo->getPaymentMemberID();
             
             
