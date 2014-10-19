@@ -164,13 +164,15 @@ a.booking_button:hover span{
 }
 
 .activityButton {
-	height: 125px;
-	width: 175px;
+	height: 130px;
+	width: 230px;
 	background-color: rgb(143, 34, 113);
 	color: white;
 	font-weight: bold;
 	font-size: 12pt;
 	font-family: calibri, verdanna;
+	margin: 2px;
+	border: none;
 }
 
 label{

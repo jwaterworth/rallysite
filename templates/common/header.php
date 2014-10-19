@@ -86,7 +86,7 @@ $controller = new HeaderController(1);
 					</div>
 					<div class="event_title">
 						<div class="title_image">
-							<img class="longImage" src="images/full_title.png"/>
+							<a href="index.php?event=<?php echo $controller->data['eventID']?>"><img class="longImage" src="images/full_title.png"/></a>
 						</div>
 						<!--h1><?php echo $controller->data['eventName'] ?></h1-->						
 						<div class="event_date">
