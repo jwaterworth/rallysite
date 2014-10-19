@@ -52,7 +52,7 @@ $controller = new ConfirmationPageController($eventID, $type, $result, $errorMes
                 <p>An error occurred updating the club member account: <?php echo $controller->errorMessage ?></p>
             <?php else: ?>
                 <p>Club member updated.</p>
-				<a href=".?event=<?php echo $controller->data['eventID'] ?>&action=clubrepadmin">Return to club details page?</a>
+				<a href=".?event=<?php echo $controller->data['eventID'] ?>&action=clubrepadmin">Return to club details page.</a>
             <?php endif; ?>				
         <?php else : ?>
             <?php if($controller->errorMessage != null) : ?>

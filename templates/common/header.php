@@ -13,6 +13,8 @@ $controller = new HeaderController(1);
         <script src="jquery/jquery.js" type="text/javascript"></script>
         <script src="validation.js" type="text/javascript"></script>
         
+		<link rel="icon" type="img/png" href="images/favicon.png"/>
+		
         <!-- facebox -->
         <link href="jquery/facebox/facebox.css" media="screen" rel="stylesheet" type="text/css" />
         <script src="jquery/facebox/facebox.js" type="text/javascript"></script>

@@ -24,7 +24,7 @@ define('BOOKING', 2);
 define('UPDATE_DETAILS', 3);
 define('CLUB_REGISTRATON', 4);
 define('CLUB_MEMBER_UPDATE', 5);
-define('CLUB_BOOKING', 5);
+define('CLUB_BOOKING', 6);
 
 //Download TYPES
 define('PARTICIPANT_LIST', 0);
