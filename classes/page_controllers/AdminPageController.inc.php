@@ -188,8 +188,8 @@ class AdminPageController extends PageController {
         $bookingInfo = BookingInfoFactory::CreateValueObject();
         
         $bookingInfo->setId(htmlspecialchars($id, ENT_NOQUOTES));
-        $bookingInfo->setBookingSummary(htmlspecialchars($summary, ENT_NOQUOTES));
-        $bookingInfo->setBookingInfo(htmlspecialchars($info, ENT_NOQUOTES));
+        $bookingInfo->setBookingSummary($summary);
+        $bookingInfo->setBookingInfo($info);
         
         try {
             $bookingInfoData->SaveBookingInfo($bookingInfo);
@@ -211,7 +211,7 @@ class AdminPageController extends PageController {
         $activityPage = ActivityPageFactory::CreateValueObject();
         
         $activityPage->setId(htmlspecialchars($id, ENT_NOQUOTES));
-        $activityPage->setActivitiesBrief(htmlspecialchars($brief, ENT_NOQUOTES));
+        $activityPage->setActivitiesBrief($brief);
         
         try {
             $activityPageData->SaveActivityPage($activityPage);

@@ -25,7 +25,6 @@ class AccountDAO extends DatabaseAccessObject{
        
     protected function AssignValues($row) {
         $valueObject = AccountFactory::CreateValueObject();
-        
         $valueObject->setId($row[AccountVO::$dbId]);
         $valueObject->setName($row[AccountVO::$dbName]);
 		$valueObject->setUserSalt($row[AccountVO::$dbUserSalt]);

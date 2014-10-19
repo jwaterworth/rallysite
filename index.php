@@ -2,7 +2,6 @@
 include("config.php");
 session_start();
 $action = isset( $_GET['action'] ) ? $_GET['action'] : "";
-
 switch($action) {
     case 'ajax':
         ajax();
@@ -70,6 +69,7 @@ switch($action) {
     default:
         homepage();
  }
+ 
  
 function adminentry() {
     require_once(PAGE_CONTROLLERS."/AdminPageController.inc.php");
@@ -154,7 +154,7 @@ function entry() {
 
             $result = $controller->SaveBooking($_POST['userID'], $_POST['activityID'], $_POST['foodChoices']);
             
-            $_POST['confirmation_type'] = BOOKING;
+            $_POST['confirmation_type'] =  Authentication::GetLoggedInId() == $_POST['userID'] ? BOOKING : CLUB_BOOKING;
             $_POST['confirmation_result'] = $result;
             $_POST['confirmation_error'] = $controller->errorMessage;
             
@@ -218,7 +218,30 @@ function entry() {
             $_POST['confirmation_type'] = CLUB_REGISTRATON;
             $_POST['confirmation_result'] = $result;
             $_POST['confirmation_error'] = $controller->errorMessage;
-            bookings();
+            confirmation();
+			break;
+		case 'updateclubmember':
+			require_once(PAGE_CONTROLLERS."/NewClubMemberPageController.inc.php");
+			
+			$controller = new NewClubMemberPageController($eventID, isset($_POST['userId']) ? $_POST['userId'] : null);
+			
+			$result = $controller->UpdateAccount(isset($_POST['userId']) ? $_POST['userId'] : null,
+											isset($_POST['userName']) ? $_POST['userName'] : null,
+											isset($_POST['userEmail']) ? $_POST['userEmail'] : null, 
+											isset($_POST['userPhone']) ? $_POST['userPhone'] : null, 
+											isset($_POST['userAddress']) ? $_POST['userAddress'] : null, 
+											isset($_POST['userDOB']) ? $_POST['userDOB'] : null, 
+											isset($_POST['userMedicalCond']) ? $_POST['userMedicalCond'] : null, 
+											isset($_POST['userDietaryReq']) ? $_POST['userDietaryReq'] : null, 
+											isset($_POST['emergName']) ? $_POST['emergName'] : null, 
+											isset($_POST['emergRel']) ? $_POST['emergRel'] : null, 
+											isset($_POST['emergPhone']) ? $_POST['emergPhone'] : null, 
+											isset($_POST['emergAddress']) ? $_POST['emergAddress'] : null);
+
+			$_POST['confirmation_type'] = CLUB_MEMBER_UPDATE;
+			$_POST['confirmation_result'] = $result;
+			$_POST['confirmation_error'] = $controller->errorMessage;
+			confirmation();
 			break;
 		case 'login':
 			$email = $_POST['username'];

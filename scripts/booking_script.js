@@ -1,6 +1,7 @@
 BookingScript = {};
 
 $(document).ready(function() { 
+
 	$(".activityButton").click(function(e) {
 		e.preventDefault();
 		$(this).css('background-color', 'rgba(0, 177, 45, 1)');

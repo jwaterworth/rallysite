@@ -30,6 +30,27 @@ class ConfirmationPageController extends PageController{
                     $this->errorMessage = $errorMessage;
                 }
                 break;
+			case UPDATE_DETAILS:
+                $this->data['title'] = "Details Updated";
+                $this->confirmationType = UPDATE_DETAILS;
+                if(!$result) {
+                    $this->errorMessage = $errorMessage;
+                }
+                break;
+			case CLUB_REGISTRATON:
+                $this->data['title'] = "Club Member Registered";
+                $this->confirmationType = CLUB_REGISTRATON;
+                if(!$result) {
+                    $this->errorMessage = $errorMessage;
+                }
+                break;
+			case CLUB_MEMBER_UPDATE:
+                $this->data['title'] = "Club Member Updated";
+                $this->confirmationType = CLUB_MEMBER_UPDATE;
+                if(!$result) {
+                    $this->errorMessage = $errorMessage;
+                }
+                break;
             case BOOKING:
                $this->data['title'] = "Booking Confirmation";
                 $this->confirmationType = BOOKING;

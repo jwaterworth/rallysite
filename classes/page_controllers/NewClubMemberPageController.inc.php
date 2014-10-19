@@ -130,4 +130,36 @@ class NewClubMemberPageController extends PageController {
 			return false;
         }
     }
+	
+	 public function UpdateAccount($id, $name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
+            $emergName, $emergRel, $emergPhone, $emergAddress) {
+        
+		if($this->CheckAuth(CLUBREP, false)) {
+			$accountData = LogicFactory::CreateObject("Accounts");
+			$account = AccountFactory::CreateValueObject();
+			$account = $accountData->GetAccount($id);
+			
+			$account->setName($name);
+			$account->setEmail($email);
+			$account->setPhoneNumber($phone);
+			$account->setAddress($address);
+			$account->setDateOfBirth($dob);
+			$account->setMedicalConditions($medicalCond);
+			$account->setDietaryReq($dietaryReq);
+			$account->setEmergName($emergName);
+			$account->setEmergPhone($emergPhone);
+			$account->setEmergAddress($emergAddress);        
+			$account->setEmergRelationship($emergRel); 
+			try {
+				$accountData->SaveAccount($account);
+				return true;
+			} catch(Exception $e) {
+				$this->errorMessage = $e->getMessage();
+				return false;
+			}
+		} else {	
+			$this->errorMessage = "Only Club Representatives may update other accounts";
+			return false;
+		}
+    }
 }

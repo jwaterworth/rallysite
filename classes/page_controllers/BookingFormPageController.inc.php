@@ -48,6 +48,7 @@ class BookingFormPageController extends PageController {
     }
     
     public function GeneratePageData() {
+	
         //Create logic objects
         $accountData = LogicFactory::CreateObject("Accounts");
         $activityData = LogicFactory::CreateObject("Activities");
@@ -57,10 +58,10 @@ class BookingFormPageController extends PageController {
         $authType = $this->ownBooking ? ALLTYPES : CLUBREP;
         
         if(!$this->CheckAuth($authType, false)) {
-            $this->errorMessage = "An error occured authenticating account, please log in and try again";
+            $this->errorMessage = "An error occurred authenticating account, please log in and try again";
             return;
         }
-        
+		        
         //If booking on behalf of club member
         if(!$this->ownBooking) {
             $this->data['bookingType'] = 'clubBooking';
@@ -95,7 +96,6 @@ class BookingFormPageController extends PageController {
 						$arrClubMembers[] = $account;
 					}                    
                 }
-                
                 $this->data['clubMembers'] = $arrClubMembers;
             } catch (Exception $e) {
                 $this->errorMessage = $e->getMessage();
@@ -123,19 +123,15 @@ class BookingFormPageController extends PageController {
             } catch (Exception $e) {
                 $this->errorMessage = $e->getMessage();
                 return;
-            }
-        
+            }        
         }
-        
         //Get list of activities
         $this->data['activities'] = $this->GetActivities($activityData);
         
         //Get food choices
         $this->data['foodTypes'] = $this->GetFoodChoices($bookingData);
     }
-    
-    
-    
+        
     public function SaveBooking($userID, $activityID, $foodChoices) {
         //Authenticate user
         if(!$this->CheckAuth(ALLTYPES) ) {
@@ -220,12 +216,13 @@ class BookingFormPageController extends PageController {
         //Get list of activities
         try {
             //Get page and activity data
+			
             $activityPage = $activityData->GetActivitiesPage($this->event);
             $activityVOs = $activityData->GetAllActivities($activityPage);
             
             //Sort activities
             usort($activityVOs, 'cmp');
-            
+           
             //Create array to hold activities
             $arrActivities = array();
         
@@ -239,9 +236,7 @@ class BookingFormPageController extends PageController {
                 $activity['capacity'] = $activityVO->getActivityCapacity();
                 $activity['cost'] = $activityVO->getActivityCost();
                 $activity['imageLoc'] = $activityVO->getActivityImageLoc();
-
                 $activity['enabled'] = $activityData->CheckSpace($activityVO);
-
                 $arrActivities[] = $activity;
             }
                 

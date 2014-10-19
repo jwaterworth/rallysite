@@ -66,7 +66,7 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
      *
      * Returns an array of value objects returned from database query
      */
-    protected function ExecuteQuery($sql) {
+    protected function ExecuteMYSQLIQuery($sql) {
 	
         $tempArray = array();
         $valueObjects = array();
@@ -85,12 +85,44 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
 		
         return $valueObjects;
     }
+	
+	/*
+     * Executes an sql query specified by parameter $sql
+     *
+     * Returns an array of value objects returned from database query
+     */
+    protected function ExecuteQuery($sql, $useValueArray = false) {
+	
+        $tempArray = array();
+        $valueObjects = array();
+		
+		$stmt = $this->pdoConnection->prepare($sql);
+		
+		try {
+			if($useValueArray) {
+				$stmt->execute($this->valueArray);
+			} else {
+				$stmt->execute();
+			}		
+						
+			$count = 0;
+			while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			//Append to value objects array
+			$valueObjects[$count++] = $this->AssignValues($row);
+			}	
+		} catch (PDOException $e) {
+			throw new Exception("There was an error running the query [" . $e->getMessage() . "]");
+		}				
+		
+        return $valueObjects;
+    }
 	    
     /*
      * Get all records from database table specified in sub class constructor
      */
-    public function GetAll() {
-        $sql = sprintf("SELECT * FROM %s ORDER BY id ASC",$this->tableName);
+    public function GetAll($ascending = true) {
+        $sql = sprintf("SELECT * FROM %s ORDER BY id %s",$this->tableName, $ascending ? "ASC" : "DESC");
+		
         return $this->ExecuteQuery($sql);
     }
     
@@ -98,19 +130,39 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
      * Get a particular record from database table, using it's primary key as an identifier
      */
     public function GetById($id) {
-		//Cast id to an int to ensure nothing malicious gets through
+		
+		//Init the binding value array
+		$this->valueArray = array();
 		
         $valueObjectArray = array();
-        $sql = sprintf("SELECT * FROM %s WHERE id='%s' ORDER BY id ASC", $this->tableName, $id);
-        $valueObjectArray = $this->ExecuteQuery($sql);
+        //$sql = sprintf("SELECT * FROM %s WHERE id='%s' ORDER BY id ASC", $this->tableName, $id);
+        //$valueObjectArray = $this->ExecuteQuery($sql);
+		
+		$sql = sprintf("SELECT * FROM %s WHERE id=:id ORDER BY id ASC", $this->tableName);		
+		$this->valueArray[":id"] = $id;
+		$valueObjectArray = $this->ExecuteQuery($sql, true);
 		
         return count($valueObjectArray) > 0 ? $valueObjectArray[0] : null;
     }
 	
 	public function RecordExists($id) {
-		$sql = sprintf("SELECT id FROM %s WHERE id='%s' ORDER BY id ASC", $this->tableName, $id);
-		$result = $this->mysqli->query($sql);
-		return mysqli_num_rows($result) > 0;
+		//Init the binding value array
+		$this->valueArray = array();
+		
+		$sql = sprintf("SELECT COUNT(*) FROM %s WHERE id=:id ORDER BY id ASC", $this->tableName);
+		
+		$this->valueArray[":id"] = $id;
+		
+		$stmt = $this->pdoConnection->prepare($sql);
+		
+		try {
+			$stmt->execute($this->valueArray);
+			
+			return $stmt->fetchColumn();
+			
+		} catch (PDOException $e) {
+			return false;
+		}		
 	}
     
     public function GetByAttribute($attribute, $param) {
@@ -134,12 +186,20 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
     /*
      * Gets a particular record from database table, using it's foreign key as an identifier (if set)
      */
-    public function GetByForeignKey($param) {
+    public function GetByForeignKey($param, $ascending = true) {
         //Attempt to get records if foreign key is set
         if($this->foreignKey != null){
             $valueObjectArray = array();
-            $sql = sprintf("SELECT * FROM %s WHERE %s = '%s' ORDER BY id ASC", $this->tableName, $this->foreignKey, $param);
-            $valueObjectArray = $this->ExecuteQuery($sql);
+            //$sql = sprintf("SELECT * FROM %s WHERE %s = '%s' ORDER BY id ASC", $this->tableName, $this->foreignKey, $param);
+            //$valueObjectArray = $this->ExecuteQuery($sql);
+			
+			$sql = sprintf("SELECT * FROM %s WHERE %s = :%s ORDER BY id %s", $this->tableName, $this->foreignKey, $this->foreignKey, $ascending ? "ASC" : "DESC");
+			
+			$this->valueArray = array();
+			$this->valueArray[":" . $this->foreignKey] = $param;
+			
+			$valueObjectArray = $this->ExecuteQuery($sql, true);
+			
         } else {
             $valueObjectArray = null;
         }

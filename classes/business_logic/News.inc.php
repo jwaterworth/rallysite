@@ -13,7 +13,7 @@ class News extends BusinessLogic {
         
         $dbNewsPost = NewsPostFactory::GetDataAccessObject();
         
-        $newsPosts = $dbNewsPost->GetByForeignKey($event->getId());
+        $newsPosts = $dbNewsPost->GetByForeignKey($event->getId(), false); //Ascending = false
         
         if($newsPosts == null) {
             throw new Exception("No news posts found");    
@@ -68,16 +68,20 @@ class News extends BusinessLogic {
     }
     
     public function RemoveNewsPost($newsPostID) {
-        $this->CheckParam($newsPostID, "RemoveNewsPost");
-        
-        $dbNewsPost = NewsPostFactory::GetDataAccessObject();
-        
-        $newsPost = NewsPostFactory::CreateValueObject();
-        $newsPost = $dbNewsPost->GetById($newsPostID);
-        
-        if($newsPost == null || $dbNewsPost->Delete($newsPost) < 1){
-            throw Exception("An error occured while removing " . $newsPost->getNewsTitle());
-        }
+		if($newsPostID) {
+			 $this->CheckParam($newsPostID, "RemoveNewsPost");
+			
+			$dbNewsPost = NewsPostFactory::GetDataAccessObject();
+			
+			$newsPost = NewsPostFactory::CreateValueObject();
+			$newsPost = $dbNewsPost->GetById($newsPostID);
+			
+			if($newsPost == null || $dbNewsPost->Delete($newsPost) < 1){
+				throw Exception("An error occured while removing " . $newsPost->getNewsTitle());
+			} else {
+				return true;
+			}
+		}       
         
         return false;
     }

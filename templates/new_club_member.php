@@ -2,7 +2,7 @@
 include (COMMON_TEMPLATES."/header.php");
 require_once(PAGE_CONTROLLERS."/NewClubMemberPageController.inc.php");
 $eventId = isset( $_GET['event'] ) ? $_GET['event'] : "1";
-$userId = isset( $_GET['userId'] ) ? $_GET['userId'] : null;
+$userId = isset( $_GET['userid'] ) ? $_GET['userid'] : null;
 $controller = new NewClubMemberPageController($eventId, $userId);
 $controller->GeneratePageData();
 ?>
@@ -26,7 +26,7 @@ $controller->GeneratePageData();
 	
 	<?php endif;?>	
 	<div id="registration_form" class="registration_form">
-        <form method="POST" action=".?event=<?php echo $controller->data['eventID']?>&action=entry&form=<?php echo $controller->data['edit'] ? "update_details" : "newclubmember"?>">
+        <form method="POST" action=".?event=<?php echo $controller->data['eventID']?>&action=entry&form=<?php echo $controller->data['edit'] ? "updateclubmember" : "newclubmember"?>">
 			<div class="form_details">
                 <h3 class="form_details">Login Details</h3>
                 <div>
@@ -107,6 +107,7 @@ $controller->GeneratePageData();
             <?php if(!$controller->data['edit']) :?>
             <input type="submit" value="Create"/>
             <?php else : ?>
+			<input type="hidden" name="userId" value="<?php echo $account["id"]?>"/>
             <input type="submit" value="Update"/>        
             <?php endif; ?>
         </form>

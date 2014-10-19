@@ -102,29 +102,35 @@ class RegisterPageController extends PageController{
     private function UpdateAccount($id, $name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
             $emergName, $emergRel, $emergPhone, $emergAddress) {
         
-        $accountData = LogicFactory::CreateObject("Accounts");
-        $account = AccountFactory::CreateValueObject();
-        $account = $accountData->GetAccount($id);
-        
-        $account->setName($name);
-        $account->setEmail($email);
-        $account->setPhoneNumber($phone);
-        $account->setAddress($address);
-        $account->setDateOfBirth($dob);
-        $account->setMedicalConditions($medicalCond);
-        $account->setDietaryReq($dietaryReq);
-        $account->setEmergName($emergName);
-        $account->setEmergPhone($emergPhone);
-        $account->setEmergAddress($emergAddress);        
-		$account->setEmergRelationship($emergRel); 
-        try {
-            $accountData->SaveAccount($account);
-        } catch(Exception $e) {
-            $this->errorMessage = $e->getMessage();
-            return false;
-        }
+		if($this->CheckAuth(ALLTYPES, false)) {
+			$accountData = LogicFactory::CreateObject("Accounts");
+			$account = AccountFactory::CreateValueObject();
+			$account = $accountData->GetAccount($id);
+			
+			$account->setName($name);
+			$account->setEmail($email);
+			$account->setPhoneNumber($phone);
+			$account->setAddress($address);
+			$account->setDateOfBirth($dob);
+			$account->setMedicalConditions($medicalCond);
+			$account->setDietaryReq($dietaryReq);
+			$account->setEmergName($emergName);
+			$account->setEmergPhone($emergPhone);
+			$account->setEmergAddress($emergAddress);        
+			$account->setEmergRelationship($emergRel); 
+			try {
+				$accountData->SaveAccount($account);
+				return false;
+			} catch(Exception $e) {
+				$this->errorMessage = $e->getMessage();
+				return false;
+			}
+			
+		 else {
+			$this->errorMessage = "You are not logged in.";
+		 }
 		
-		return true;
+		return false;
     }
     
     private function SaveNewAccount($name, $password, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,

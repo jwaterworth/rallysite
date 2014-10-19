@@ -49,6 +49,7 @@ $controller->GetClubData();
                                     <li><?php echo $account['name'] ?></li>
                                     <li class="member_email"><a href="mailto:<?php echo $account['email'] ?>"><?php echo $account['email'] ?></a></li>
                                     <li><?php echo $account['phone'] ?></li>
+									<li><a href=".?action=newclubmember&userid=<?php echo $account['id'] ?>">Update Details</a></li>
                                 </ul>
                             <?php endforeach; ?>
 							<?php endif; ?>

@@ -27,7 +27,7 @@ class Bookings extends BusinessLogic {
         
         $dbFees = FeesFactory::GetDataAccessObject();
         
-        $fees = $dbFees->GetByForeignKey($bookingInfo->getId());
+        $fees = $dbFees->GetByForeignKey($bookingInfo->getId(), false);
         
         if($fees == null){
             throw new Exception("No fees found for this event");
@@ -278,7 +278,7 @@ class Bookings extends BusinessLogic {
         $this->CheckParam($event, "CalculateFees - event");
         $this->CheckParam($activityID, "CalculateFees - activity");
         
-        $eventFee = 0;
+        $eventFee = null;
         
         //Get activity cost
         $activityData = LogicFactory::CreateObject("Activities");  
@@ -290,22 +290,48 @@ class Bookings extends BusinessLogic {
         $dbFees = FeesFactory::GetDataAccessObject();      
         $fees = $dbFees->GetByForeignKey($bookingInfo->getId());
 
+		$currFee = null;
+		
         foreach($fees as $fee){
-            //if($fee->getDeadline() < current Date) 
-                $eventFee = $fee->getFee();
-                break;
+			//If curr date is before the deadline
+            if($this->CompareDates($this->parseUkDate($fee->getDeadline()), "now"))
+			{				
+				//Select the fee if no fee is set or if our current fee's deadline is later than this one
+				if(!$currFee || $this->CompareDates($this->parseUkDate($currFee->getDeadline()), $this->parseUkDate($fee->getDeadline()))) {				
+					$currFee = $fee;
+				}
+			}
         }
-        
+		
+		if($currFee) {
+			$eventFee = $currFee->getFee();
+		} else {
+			$eventFee = $fees[count($fees)-1]->getFee(); //Set it to the last fee entered
+		}
+		        		
         //Calculate total fee
         $totalFee = $activityCost + $eventFee;
         
         if($totalFee == 0) {
-            throw new Exception("An error occured calculating the total fee");
+            throw new Exception("An error occurred calculating the total fee");
         }
         
         return $totalFee;
     }
-    
+	
+	private function CompareDates($date1, $date2) {
+		$date1Formatted = date("Y-m-d", strtotime($date1));
+		$date2Formatted = date("Y-m-d", strtotime($date2));
+		return $date1Formatted <= $date2Formatted;
+    }
+	
+	private function parseUkDate($date) {
+		$values = explode('/', $date);
+		$dateString = sprintf("%s-%s-%s", $values[2], $values[1], $values[0]);
+		$newDate = date("Y-m-d", strtotime($dateString));
+		return $newDate;
+	}
+	
     public function MarkBookingPaid(BookingVO $booking) {
         $this->CheckParam($booking, "MarkBookingPaid");
         
