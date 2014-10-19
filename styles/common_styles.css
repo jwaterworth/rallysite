@@ -100,7 +100,7 @@ div.header {
 .longImage {
 }
 
-@media (max-width:1300px) {
+@media (max-width:1390px) {
 	.right_logo, .left_logo {
 		display: none;
 	}
