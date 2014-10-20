@@ -11,7 +11,7 @@ class AccountTypeDAO extends DatabaseAccessObject{
     
     public function __construct() {
         parent::__construct();
-        $this->tableName = 'accountType';
+        $this->tableName = 'accounttype';
         $this->foreignKey = 'accountTypeName';
     }
 
