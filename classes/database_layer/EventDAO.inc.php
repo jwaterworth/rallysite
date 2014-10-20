@@ -11,7 +11,7 @@ class EventDAO extends DatabaseAccessObject{
     
     public function __construct() {
         parent::__construct();
-        $this->tableName = "Event";
+        $this->tableName = "event";
         $this->foreignKey = null;
     }
 

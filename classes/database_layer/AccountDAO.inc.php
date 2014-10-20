@@ -12,7 +12,7 @@ class AccountDAO extends DatabaseAccessObject{
     
     public function __construct() {
         parent::__construct();
-        $this->tableName = "Account";
+        $this->tableName = "account";
         $this->foreignKey = null;
     }
 	

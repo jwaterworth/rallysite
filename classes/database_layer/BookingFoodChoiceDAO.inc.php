@@ -11,7 +11,7 @@ class BookingFoodChoiceDAO extends DatabaseAccessObject{
     
     public function __construct() {
         parent::__construct();
-        $this->tableName = 'BookingFoodChoice';
+        $this->tableName = 'bookingFoodChoice';
         $this->foreignKey = null;
     }
 

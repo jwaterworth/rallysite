@@ -11,7 +11,7 @@ class ClubDAO extends DatabaseAccessObject{
     
     public function __construct() {
         parent::__construct();
-        $this->tableName = "Club";
+        $this->tableName = "club";
         $this->foreignKey = null;
     }
     
