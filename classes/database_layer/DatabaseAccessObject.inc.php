@@ -52,13 +52,18 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
 		
         //$this->db = mysql_select_db(DB_NAME);
 		
-		$this->mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
+		//$this->mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
 		
-		$this->pdoConnection = new PDO("mysql:host=".DB_HOST .";dbname=". DB_NAME,DB_USERNAME,DB_PASSWORD);
-		
+		try {
+			$this->pdoConnection = new PDO("mysql:host=".DB_HOST .";dbname=". DB_NAME,DB_USERNAME,DB_PASSWORD);	
+		} catch(Exception $e) {
+			throw new Exception("An error occurred connecting to the database");
+		}		
+		/*
 		if($this->mysqli->connect_errno > 0) {
 			throw new Exception("Unable to connect to database [" . $this->mysqli->connect_error . "]");
 		}
+		*/
     }
     
     /*
@@ -96,9 +101,9 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
         $tempArray = array();
         $valueObjects = array();
 		
-		$stmt = $this->pdoConnection->prepare($sql);
-		
 		try {
+			$stmt = $this->pdoConnection->prepare($sql);		
+		
 			if($useValueArray) {
 				$stmt->execute($this->valueArray);
 			} else {
@@ -111,7 +116,7 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
 			$valueObjects[$count++] = $this->AssignValues($row);
 			}	
 		} catch (PDOException $e) {
-			throw new Exception("There was an error running the query [" . $e->getMessage() . "]");
+			throw new Exception("There was an error running the query");
 		}				
 		
         return $valueObjects;
@@ -137,10 +142,13 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
         $valueObjectArray = array();
         //$sql = sprintf("SELECT * FROM %s WHERE id='%s' ORDER BY id ASC", $this->tableName, $id);
         //$valueObjectArray = $this->ExecuteQuery($sql);
-		
-		$sql = sprintf("SELECT * FROM %s WHERE id=:id ORDER BY id ASC", $this->tableName);		
-		$this->valueArray[":id"] = $id;
-		$valueObjectArray = $this->ExecuteQuery($sql, true);
+		try {
+			$sql = sprintf("SELECT * FROM %s WHERE id=:id ORDER BY id ASC", $this->tableName);		
+			$this->valueArray[":id"] = $id;
+			$valueObjectArray = $this->ExecuteQuery($sql, true);
+		} catch(Exception $e) {
+			throw new Exception("AN error occurred retrieving data from the database");
+		}	
 		
         return count($valueObjectArray) > 0 ? $valueObjectArray[0] : null;
     }
@@ -153,9 +161,9 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
 		
 		$this->valueArray[":id"] = $id;
 		
-		$stmt = $this->pdoConnection->prepare($sql);
 		
-		try {
+		try {		
+			$stmt = $this->pdoConnection->prepare($sql);
 			$stmt->execute($this->valueArray);
 			
 			return $stmt->fetchColumn();
@@ -244,20 +252,25 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
         $lastInsertID = 0;
 		$currVO = array();
 		
-		$isUpdate = false;
-        //If entry exists update, otherwise insert new user
-        if($valueObject->getId() != "" && $this->RecordExists($valueObject->getId())) {
-            $sql = $this->GeneratePDOUpdateSQL($valueObject);
-			$isUpdate = true;	
-        } else {
-            $sql = $this->GeneratePDOInsertSQL($valueObject);			
-        }
+		try {
+			$isUpdate = false;
+			//If entry exists update, otherwise insert new user
+			if($valueObject->getId() != "" && $this->RecordExists($valueObject->getId())) {
+				$sql = $this->GeneratePDOUpdateSQL($valueObject);
+				$isUpdate = true;	
+			} else {
+				$sql = $this->GeneratePDOInsertSQL($valueObject);			
+			}
+			
+			$stmt = $this->pdoConnection->prepare($sql);	
+			
+			if(!$stmt->execute($this->valueArray)) {		
+				throw new Exception("There was an error running the save query.");
+			}
 		
-		$stmt = $this->pdoConnection->prepare($sql);	
-		
-		if(!$stmt->execute($this->valueArray)) {		
-			throw new Exception("There was an error running the save query [" . $this->pdoConnection->errorInfo() . "]");
-		}
+		} catch(Exception $e) {
+			throw new Exception("There was an error running the save query.");
+		}	
 		
 		$lastInsertID = $isUpdate ? $valueObject->getId() : $this->pdoConnection->lastInsertId();
          
@@ -275,19 +288,24 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
             $currVO = $this->GetById($valueObject->getId());
         }
         
-        //Delete row
-        if(sizeof($currVO) > 0 ) {			
-			$sql = sprintf("DELETE FROM %s WHERE id=:id", $this->tableName);
-			$this->valueArray = array();
-			$this->valueArray[":id"] = $valueObject->getId();
-			$stmt = $this->pdoConnection->prepare($sql);	
-			
-			if(!$stmt->execute($this->valueArray)) {		
-				throw new Exception("There was an error running the delete query [" . $this->pdoConnection->errorInfo() . "]");
-			}	
-			
-            $affectedRows = $stmt->rowCount();
-        }
+		try {
+			//Delete row
+			if(sizeof($currVO) > 0 ) {			
+				$sql = sprintf("DELETE FROM %s WHERE id=:id", $this->tableName);
+				$this->valueArray = array();
+				$this->valueArray[":id"] = $valueObject->getId();
+				$stmt = $this->pdoConnection->prepare($sql);	
+				
+				if(!$stmt->execute($this->valueArray)) {		
+					throw new Exception("There was an error running the delete query.");
+				}	
+				
+				$affectedRows = $stmt->rowCount();
+			}
+		} catch(Exception $e) {
+			throw new Exception("There was an error running the delete query.");
+		}
+        
         return $affectedRows;
     }
 	
