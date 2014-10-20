@@ -24,7 +24,7 @@ class Email {
             
             //True parameter allows exceptions to be thrown
             $phpmailer = new PHPMailer(true);
-            $phpmailer->AddReplyTo('donotreply@ssago.org.uk', 'Event Executive');
+            $phpmailer->AddReplyTo('loughboroughrallycommittee@gmail.com', 'Puzzle Rally Event Exec');
         
             $phpmailer->AltBody = 'To view the message, please use an HTML compatible email client';
             $phpmailer->SetFrom('ssagoevents@saggo.org.uk', 'SSAGO Registration');
@@ -51,7 +51,7 @@ class Email {
             $clubReps = $accountData->GetClubReps($club);
             
             $phpmailer = new PHPMailer(true);
-            $phpmailer->AddReplyTo('donotreply@ssago.org.uk', 'Event Executive');
+            $phpmailer->AddReplyTo('loughboroughrallycommittee@gmail.com', 'Puzzle Rally Event Exec');
             
             $phpmailer->AltBody = 'To view the message, please use an HTML compatible email client';
             $phpmailer->SetFrom('ssagoevents@ssago.com', 'SSAGO Registration');
@@ -114,7 +114,7 @@ class Email {
         try {
             //True parameter allows exceptions to be thrown
             $phpmailer = new PHPMailer(true);
-            $phpmailer->AddReplyTo('donotreply@ssago.org.uk', 'SSAGO  Executive');
+            $phpmailer->AddReplyTo('loughboroughrallycommittee@gmail.com', 'Puzzle Rally Event Exec');
         
             $phpmailer->AltBody = 'To view the message, please use an HTML compatible email client';
             $phpmailer->SetFrom('ssagoevents@saggo.org.uk', 'SSAGO Bookings');
