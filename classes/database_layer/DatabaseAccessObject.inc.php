@@ -255,7 +255,6 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
 		
 		$stmt = $this->pdoConnection->prepare($sql);	
 		
-		 //new SQL Code
 		if(!$stmt->execute($this->valueArray)) {		
 			throw new Exception("There was an error running the save query [" . $this->pdoConnection->errorInfo() . "]");
 		}
@@ -271,23 +270,23 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
     public function Delete(IValueObject $valueObject) {
         $affectedRows = 0;
         
-        //Check for user ID
+        //Check it exists
         if($valueObject->getId() != "") {
             $currVO = $this->GetById($valueObject->getId());
         }
         
         //Delete row
-        if(sizeof($currVO) > 0 ) {
-            $sql = sprintf("DELETE FROM %s WHERE id=%s", $this->tableName, $valueObject->getId());
-            //Old SQL
-			//mysql_query($sql, $this->connect) or die(mysql_error());
+        if(sizeof($currVO) > 0 ) {			
+			$sql = sprintf("DELETE FROM %s WHERE id=:id", $this->tableName);
+			$this->valueArray = array();
+			$this->valueArray[":id"] = $valueObject->getId();
+			$stmt = $this->pdoConnection->prepare($sql);	
 			
-			//New SQL
-			if(!$result = $this->mysqli->query($sql)) {		
-				throw new Exception("There was an error running the delete query [" . $this->mysqli->error . "]");
-			}
+			if(!$stmt->execute($this->valueArray)) {		
+				throw new Exception("There was an error running the delete query [" . $this->pdoConnection->errorInfo() . "]");
+			}	
 			
-            $affectedRows = $this->mysqli->affected_rows;
+            $affectedRows = $stmt->rowCount();
         }
         return $affectedRows;
     }
