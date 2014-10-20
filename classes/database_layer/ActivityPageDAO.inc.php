@@ -11,7 +11,7 @@ class ActivityPageDAO extends DatabaseAccessObject{
 
     public function __construct() {
         parent::__construct();
-        $this->tableName = "activityPage";
+        $this->tableName = "activitypage";
         $this->foreignKey = null;
     }
     

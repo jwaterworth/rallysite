@@ -12,7 +12,7 @@ class NewsPostDAO extends DatabaseAccessObject {
     
     public function __construct() {
         parent::__construct();
-        $this->tableName = "newsPost"; 
+        $this->tableName = "newspost"; 
         $this->foreignKey = NewsPostVO::$dbEventID;
         
     }

@@ -14,7 +14,7 @@ class OpenSessionDAO extends DatabaseAccessObject{
     
     public function __construct() {
         parent::__construct();
-        $this->tableName = "openSession";
+        $this->tableName = "opensession";
         $this->foreignKey = null;
     }
 	
