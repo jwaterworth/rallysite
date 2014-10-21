@@ -159,7 +159,7 @@ class Email {
             $phpmailer->AddReplyTo($replyToAddress, $account->getName());
         
             $phpmailer->AltBody = 'To view the message, please use an HTML compatible email client';
-            $phpmailer->SetFrom($address, 'SSAGO Event Payment');
+            $phpmailer->SetFrom($replyToAddress, 'SSAGO Event Payment');
         
             $phpmailer->AddAddress($address);
             

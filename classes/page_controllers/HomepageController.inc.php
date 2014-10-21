@@ -39,8 +39,8 @@ class HomepageController extends PageController {
             foreach($newsPosts as $newsPostVO) {
                 $newsPost = array();
                 $newsPost['newsId'] = $newsPostVO->getId();
-                $newsPost['title'] = $newsPostVO->getNewsTitle();
-                $newsPost['author'] = $newsData->GetNewsAuthor($newsPostVO);
+                $newsPost['title'] = htmlspecialchars($newsPostVO->getNewsTitle());
+                $newsPost['author'] = htmlspecialchars($newsData->GetNewsAuthor($newsPostVO));
                 $newsPost['timestamp'] = $newsPostVO->getNewsTimeStamp();
                 $newsPost['body'] = $newsPostVO->getNewsBody();
 

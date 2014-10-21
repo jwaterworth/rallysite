@@ -18,10 +18,10 @@ class NewsPostPageController extends PageController {
             $newsPost = $newsData->GetNewsPost($newsPostID);
             
             $this->data['id'] = $newsPost->getId();
-            $this->data['title'] = $newsPost->getNewsTitle();
+            $this->data['title'] = htmlspecialchars($newsPost->getNewsTitle());
             $this->data['body'] = $newsPost->getNewsBody();
             $this->data['authorID'] = $newsPost->getUserID();
-            $this->data['authorName'] = $newsData->GetNewsAuthor($newsPost);
+            $this->data['authorName'] = htmlspecialchars($newsData->GetNewsAuthor($newsPost));
             $this->data['timestamp'] = $newsPost->getNewsTimeStamp();
         } catch (Exception $e) {
             $this->errorMessage = $e->getMessage();
