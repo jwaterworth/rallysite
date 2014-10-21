@@ -20,7 +20,7 @@ class AJAXHandler {
             $account = AccountFactory::CreateValueObject();
             $account = $accountData->GetAccount($accountID);
 
-            $responseString = $account->getName() . '|' . $account->getEmail() . '|' . $account->getPhoneNumber();
+            $responseString = htmlspecialchars($account->getName()) . '|' . htmlspecialchars($account->getEmail()) . '|' . htmlspecialchars($account->getPhoneNumber());
         } catch (Exception $e) {
             $responseString = 'No data found';
         }
@@ -205,13 +205,13 @@ class AJAXHandler {
 
         $summary = array();
         
-        $summary['userID'] = $account->getId();
-        $summary['userName'] = $account->getName();
-        $summary['bookingId'] = $booking->getId();
-        $summary['fee'] = $booking->getBookingFee();
-		$summary['paid'] = $booking->getPaid();
-        $summary['activityID'] = $activity->getId();
-        $summary['activityName'] = $activity->getActivityName();
+        $summary['userID'] = htmlspecialchars($account->getId());
+        $summary['userName'] = htmlspecialchars($account->getName());
+        $summary['bookingId'] = htmlspecialchars($booking->getId());
+        $summary['fee'] = htmlspecialchars($booking->getBookingFee());
+		$summary['paid'] = htmlspecialchars($booking->getPaid());
+        $summary['activityID'] = htmlspecialchars($activity->getId());
+        $summary['activityName'] = htmlspecialchars($activity->getActivityName());
         
         //If statement because paid variable is integer 1 or 0 rather than a boolean
         if($booking->getPaid()) {

@@ -42,13 +42,13 @@ class AccountPageController extends PageController{
         try {
             $account = $accountData->GetAccount($this->userID);
             //Personal Details
-            $this->data['userID'] = $account->getId();
-            $this->data['name'] = $account->getName();
-            $this->data['email'] = $account->getEmail();
-            $this->data['phone'] = $account->getPhoneNumber();
-            $this->data['address'] = $account->getAddress();
-            $this->data['dietaryReq'] = $account->getDietaryReq();
-            $this->data['medicalCond'] = $account->getMedicalConditions();
+            $this->data['userID'] = htmlspecialchars($account->getId());
+            $this->data['name'] = htmlspecialchars($account->getName());
+            $this->data['email'] = htmlspecialchars($account->getEmail());
+            $this->data['phone'] = htmlspecialchars($account->getPhoneNumber());
+            $this->data['address'] = htmlspecialchars($account->getAddress());
+            $this->data['dietaryReq'] = htmlspecialchars($account->getDietaryReq());
+            $this->data['medicalCond'] = htmlspecialchars($account->getMedicalConditions());
             
             //Club
             $club = $accountData->GetMemberClub($account);

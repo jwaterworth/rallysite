@@ -88,10 +88,10 @@ class BookingFormPageController extends PageController {
 					if(!in_array($accountVO->getID(), $bookedAccounts)) {
 						$account = array();
 						
-						$account['id'] = $accountVO->getId();
-						$account['name'] = $accountVO->getName();
-						$account['email'] = $accountVO->getEmail();
-						$account['phone'] = $accountVO->getPhoneNumber();
+						$account['id'] = htmlspecialchars($accountVO->getId());
+						$account['name'] = htmlspecialchars($accountVO->getName());
+						$account['email'] = htmlspecialchars($accountVO->getEmail());
+						$account['phone'] = htmlspecialchars($accountVO->getPhoneNumber());
 
 						$arrClubMembers[] = $account;
 					}                    
@@ -108,17 +108,17 @@ class BookingFormPageController extends PageController {
                 $account = $accountData->GetAccount(Authentication::GetLoggedInId());
                 $club = $accountData->GetMemberClub($account);
 
-                $this->data['userID'] = $account->getId();
-                $this->data['userName'] = $account->getName();
-                $this->data['userEmail'] = $account->getEmail();
-                $this->data['userPhone'] = $account->getPhoneNumber();
-                $this->data['userAddress'] = $account->getAddress();
-                $this->data['emergName'] = $account->getEmergName();
-                $this->data['emergPhone'] = $account->getEmergPhone();
-                $this->data['emergAddress'] = $account->getEmergAddress();
-                $this->data['dietaryReq'] = $account->getDietaryReq();
-                $this->data['medicalCond'] = $account->getMedicalConditions();
-                $this->data['club'] = $club->getName();
+                $this->data['userID'] = htmlspecialchars($account->getId());
+                $this->data['userName'] = htmlspecialchars($account->getName());
+                $this->data['userEmail'] = htmlspecialchars($account->getEmail());
+                $this->data['userPhone'] = htmlspecialchars($account->getPhoneNumber());
+                $this->data['userAddress'] = htmlspecialchars($account->getAddress());
+                $this->data['emergName'] = htmlspecialchars($account->getEmergName());
+                $this->data['emergPhone'] = htmlspecialchars($account->getEmergPhone());
+                $this->data['emergAddress'] = htmlspecialchars($account->getEmergAddress());
+                $this->data['dietaryReq'] = htmlspecialchars($account->getDietaryReq());
+                $this->data['medicalCond'] = htmlspecialchars($account->getMedicalConditions());
+                $this->data['club'] = htmlspecialchars($club->getName());
 
             } catch (Exception $e) {
                 $this->errorMessage = $e->getMessage();

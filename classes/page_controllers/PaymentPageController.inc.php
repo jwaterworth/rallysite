@@ -117,17 +117,17 @@ class PaymentPageController extends PageController{
         }
         
         //Account details
-        $booking['userID'] = $account->getId();
-        $booking['userName'] = $account->getName();
-        $booking['email'] = $account->getEmail();
-        $booking['phone'] = $account->getPhoneNumber();
-        $booking['dob'] = $account->getDateOfBirth();
-        $booking['address'] = $account->getAddress();
-        $booking['medicalCond'] = $account->getMedicalConditions();
-        $booking['dietaryReq'] = $account->getDietaryReq();
-        $booking['emergName'] = $account->getEmergName();
-        $booking['emergPhone'] = $account->getEmergPhone();
-        $booking['emergAddress'] = $account->getEmergAddress();   
+        $booking['userID'] = htmlspecialchars($account->getId());
+        $booking['userName'] = htmlspecialchars($account->getName());
+        $booking['email'] = htmlspecialchars($account->getEmail());
+        $booking['phone'] = htmlspecialchars($account->getPhoneNumber());
+        $booking['dob'] = htmlspecialchars($account->getDateOfBirth());
+        $booking['address'] = htmlspecialchars($account->getAddress());
+        $booking['medicalCond'] = htmlspecialchars($account->getMedicalConditions());
+        $booking['dietaryReq'] = htmlspecialchars($account->getDietaryReq());
+        $booking['emergName'] = htmlspecialchars($account->getEmergName());
+        $booking['emergPhone'] = htmlspecialchars($account->getEmergPhone());
+        $booking['emergAddress'] = htmlspecialchars($account->getEmergAddress());   
 
         //Booking details
         $booking['bookingID'] = $bookingVO->getId();

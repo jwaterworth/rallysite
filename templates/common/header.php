@@ -74,9 +74,9 @@ $controller = new HeaderController(1);
                 <div class="account_signout">
                     <?php if($controller->data['loggedin'] != null) : ?>
                         <?php if(isset($controller->data['club']) && $controller->data['club'] != null) :?>
-                            <p class="account_link"><a href=".?action=clubrepadmin"><?php echo $controller->data['club'] ?></a> | <a href=".?action=myaccount"><?php echo $controller->data['name'] ?></a> | <a href=".?event=<?php echo $controller->data['eventID']?>&action=logout">Logout</a></p>
+                            <p class="account_link"><a href=".?action=clubrepadmin"><?php echo $controller->data['club'] ?></a> | <a href=".?action=myaccount"><?php echo htmlspecialchars($controller->data['name']) ?></a> | <a href=".?event=<?php echo $controller->data['eventID']?>&action=logout">Logout</a></p>
                         <?php else : ?>
-                            <p class="account_link"><a href=".?action=myaccount"><?php echo $controller->data['name'] ?></a> | <a href=".?event=<?php echo $controller->data['eventID']?>&action=logout">Logout</a></p>
+                            <p class="account_link"><a href=".?action=myaccount"><?php echo htmlspecialchars($controller->data['name']) ?></a> | <a href=".?event=<?php echo $controller->data['eventID']?>&action=logout">Logout</a></p>
                         <?php endif; ?>
                     <?php else : ?>
                     <p class="account_link"><a href=".?event=<?php echo $controller->data['eventID']?>&action=myaccount">Sign In</a></p>

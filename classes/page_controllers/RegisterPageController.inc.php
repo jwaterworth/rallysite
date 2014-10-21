@@ -38,18 +38,18 @@ class RegisterPageController extends PageController{
             $accountVO = AccountFactory::CreateValueObject();
             $accountVO = $accountData->GetAccount(Authentication::GetLoggedInId());
             
-            $account['id'] = $accountVO->getId();
-            $account['name'] = $accountVO->getName();
-            $account['number'] = $accountVO->getPhoneNumber();
-            $account['email'] = $accountVO->getEmail();
-            $account['address'] = $accountVO->getAddress();
-            $account['dob'] = $accountVO->getDateOfBirth();
-            $account['emergName'] = $accountVO->getEmergName();
-            $account['emergPhone'] = $accountVO->getEmergPhone();
-            $account['emergAddress'] = $accountVO->getEmergAddress();
-			$account['emergRelationship'] = $accountVO->getEmergRelationship();
-            $account['dietaryReq'] = $accountVO->getDietaryReq();
-            $account['medicalCond'] = $accountVO->getMedicalConditions();
+            $account['id'] = htmlspecialchars($accountVO->getId());
+            $account['name'] = htmlspecialchars($accountVO->getName());
+            $account['number'] = htmlspecialchars($accountVO->getPhoneNumber());
+            $account['email'] = htmlspecialchars($accountVO->getEmail());
+            $account['address'] = htmlspecialchars($accountVO->getAddress());
+            $account['dob'] = htmlspecialchars($accountVO->getDateOfBirth());
+            $account['emergName'] = htmlspecialchars($accountVO->getEmergName());
+            $account['emergPhone'] = htmlspecialchars($accountVO->getEmergPhone());
+            $account['emergAddress'] = htmlspecialchars($accountVO->getEmergAddress());
+			$account['emergRelationship'] = htmlspecialchars($accountVO->getEmergRelationship());
+            $account['dietaryReq'] = htmlspecialchars($accountVO->getDietaryReq());
+            $account['medicalCond'] = htmlspecialchars($accountVO->getMedicalConditions());
             
             $this->data['account'] = $account;
         } catch (Exception $e) {
@@ -138,19 +138,19 @@ class RegisterPageController extends PageController{
         
 		$accountVO = AccountFactory::CreateValueObject();
 		//No need to set password in the objet just yet as it needs hashing and salting
-		$accountVO->setName(htmlspecialchars($name));
-		$accountVO->setEmail(htmlspecialchars($email));
-		$accountVO->setPhoneNumber(htmlspecialchars($phone));
-		$accountVO->setAddress(htmlspecialchars($address));
-		$accountVO->setDateOfBirth(htmlspecialchars($dob));
-		$accountVO->setMedicalConditions(htmlspecialchars($medicalCond));
-		$accountVO->setDietaryReq(htmlspecialchars($dietaryReq));
-		$accountVO->setEmergName(htmlspecialchars($emergName));
-		$accountVO->setEmergPhone(htmlspecialchars($emergPhone));
-		$accountVO->setEmergAddress(htmlspecialchars($emergAddress));
-		$accountVO->setEmergRelationship(htmlspecialchars($emergRel));
-		$accountVO->setClubId(htmlspecialchars($clubId));	
-		$accountVO->setAccountTypeID(UNAPPROVED);
+		$accountVO->setName($name);
+		$accountVO->setEmail($email);
+		$accountVO->setPhoneNumber($phone);
+		$accountVO->setAddress($address);
+		$accountVO->setDateOfBirth($dob);
+		$accountVO->setMedicalConditions($medicalCond);
+		$accountVO->setDietaryReq($dietaryReq);
+		$accountVO->setEmergName($emergName);
+		$accountVO->setEmergPhone($emergPhone);
+		$accountVO->setEmergAddress($emergAddress);
+		$accountVO->setEmergRelationship($emergRel);
+		$accountVO->setClubId($clubId);	
+		$accountVO->setAccountTypeID(MEMBER);
 		
 		$result = Authentication::CreateAccount($accountVO, $password);
 		

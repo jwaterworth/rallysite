@@ -69,18 +69,21 @@
 					session_start();
 				}
 				
+				$_SESSION['token'] = $token;
+				$_SESSION['account_id'] = $accountVO->getId();
+				
+				/*
 				//Set up the value object for committing to the database
 				//$openSessionVO = OpenSessionFactory::CreateValueObject();
 				//$openSessionVO->setAccountId($accountVO->getId());
 				//$openSessionVO->setSessionId(session_id());
 				//$openSessionVO->setToken($token);		
 				//Now actually set up the session
-				$_SESSION['token'] = $token;
-				$_SESSION['account_id'] = $accountVO->getId();
+				
 					
 				//Delete old logged_in_member records for user
 				try {
-					$dbOpenSessions->DeleteByAccountId($accountVO->GetId());
+					//$dbOpenSessions->DeleteByAccountId($accountVO->GetId());
 				} catch(Exception $exception) {
 					//Safe to swallow here the record may not exist
 				}					
@@ -88,6 +91,7 @@
 				//Insert new logged_in_member record for user
 				//$insertedId = $dbOpenSessions->Save($openSessionVO);
 
+				*/
 				//Logged in
 				//if($insertedId != null) {
 					$result = true;

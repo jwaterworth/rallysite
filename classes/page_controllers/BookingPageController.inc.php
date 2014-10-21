@@ -167,12 +167,12 @@ class BookingPageController extends PageController{
 
         $summary = array();
         
-        $summary['userID'] = $account->getId();
-        $summary['userName'] = $account->getName();
-        $summary['bookingID'] = $booking->getId();
-        $summary['fee'] = '£' . $booking->getBookingFee();
-        $summary['activityID'] = $activity->getId();
-        $summary['activityName'] = $activity->getActivityName();
+        $summary['userID'] = htmlspecialchars($account->getId());
+        $summary['userName'] = htmlspecialchars($account->getName());
+        $summary['bookingID'] = htmlspecialchars($booking->getId());
+        $summary['fee'] = '£' . htmlspecialchars($booking->getBookingFee());
+        $summary['activityID'] = htmlspecialchars($activity->getId());
+        $summary['activityName'] = htmlspecialchars($activity->getActivityName());
         
         //If statement because paid variable is integer 1 or 0 rather than a boolean
         if($booking->getPaid()) {

@@ -94,7 +94,7 @@ class ParticipantsPageController extends PageController{
                 $booking['error'] = null;
                 $accountVO = $bookingData->GetBookingAccount($bookingVO);
                 $booking['accountID'] = $accountVO->getId();
-                $booking['accountName'] = $accountVO->getName();
+                $booking['accountName'] = htmlspecialchars($accountVO->getName());
 
                 $club = $accountData->GetMemberClub($accountVO);
                 $booking['clubID'] = $club->getId();

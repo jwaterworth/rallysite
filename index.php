@@ -273,7 +273,7 @@ function downloads() {
 }
 
 function ajax() {
-	//if(Authentication::CheckAuthenticationLevel(CLUBREP|EVENTEXEC|SSAGOEXEC)) {
+	if(Authentication::CheckAuthenticationLevel(CLUBREP|EVENTEXEC|SSAGOEXEC)) {
 		require_once('ajax/AJAXHandler.php');
 		$ajaxHandler = new AJAXHandler();
 		if($accountID = isset( $_GET['accountID'] ) ? $_GET['accountID'] : "") {
@@ -293,7 +293,7 @@ function ajax() {
 			$paid = isset($_POST['paid']) ? $_POST['paid'] : null;
 			$ajaxHandler->UpdateBooking($bookingId, $activityId, $fee, $paid);
 		}
-	//}	
+	}	
     
 }
 
