@@ -173,13 +173,7 @@ class BookingPageController extends PageController{
         $summary['fee'] = '£' . htmlspecialchars($booking->getBookingFee());
         $summary['activityID'] = htmlspecialchars($activity->getId());
         $summary['activityName'] = htmlspecialchars($activity->getActivityName());
-        
-        //If statement because paid variable is integer 1 or 0 rather than a boolean
-        if($booking->getPaid()) {
-            $summary['paid'] = true;
-        } else {
-            $summary['paid'] = false;
-        }
+		$summary['paid'] = $booking->getPaid() ? "Paid" : "Awaiting Payment";
 
         return $summary;
     }

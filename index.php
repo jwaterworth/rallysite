@@ -278,8 +278,6 @@ function ajax() {
 		$ajaxHandler = new AJAXHandler();
 		if($accountID = isset( $_GET['accountID'] ) ? $_GET['accountID'] : "") {
 			$ajaxHandler->GetAccountDetails($accountID);
-		} else if( $activityID = isset( $_GET['activityID'] ) ? $_GET['activityID'] : "") {
-			$ajaxHandler->GetActivityDetails($activityID);
 		} else if(isset($_GET['getClubs'])) {
 			$ajaxHandler->GetClubs();
 		} else if(isset($_GET['getClubBookings']) && isset($_GET['clubId'])) {
@@ -293,7 +291,13 @@ function ajax() {
 			$paid = isset($_POST['paid']) ? $_POST['paid'] : null;
 			$ajaxHandler->UpdateBooking($bookingId, $activityId, $fee, $paid);
 		}
-	}	
+	}
+	
+	if( $activityID = isset( $_GET['activityID'] ) ? $_GET['activityID'] : "") {
+		require_once('ajax/AJAXHandler.php');
+		$ajaxHandler = new AJAXHandler();
+		$ajaxHandler->GetActivityDetails($activityID);	
+	}
     
 }
 

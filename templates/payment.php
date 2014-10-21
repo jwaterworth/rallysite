@@ -40,8 +40,8 @@ $booking = $controller->data['booking'];
 				<p>Notes: Write your name and club on the back of the cheque, so we know it's you! Include your initial, surname and club (or as much will fit) as the reference</p>
                 <p class="payment_header">Bank Transfer</p>
                 <p>Transfer details available by email...</p>
-                <!--<p><a href=".?event=<?php echo $controller->data['eventID']?>&action=payment&paymentid=<?php echo $booking['userID']?>&id=<?php echo $booking['bookingID'] ?>">Request bank details</a></p>-->
-				<p><a href="mailto:ssagopuzzlerally@gmail.com?subject=Please send me rally payment details"/a>Request bank details</p>
+                <p><a href=".?event=<?php echo $controller->data['eventID']?>&action=payment&paymentid=<?php echo $booking['userID']?>&id=<?php echo $booking['bookingID'] ?>">Request bank details</a></p>
+				<!--<p><a href="mailto:ssagopuzzlerally@gmail.com?subject=Please send me rally payment details"/a>Request bank details</p>-->
             <div class="clear"></div>
         </div>
         <?php endif; ?>

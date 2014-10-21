@@ -138,8 +138,46 @@ class BookingFormPageController extends PageController {
              return $this->errorMessage = "An error occured authenticating account, please log in and try again";
            
         }
+        $bookingData = LogicFactory::CreateObject("Bookings");	
+		$accountData = LogicFactory::CreateObject("Accounts");
+		
+		$bookingAccount = $accountData->GetAccount($userID);
+		
+		$currLoggedInId = Authentication::GetLoggedInId();
+		//Ensure that if the user is not the same as the logged in user, they have the appropriate permissions
+		if($userID != $currLoggedInId) {
+			//If not event or ssago exec
+			if(!$this->CheckAuth(EVENTEXEC|SSAGOEXEC, false)){
+				//They'll need to be a club rep with the same club
+				if($this->CheckAuth(CLUBREP, false)) {
+					$loggedinAccount = $accountData->GetAccount($currLoggedInId);			
+					if($bookingAccount->getClubId() != $loggedinAccount->getClubId()) {
+						$this->errorMessage = "You can only create bookings for members of your own club.";
+						return false;
+					}
+				}	
+				else {
+					$this->errorMessage = "You must be a club representative to create somebody else's booking.";
+					return false;
+				}				
+			}
+		}	
+
+			
+		
+		//Ensure this user doesn't already have a booking for this event
+		try {
+			//This is a really nasty approach but there would  be a lot to change otherwise
+			//This method will throw an exception if a booking doesn't exist
+			$bookingData->GetAccountBooking($this->event, $bookingAccount);
+			$this->errorMessage = "A booking for this account on this event already exists.";
+			return false;
+		}
+		catch(Exception $e) {
+			//Swallow the exception as this is good for once
+		}
+		
         
-        $bookingData = LogicFactory::CreateObject("Bookings");
         $booking = BookingFactory::CreateValueObject();
         $booking->setUserID(htmlspecialchars($userID));
         

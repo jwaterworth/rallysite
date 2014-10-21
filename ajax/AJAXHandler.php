@@ -46,7 +46,7 @@ class AJAXHandler {
             $capacity = $activity->getActivityCapacity();
             
             $spaces = $capacity - $number;
-            
+			
             $responseString = $name . '|' . '£'.$cost . '|' . $number . '|' . $capacity . '|' . $spaces;
         } catch (Exception $e) {
             $responseString = '0';

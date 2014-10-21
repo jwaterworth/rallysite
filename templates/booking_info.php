@@ -58,6 +58,7 @@
                             <p><?php echo $controller->data['personalBooking']['userName'] ?></p>
                             <p class="short_attribute"><?php echo $controller->data['personalBooking']['fee'] ?></p>
                             <p><?php echo $controller->data['personalBooking']['activityName'] ?></p>
+							<p><?php echo $controller->data['personalBooking']['paid'] ?></p>
 							</div>
 							<div class="booking_actions">					
                                 <a class="booking_button" href=".?event=<?php echo $controller->data['eventID'] ?>&action=bookingsummary" rel="facebox"><span>view</span></a>
@@ -102,9 +103,10 @@
                     <?php foreach($controller->data['clubBookings'] as $booking) : ?>
                         <div class="booking">
 							<div class="booking_actions">	
-                            <p><?php echo $booking['userName'] ?></p>
-                            <p class="short_attribute"><?php echo $booking['fee'] ?></p>
-                            <p><?php echo $booking['activityName'] ?></p>
+								<p><?php echo $booking['userName'] ?></p>
+								<p class="short_attribute"><?php echo $booking['fee'] ?></p>
+								<p><?php echo $booking['activityName'] ?></p>
+								<p><?php echo $booking['paid'] ?></p>
 							</div>
 							<div class="booking_actions">	
                                 <a class="booking_button" href=".?event=<?php echo $controller->data['eventID'] ?>&action=bookingsummary&id=<?php echo $booking['bookingID'] ?>" rel="facebox"><span>view</span></a>

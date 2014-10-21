@@ -148,23 +148,24 @@ class Email {
 
             $bookingInfo = $bookingData->GetBookingInfo($event);
 
-            $eventExecID = $bookingInfo->getPaymentMemberID();
-            $eventExecAccount = $accountData->getAccount($eventExecID);
+            //$eventExecID = $bookingInfo->getPaymentMemberID();
+           // $eventExecAccount = $accountData->getAccount($eventExecID);
             
-            $address = $eventExecAccount->getEmail();
+            //$address = $eventExecAccount->getEmail();
+			$address = "ssagopuzzlerally@gmail.com";
             
             //True parameter allows exceptions to be thrown
             $phpmailer = new PHPMailer(true);
             $phpmailer->AddReplyTo($replyToAddress, $account->getName());
         
             $phpmailer->AltBody = 'To view the message, please use an HTML compatible email client';
-            $phpmailer->SetFrom('ssagoevents@saggo.org.uk', 'SSAGO Event Payment');
+            $phpmailer->SetFrom($address, 'SSAGO Event Payment');
         
             $phpmailer->AddAddress($address);
             
             $phpmailer->Subject = $event->getName() . ' - Bank Transfer Details Requested';
             
-            $phpmailer->MsgHTML($this->GeneratePaymentDetails($event, $account, $eventExecAccount));
+            $phpmailer->MsgHTML($this->GeneratePaymentDetails($event, $account));
             
             $phpmailer->Send();
         } catch(phpmailerException $e) {
@@ -238,11 +239,11 @@ class Email {
         return $email;
     }
    
-    private function GeneratePaymentDetails(EventVO $event, AccountVO $memberAccount, AccountVO $execAccount) {
+    private function GeneratePaymentDetails(EventVO $event, AccountVO $memberAccount) {
                 
         $email_template = file_get_contents(TEMPLATE_PATH."/emails/bank_details.html");
         
-        $email = sprintf($email_template, $execAccount->getName(), $memberAccount->getName(), $event->getName(), $memberAccount->getName());
+        $email = sprintf($email_template, $memberAccount->getName(), $event->getName(), $memberAccount->getName());
         
         return $email;
     }

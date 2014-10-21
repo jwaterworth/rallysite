@@ -111,6 +111,7 @@ class BookingSummaryPageController extends PageController{
         //Booking details
         $booking['bookingID'] = $bookingVO->getId();
         $booking['bookingFee'] = '£' . $bookingVO->getBookingFee();
+		$booking['paid'] = $bookingVO->getPaid() ? "Paid" : "Awaiting Payment";
         
         $baseFee = $bookingVO->getBookingFee() - $activity->getActivityCost();
         

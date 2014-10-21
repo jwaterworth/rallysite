@@ -116,8 +116,17 @@ p.club_header {
 	display: inline-block;
 }
 
+.booking_actions:not(:first-child)  {
+	margin-left: 30px;
+}
+
 .booking_actions .booking_button {
 	margin-top: 20px;
+}
+
+.booking_actions p {
+	padding: 0px;
+	margin: 0px;
 }
 
 a.booking_button {

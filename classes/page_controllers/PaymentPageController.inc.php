@@ -154,7 +154,7 @@ class PaymentPageController extends PageController{
     
     public function SendPaymentDetailsEmail($accountID) {
         
-        if(!$this->CheckAuth(ALL_TYPES, false)) {
+        if(!$this->CheckAuth(ALLTYPES, false)) {
             $this->errorMessage = "An error occured authenticating account, please log in and try again";
             return;
         }
