@@ -92,7 +92,7 @@ class Accounts extends BusinessLogic {
     public function GetAllClubs() {
         $dbClubs = ClubFactory::GetDataAccessObject();
         
-        $clubs = $dbClubs->GetAll();
+        $clubs = $dbClubs->GetAll("name", true);
         
         if(sizeof($clubs) < 1) {
             throw new Exception("No clubs found");

@@ -2,25 +2,29 @@
 
 include("C:/wamp/www/rallysite/unit_tests/test_config.php");
 require_once(PAGE_CONTROLLERS."/RegisterPageController.inc.php");
+require_once(PAGE_CONTROLLERS."/BookingFormPageController.inc.php");
 
 class AccountsTest extends PHPUnit_Framework_TestCase
 {	
     // ...
+	
+	public function testFiftyCreates() {
+		for($i=0; $i<50; $i++) {
+			$this->Create($i);
+		}
+	}
 
-    public function testCanBeNegated()
+    public function Create($index)
     {
         // Arrange
-		//uthentication::Login("j.waterworth1990@gmail.com", "password");
+		//Authentication::Login("j.waterworth1990@gmail.com", "password");
 		
 		$registrationController = new RegisterPageController(1);
-		
-        
-
-
+		     
         // Act
 		// Assert
-			$this->assertTrue($registrationController->SaveAccount("Unit Test 1", 
-											"test@testing.com", 
+			$this->assertTrue($registrationController->SaveAccount("Unit Test Account " . $index, 
+											$this->generateRandomString() . "@testing.com", 
 											"password", 
 											"07511914561",
 											 "3 Orston Lane,Whatton,Nottinghamshire",
@@ -34,5 +38,12 @@ class AccountsTest extends PHPUnit_Framework_TestCase
 											 "1"));       
     }
 
-    // ...
+	private function generateRandomString($length = 10) {
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$randomString = '';
+		for ($i = 0; $i < $length; $i++) {
+			$randomString .= $characters[rand(0, strlen($characters) - 1)];
+		}
+		return $randomString;
+	}
 }

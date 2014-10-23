@@ -35,6 +35,10 @@ class HeaderController extends PageController {
                     $club = $accountData->GetMemberClub($account);
                     $this->data['club'] = $club->getName();
                 }
+				
+				if(Authentication::CheckAuthenticationLevel(CLUBREP)) {
+					$this->data['eventAdmin'] = true;
+				}
             } catch(Exception $e) {
 			echo $e->getMessage();
                 $this->errorMessage = $e->getMessage();

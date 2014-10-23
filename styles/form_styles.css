@@ -232,23 +232,27 @@ label{
 }
 
 .col1 {
-	width: 250px;
+	width: 175px;
 }
 
 .col2 {
-	width: 225px;
+	width: 190px;
 }
 
 .col3 {
-	width:75px;
+	width:60px;
 }
 
 .col4 {
-	width: 75px;
+	width: 50px;
 }
 
 .col5 {
-	width: 175px;
+	width: 120px;
+}
+
+.col6 {
+	width: 120px;
 }
 
 .bookingsTable {
@@ -284,11 +288,12 @@ input[type="submit"] {
 }
 
 .bookingField > input[type="submit"] {
-	margin-left: 38px;
+	margin-left: 10px;
 }
 
 .bookingField  > select{
 	border: none;	
+	width: 200px;
 }
 
 .bookingField  > select:focus{
@@ -298,7 +303,7 @@ input[type="submit"] {
 
 .short  {
 	min-width: 30px;
-	width: 60px;
+	width: 40px;
 }
 
 /*

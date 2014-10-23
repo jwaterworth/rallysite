@@ -155,9 +155,8 @@ class AJAXHandler {
 		$bookingData = LogicFactory::CreateObject("Bookings");
 		
 		$responseArray = array();
-		
 		try {
-			if($bookingId != null) {
+			if($bookingId != null && $bookingData->GetBooking($bookingId)) {
 				//Process the booking related changes
 				$booking = BookingFactory::CreateValueObject();
 				$booking->setId($bookingId);
@@ -183,19 +182,79 @@ class AJAXHandler {
 				
 				if($bookingData->UpdateBooking($booking, $tempBookingActivity, null)) {
 					$responseArray["result"] = "success";
-					$responseArray["messsage"] = "";
+					$responseArray["message"] = "";
 				}
 				
-			}			
+			} else{
+				$responseArray["result"] = "failure";
+				$responseArray["message"] = "No booking found to update";	
+			}				
 		} catch(Exception $e) {
 				$responseArray["result"] = "failure";
-				$responseArray["messsage"] = $e;			
+				$responseArray["message"] = $e->getMessage();			
 		}
 		
 		$post_data = json_encode($responseArray);
 				
 		echo $post_data;
 	}
+	
+	 public function RemoveBooking($bookingID) {
+		$responseArray = array();
+		$responseArray["result"] = "failure";
+		$responseArray["message"] = "";	
+	 
+        //Authenticate user
+        if(Authentication::CheckAuthenticationLevel(ALLTYPES, false) ) {
+		
+			$bookingData = LogicFactory::CreateObject("Bookings");
+			$accountData = LogicFactory::CreateObject("Accounts");
+			
+			try {
+				//Get booking
+				$booking = $bookingData->GetBooking($bookingID);
+				//Get user account
+				$userAccount = $accountData->GetAccount(Authentication::GetLoggedInId());	
+				//Get account
+				$bookingAccount = $bookingData->GetBookingAccount($booking);
+				//If event/SSAGO exec or own booking, no further check need to be done
+				if($userAccount->getId() == $bookingAccount->getId() || Authentication::CheckAuthenticationLevel(EVENTEXEC|SSAGOEXEC)) {
+					//Remove booking
+					$bookingData->RemoveBooking($booking);
+					$responseArray["result"] = "success"; 
+				} else if(Authentication::CheckAuthenticationLevel(CLUBREP, false)){ //If club rep, ensure they are only removing a club member booking
+					
+					//Compare clubs
+					$userClub = $accountData->GetMemberClub($userAccount);
+					$bookingClub = $accountData->GetMemberClub($bookingAccount);
+					
+					if($userClub->getId() != $bookingClub->getId()) {
+						$this->errorMessage = "You may only remove bookings for members of " . $bookingClub->getName();
+						
+						$responseArray["result"] = "failure";
+						$responseArray["message"] = "You may only remove bookings for members of " . $bookingClub->getName();
+					} else {
+						//Remove booking
+						$bookingData->RemoveBooking($booking);
+						$responseArray["result"] = "success";
+					}
+				} else {
+					$responseArray["result"] = "failure";
+					$responseArray["message"] = "An error occured authenticating account, please log in and try again";
+				}		
+			} catch (Exception $e) {
+				$responseArray["result"] = "failure";
+				$responseArray["message"] = $e->getMessage();
+			}      
+       } else {
+			$responseArray["result"] = "failure";
+			$responseArray["message"] = "An error occured authenticating account, please log in and try again";	
+		}   
+			
+        $post_data = json_encode($responseArray);
+				
+		echo $post_data;
+    }
 	
 	private function CreateSummary($bookingData, AccountVO $account, BookingVO $booking) {
 		$bookingData = LogicFactory::CreateObject("Bookings");

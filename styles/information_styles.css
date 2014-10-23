@@ -346,12 +346,16 @@ img.activity_image {
     padding: 5px;
 	margin-bottom: 10px;
 	border-radius: 3px;
+	min-height: 150px;
 }
 
 .activity_entry p {
     display: inline-block;
 }
 
+.activity_header {
+	min-height: 50px;
+}
 .activity_title {
     font-weight: bold;
 }

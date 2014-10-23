@@ -6,7 +6,7 @@
     $controller->GetPageData(WHOSDOING);
 ?>
 
-<h3 class="page_title">Who's doing</h3>
+<h3 class="page_title">Who's Doing</h3>
 
 <div class="booking_page">
 <?php if($controller->errorMessage != null) : ?>
@@ -15,7 +15,7 @@
     </div>
 <?php else : ?>
     <div class="event_participants">
-		<div class="activity_entry" >    
+		<div class="activity_entry activity_header" >    
 			<p><?php echo $controller->data['total']?> participants signed up so far!</p>
 		</div>
         <div class="activity_list" >

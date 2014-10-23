@@ -57,7 +57,7 @@ div.content {
 	position: relative;
 }
 
-@media (max-width:1100px) {
+@media (max-width:1300px) {
 	div.content{ 
 		width: 100%;
 	}
@@ -183,13 +183,13 @@ div.header {
 	/*
 	padding-left: 35px;
 	padding-right: 35px; */
-	padding-left: 4%;
-	padding-right: 4%;
+	padding-left: 3%;
+	padding-right: 3%;
 	padding-top: 2px;
 	height: 28px;
 }
 
-@media (max-width:1100px) {
+@media (max-width:1300px) {
 
 .menu li a{
 	padding-left: 2%;
@@ -219,6 +219,10 @@ div.header {
 	margin-right: auto;
 	margin-top: 40px;
 	width: 700px;
+	background-color: #ffffff;
+	padding: 3px;
+	border-radius: 3px;
+	box-shadow: 5px 5px 3px #555555;
 }
 
 .login_details{

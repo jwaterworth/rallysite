@@ -276,7 +276,7 @@ function downloads() {
 }
 
 function ajax() {
-	if(Authentication::CheckAuthenticationLevel(CLUBREP|EVENTEXEC|SSAGOEXEC)) {
+	//if(Authentication::CheckAuthenticationLevel(CLUBREP|EVENTEXEC|SSAGOEXEC)) {
 		require_once('ajax/AJAXHandler.php');
 		$ajaxHandler = new AJAXHandler();
 		if($accountID = isset( $_GET['accountID'] ) ? $_GET['accountID'] : "") {
@@ -293,8 +293,11 @@ function ajax() {
 			$fee = isset($_POST['fee']) ? $_POST['fee'] : null;
 			$paid = isset($_POST['paid']) ? $_POST['paid'] : null;
 			$ajaxHandler->UpdateBooking($bookingId, $activityId, $fee, $paid);
+		} else if(isset($_GET['removeBooking'])) {
+			$bookingId = isset($_POST['bookingId']) ? $_POST['bookingId'] : null;
+			$ajaxHandler->RemoveBooking($bookingId);
 		}
-	}
+	//}
 	
 	if( $activityID = isset( $_GET['activityID'] ) ? $_GET['activityID'] : "") {
 		require_once('ajax/AJAXHandler.php');

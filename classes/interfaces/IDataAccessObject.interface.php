@@ -9,7 +9,7 @@ interface IDatabaseAccessObject {
     
     public function GetById($id);
     
-    public function GetAll();
+    public function GetAll($orderByField, $ascending);
     
     public function Save(IValueObject $valueObject);
     

@@ -156,8 +156,8 @@ class RegisterPageController extends PageController{
 		
         if($result) {
             //Send email updates
-            $emailer = new Email();
-            $emailer->SendRegistrationEmail($email);
+            //$emailer = new Email();
+            //$emailer->SendRegistrationEmail($email);
 			return true;
         } else {
             $this->errorMessage =  "Error creating account, please try again";

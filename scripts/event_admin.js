@@ -59,13 +59,13 @@ EventAdmin.setClubBookingsTable = function(clubBookings) {
 
 	if(clubBookings && clubBookings.length)  {
 		for(var i=0; i<clubBookings.length; i++) {
-			var $form = $('<form class="updateBookingForm" action=".?event=1&action=admin&type=updateBooking#tabs-5" method="POST"></form>');
+			var $form = $('<form class="updateBookingForm"></form>');
 			$form.append('<div class="bookingField col1"><span>' + clubBookings[i].userName + '</span></div>');
 			$form.append('<div class="bookingField col2"><select class="updateBookingActivity" ></select></div>');
 			$form.append('<div class="bookingField col3"><span>£</span><input class="short fee"  value=' + clubBookings[i].fee + ' type="number" step="any" min="0"/></div>');
 			$form.append('<div class="bookingField col4"><input type="checkbox" class="paid"/></div>');
-			$form.append('<div class="bookingField col5"><input type="hidden" class="bookingId" value="' + clubBookings[i].bookingId + '"/><input type="submit" class="updateBookingSubmit" value="Update"/></div><div class="clear"></div>');									
-			
+			$form.append('<div class="bookingField col5"><input type="hidden" class="bookingId" value="' + clubBookings[i].bookingId + '"/><input type="submit" class="updateBookingSubmit" value="Update"/>');									
+			$form.append('<div class="bookingField col6"><input type="submit" class="removeBookingSubmit" value="Remove"/></div><div class="clear"></div>');									
 			$(".clubBookings").append($form);
 			
 			//Load activities into select and set the activity select option
@@ -79,40 +79,65 @@ EventAdmin.setClubBookingsTable = function(clubBookings) {
 			$form.find(".paid").prop('checked', clubBookings[i].paid);
 		}	
 		
-		//Add a click handler to all the update buttons to confirm changes
-		$(".updateBookingForm").submit(function(e) {
+		$(".removeBookingSubmit").click(function(e) {
 			e.preventDefault();
-			//if(confirm("Please confirm booking update.")) 
-			//{
-				var bookingId = $(this).find(".bookingId").val();
-				var activityId = $(this).find(".updateBookingActivity").val();
-				var fee = $(this).find(".fee").val();
-				var paid = $(this).find(".paid").prop('checked') ? 1 : 0;
-				
-				$.ajax({
-					type: "POST",
-					url: "?event=1&action=ajax&updateBooking=true",
-					dataType: "JSON",
-					data: {
-						bookingId : bookingId,
-						activityId : activityId,
-						fee : fee,
-						paid : paid
+			var bookingId = $(this).parent().parent().find(".bookingId").val();
+			
+			$.ajax({
+				type: "POST",
+				url: "?event=1&action=ajax&removeBooking=true",
+				dataType: "JSON",
+				data: {
+					bookingId : bookingId
+				}
+			}).done(function(response) {
+				if(response) {
+					if(response.result != "success")  {
+						alert("An error occurred removing the booking: " + response.message ? response.message : "");
+					} else {
+						alert("Booking removed");
+						$(this).parent().parent().remove();
 					}
-				}).done(function(response) {
-					if(response) {
-						if(response.result != "success")  {
-							alert("An error occurred updating the booking: " + response.message ? response.messages : "");
-						} else {
-							alert("Booking updated!");
-						}
-					} else { 
-						alert("No response from server");
-					}						
-				});
-			//}
+				} else { 
+					alert("No response from server");
+				}						
+			});
 		});
-	}
+					
+		//Add a click handler to all the update buttons to confirm changes
+		$(".updateBookingSubmit").click(function(e) {
+			e.preventDefault();			
+			var bookingId =  $(this).parent().parent().find(".bookingId").val();
+			var activityId =  $(this).parent().parent().find(".updateBookingActivity").val();
+			var fee =  $(this).parent().parent().find(".fee").val();
+			var paid =  $(this).parent().parent().find(".paid").prop('checked') ? 1 : 0;
+			
+			$.ajax({
+				type: "POST",
+				url: "?event=1&action=ajax&updateBooking=true",
+				dataType: "JSON",
+				data: {
+					bookingId : bookingId,
+					activityId : activityId,
+					fee : fee,
+					paid : paid
+				}
+			}).done(function(response) {
+				if(response) {
+					if(response.result != "success")  {
+						alert("An error occurred updating the booking: " + response.message ? response.message : "");
+					} else {
+						alert("Booking updated!");
+					}
+				} else { 
+					alert("No response from server");
+				}						
+			});
+				
+		});
+	} else {
+		$(".clubBookings").append("<p>No Bookings found</p>");
+	}	
 }
 
 EventAdmin.refreshClubBookings = function() {

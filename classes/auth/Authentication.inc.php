@@ -61,7 +61,7 @@
 				//First, generate a random string.
 				$random = self::randomString();
 				//Build the token
-				$token = $_SERVER['HTTP_USER_AGENT'] . $random;
+				$token = (isset($_SERVER['HTTP_USER_AGENT']) ? isset($_SERVER['HTTP_USER_AGENT']) : "")  . $random;
 				$token = self::hashData($token);
 					
 				//Setup sessions vars					

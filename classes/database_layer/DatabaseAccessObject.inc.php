@@ -125,8 +125,8 @@ abstract class DatabaseAccessObject implements IDatabaseAccessObject {
     /*
      * Get all records from database table specified in sub class constructor
      */
-    public function GetAll($ascending = true) {
-        $sql = sprintf("SELECT * FROM %s ORDER BY id %s",$this->tableName, $ascending ? "ASC" : "DESC");
+    public function GetAll($orderByField, $ascending = true) {
+        $sql = sprintf("SELECT * FROM %s ORDER BY %s %s",$this->tableName, $orderByField, $ascending ? "ASC" : "DESC");
 		
         return $this->ExecuteQuery($sql);
     }

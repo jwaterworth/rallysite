@@ -165,6 +165,9 @@ $controller->GetPageData();
 									<div class="bookingField col5">
 										<label>Update Booking</label>
 									</div>
+									<div class="bookingField col6">
+										<label>Remove Booking</label>
+									</div>
 									<div class="clear"></div>
 								</div>		
 								<div class="clubBookings">
