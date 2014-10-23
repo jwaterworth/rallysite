@@ -96,7 +96,7 @@ $controller->GeneratePageData();
                         <?php else : ?>
                             <select name="foodChoices[]">
                                 <?php foreach($foodType['foodChoices'] as $foodChoice) : ?>
-                                    <option value="<? echo $foodChoice['id'] ?>"><?php echo $foodChoice['name'] ?> | <?php echo $foodChoice['notes'] ?></option>
+                                    <option value="<?php echo $foodChoice['id'] ?>"><?php echo $foodChoice['name'] ?> | <?php echo $foodChoice['notes'] ?></option>
                                 <?php endforeach; ?>
                             </select>
                         <?php endif; ?>

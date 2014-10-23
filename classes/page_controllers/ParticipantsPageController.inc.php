@@ -28,8 +28,69 @@ class ParticipantsPageController extends PageController{
         }
     }
     
-    public function GetPageData() {
-        $activityData = LogicFactory::CreateObject("Activities");
+    public function GetPageData($bookingsType = 1) {	
+		
+		if($bookingsType == WHOSGOING) {		
+			$this->WhosGoing();
+		} else if($bookingsType == WHOSDOING) {
+			$this->WhosDoing();
+		} 
+    }
+	
+	private function WhosGoing() {
+		$bookingData = LogicFactory::CreateObject("Bookings");
+        $bookingData = new Bookings();
+        
+        $accountData = LogicFactory::CreateObject("Accounts");
+        $accountData = new Accounts();
+		
+		$totalBookingCount = 0;
+		
+		try {
+			$clubs = $accountData->GetAllClubs();
+			
+			$this->data["clubs"] = array();
+			
+			foreach($clubs as $club) {
+				$clubBookingArray = array();	
+				$clubBookingArray["clubError"] = null;
+				$clubBookingCount = 0;
+				try {					
+					$clubBookingArray["clubName"] = $club->getName();	
+					$clubBookingArray["clubBookings"] = array();
+					//Get all club bookings in the new composite bookings container
+					$clubBookings = $bookingData->getClubBookingsComposite($this->event->getId(), $club->getId());
+					
+					foreach($clubBookings as $composite) {
+						$bookingArray = array();
+						
+						$bookingArray["accountId"] = $composite->getUserId();
+						$bookingArray["accountName"] = $composite->getUserName();
+						$bookingArray["bookingId"] = $composite->getBookingId();
+						$bookingArray["activityId"] = $composite->getActivityId();
+						$bookingArray["activityName"] = $composite->getActivityName();
+						
+						$clubBookingArray["clubBookings"][] = $bookingArray;
+						$clubBookingCount++;
+						$totalBookingCount++;
+					}		
+				
+				} catch(Exception $e) {
+					$clubBookingArray["clubError"] = $e->getMessage();
+				}				
+				
+				$clubBookingArray["numBookings"] = $clubBookingCount;
+				$this->data["clubs"][] = $clubBookingArray;				
+			}	
+			
+			$this->data["total"] = $totalBookingCount;
+		} catch(Exception $e) {
+			$this->errorMessage = $e->getMessage();
+		}
+	}
+	
+	private function WhosDoing() {
+		$activityData = LogicFactory::CreateObject("Activities");
         $activityData = new Activities();
         
         $bookingData = LogicFactory::CreateObject("Bookings");
@@ -49,8 +110,7 @@ class ParticipantsPageController extends PageController{
         } catch (Exception $e) {
             $this->errorMessage = $e->getMessage();
         }
-        
-    }
+	}
     
     private function GetActivityDetails($activities, $activityData, $bookingData, $accountData) {
         //Initialise activity array
@@ -108,6 +168,21 @@ class ParticipantsPageController extends PageController{
         }
  
         return $arrBookings;
+    }
+	
+	private function CreateSummary($bookingData, AccountVO $account, BookingVO $booking) {
+        //Get user's booking summary
+        $activity = $bookingData->GetBookingActivity($booking);
+
+        $summary = array();
+        
+        $summary['userID'] = htmlspecialchars($account->getId());
+        $summary['userName'] = htmlspecialchars($account->getName());
+        $summary['bookingID'] = htmlspecialchars($booking->getId());
+        $summary['activityID'] = htmlspecialchars($activity->getId());
+        $summary['activityName'] = htmlspecialchars($activity->getActivityName());
+
+        return $summary;
     }
 
 }

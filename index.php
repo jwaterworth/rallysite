@@ -39,6 +39,9 @@ switch($action) {
     case 'participants':
         participants();
         break;
+	case 'whosgoing':
+		whosgoing();
+		break;
     case 'clubrepadmin':
         clubrepadmin();
         break;
@@ -151,14 +154,14 @@ function entry() {
         case 'booking':
             require_once(PAGE_CONTROLLERS."/BookingFormPageController.inc.php");
             $controller = new BookingFormPageController($eventID);
+		
+			$result = $controller->SaveBooking($_POST['userID'], $_POST['activityID'], $_POST['foodChoices']);
 
-            $result = $controller->SaveBooking($_POST['userID'], $_POST['activityID'], $_POST['foodChoices']);
-            
-            $_POST['confirmation_type'] =  Authentication::GetLoggedInId() == $_POST['userID'] ? BOOKING : CLUB_BOOKING;
-            $_POST['confirmation_result'] = $result;
-            $_POST['confirmation_error'] = $controller->errorMessage;
-            
-            confirmation();
+			$_POST['confirmation_type'] =  Authentication::GetLoggedInId() == $_POST['userID'] ? BOOKING : CLUB_BOOKING;
+			$_POST['confirmation_result'] = $result;
+			$_POST['confirmation_error'] = $controller->errorMessage;
+
+			confirmation();
             break;
         case 'removebooking' :
             require_once(PAGE_CONTROLLERS."/BookingFormPageController.inc.php");
@@ -355,6 +358,10 @@ function bookings() {
 
 function participants() {
     require(TEMPLATE_PATH."/event_participants.php");
+}
+
+function whosgoing() {
+	require(TEMPLATE_PATH."/club_event_participants.php");
 }
 
 function directions() {

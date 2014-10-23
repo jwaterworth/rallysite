@@ -108,8 +108,8 @@ $controller = new HeaderController(1);
 						<li><a href=".?event=<?php echo $controller->data['eventID'] ?>&action=eventinfo">Event Information</a></li>
 						<li><a href=".?event=<?php echo $controller->data['eventID'] ?>&action=bookinginfo">Bookings</a></li>
 						<li><a href=".?event=<?php echo $controller->data['eventID'] ?>&action=activities">Activities</a></li>
-						<li><a href=".?event=<?php echo $controller->data['eventID'] ?>&action=participants">Who's Going</a></li>
-						<li><a href=".?event=<?php echo $controller->data['eventID'] ?>&action=admin">Admin</a></li>
+						<li><a href=".?event=<?php echo $controller->data['eventID'] ?>&action=participants">Who's Doing</a></li>
+						<li><a href=".?event=<?php echo $controller->data['eventID'] ?>&action=whosgoing">Who's Going</a></li>
 					</ul>
 				</div>
 			</div>

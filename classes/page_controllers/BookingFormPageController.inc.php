@@ -161,9 +161,7 @@ class BookingFormPageController extends PageController {
 					return false;
 				}				
 			}
-		}	
-
-			
+		}			
 		
 		//Ensure this user doesn't already have a booking for this event
 		try {
@@ -175,8 +173,7 @@ class BookingFormPageController extends PageController {
 		}
 		catch(Exception $e) {
 			//Swallow the exception as this is good for once
-		}
-		
+		}		
         
         $booking = BookingFactory::CreateValueObject();
         $booking->setUserID(htmlspecialchars($userID));
@@ -190,10 +187,10 @@ class BookingFormPageController extends PageController {
             $cleanFoodChoices = array();
             
             foreach($foodChoices as $foodChoiceID) { //Sanitise each element
-                $cleanFoodChoices[] = htmlspecialchars($foodChoiceID);
+                $cleanFoodChoices[] = $foodChoiceID;
             }
             
-            $bookingID = $bookingData->SaveBooking($booking, htmlspecialchars($activityID), 1, $cleanFoodChoices);
+            $bookingID = $bookingData->SaveBooking($booking, $activityID, 1, $cleanFoodChoices);
             
             $booking = $bookingData->GetBooking($bookingID);
             

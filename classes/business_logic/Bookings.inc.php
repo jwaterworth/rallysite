@@ -218,6 +218,12 @@ class Bookings extends BusinessLogic {
         
         return $bookings;
     }
+	
+	public function GetClubBookingsComposite($eventId, $clubId) {
+		$dbCompositeBookings = BookingCompositeFactory::GetDataAccessObject();
+		
+		return $dbCompositeBookings->GetBookingsByClub($eventId, $clubId);
+	}
     
     public function GetClubBookings(EventVO $event, ClubVO $club) {
         $this->CheckParam($event, "GetClubBookings - event");
