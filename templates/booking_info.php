@@ -31,7 +31,7 @@
                     <?php foreach($controller->data['fees'] as $fee) : ?>
                         <ul class="fee_list">
                             <li class="fee_list">Fee: <?php echo $fee['fee'] ?></li>
-                            <li class="fee_list">Applies from: <?php echo $fee['deadline'] ?></li>
+                            <li class="fee_list">Deadline: <?php echo $fee['deadline'] ?></li>
                         </ul>						
                     <?php endforeach; ?>
 					<div class="clear"></div>

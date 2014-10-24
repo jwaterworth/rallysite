@@ -80,28 +80,31 @@ EventAdmin.setClubBookingsTable = function(clubBookings) {
 		}	
 		
 		$(".removeBookingSubmit").click(function(e) {
-			e.preventDefault();
-			var bookingId = $(this).parent().parent().find(".bookingId").val();
-			
-			$.ajax({
-				type: "POST",
-				url: "?event=1&action=ajax&removeBooking=true",
-				dataType: "JSON",
-				data: {
-					bookingId : bookingId
-				}
-			}).done(function(response) {
-				if(response) {
-					if(response.result != "success")  {
-						alert("An error occurred removing the booking: " + response.message ? response.message : "");
-					} else {
-						alert("Booking removed");
-						$(this).parent().parent().remove();
+			if(confirm("Are you sure you would like to remove booking?")) {
+				e.preventDefault();
+				var bookingId = $(this).parent().parent().find(".bookingId").val();
+				var $thisForm = $(this).parent().parent();
+				
+				$.ajax({
+					type: "POST",
+					url: "?event=1&action=ajax&removeBooking=true",
+					dataType: "JSON",
+					data: {
+						bookingId : bookingId
 					}
-				} else { 
-					alert("No response from server");
-				}						
-			});
+				}).done(function(response) {
+					if(response) {
+						if(response.result != "success")  {
+							alert("An error occurred removing the booking: " + response.message ? response.message : "");
+						} else {
+							alert("Booking removed");
+							$thisForm.remove();
+						}
+					} else { 
+						alert("No response from server");
+					}						
+				});
+			}			
 		});
 					
 		//Add a click handler to all the update buttons to confirm changes
