@@ -200,8 +200,41 @@ class Email {
         }
 
     }
+	
+	public function SendProblemEmail($title, $details, $name, $club, $email) {
+		try {
+			//True parameter allows exceptions to be thrown
+            $phpmailer = new PHPMailer(true);
+			
+			$phpmailer->AddReplyTo($email, 'Issue Reporter');
+			
+			$phpmailer->AltBody = 'To view the message, please use an HTML compatible email client';
+            $phpmailer->SetFrom('rallysite@saggo.org.uk', 'Rally site');
+			
+			$phpmailer->AddAddress('rallysupport@ssago.org.uk');
+			
+			$phpmailer->Subject = 'Rally Site: Problem Reported';
+			
+			return $this->GenerateProblemEmail($title, $details, $name, $club, $email);
+			
+			$phpmailer->MsgHTML($this->GenerateProblemEmail($title, $details, $name, $club, $email));
+			
+			$phpmail->Send();
+		} catch(phpmailException $e) {
+			return false;
+		}
+		
+		return true;
+	}
     
-    
+    private function GenerateProblemEmail($title, $details, $name, $club, $email) {
+		$email_template = file_get_contents(TEMPLATE_PATH."/emails/problem.html");
+		
+		 //Insert name and email into placeholders
+        $email = sprintf($email_template, $title, $details, $name, $club, $email, $email);
+        
+        return $email;
+	}
         
     private function GenerateRegistrationEmail(AccountVO $account){
         $email_template = file_get_contents(TEMPLATE_PATH."/emails/registration.html");

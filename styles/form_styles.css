@@ -306,6 +306,24 @@ input[type="submit"] {
 	width: 40px;
 }
 
+/*issues styling */
+
+.issue {
+	width: 97%;
+	min-height: 500px;
+	background-color: #FFFFFF;
+	border-radius: 3px;
+	padding: 5px;
+}
+
+.issue label {  
+	display: block;
+}
+
+.issue input[type="submit"] {
+	margin-top: 10px;
+}
+
 /*
 Jquery UI override
 */

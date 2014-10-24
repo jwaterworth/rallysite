@@ -69,6 +69,9 @@ switch($action) {
     case 'adminentry':
         adminentry();
         break;
+	case 'reportaproblem':
+		issue();
+		break;
     default:
         homepage();
  }
@@ -391,5 +394,9 @@ function payment() {
 function activities() {
     require(TEMPLATE_PATH."/activities.php");
 }
+
+function issue() {
+	require(TEMPLATE_PATH."/problem.php");
+}	
 
 ?>

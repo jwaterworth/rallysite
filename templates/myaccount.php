@@ -43,7 +43,7 @@ $error = isset($_POST['login_error']) ? $_POST['login_error'] : null;
         <div class="form_details">
             <h3 class="form_details">Login Details <a class="details_header" href='.?action=editaccount'>edit</a></h3>
             <p class="account_detail">Email: <?php echo $controller->data['email'] ?></p>
-            <p class="account_detail">Password: ****** <a href="#">Change Password</a></p>
+            <!--p class="account_detail">Password: ****** <a href="#">Change Password</a></p-->
         </div>
         <div class="form_details">
             <h3 class="form_details">Personal Details <a class="details_header" href='.?action=editaccount'>edit</a></h3>
