@@ -65,7 +65,7 @@ class ParticipantsPageController extends PageController{
 						$bookingArray = array();
 						
 						$bookingArray["accountId"] = $composite->getUserId();
-						$bookingArray["accountName"] = $composite->getUserName();
+						$bookingArray["accountName"] = htmlspecialchars($composite->getUserName());
 						$bookingArray["bookingId"] = $composite->getBookingId();
 						$bookingArray["activityId"] = $composite->getActivityId();
 						$bookingArray["activityName"] = $composite->getActivityName();
