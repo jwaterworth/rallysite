@@ -130,6 +130,8 @@ class BookingFormPageController extends PageController {
         
         //Get food choices
         $this->data['foodTypes'] = $this->GetFoodChoices($bookingData);
+		
+		$this->data['baseFee'] = $bookingData->CalculateBaseFee($this->event);
     }
         
     public function SaveBooking($userID, $activityID, $foodChoices) {

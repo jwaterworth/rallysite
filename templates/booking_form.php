@@ -80,10 +80,13 @@ $controller->GeneratePageData();
 				<label>Activity</label><span id="activityName"></span>
 				</div>
 				<div>
-				<label>Activity Fee</label><span id="activityCost"></span>
+				<label>Spaces</label><span id="activitySpaces"></span>
 				</div>
 				<div>
-				<label>Spaces</label><span id="activitySpaces"></span>
+				<label>Activity Fee</label><span id="activityCost"></span>
+				</div>				
+				<div>
+				<label>Current Base Fee</label><span>£<?php echo $controller->data['baseFee']; ?></span>
 				</div>
             </div>
             <div class="booking_form_section">

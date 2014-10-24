@@ -279,6 +279,34 @@ class Bookings extends BusinessLogic {
         
         return $clubBookings;
     }
+	
+	public function CalculateBaseFee(EventVO $event) {
+		//Get current fee
+        $bookingInfo = $this->GetBookingInfo($event);
+        $dbFees = FeesFactory::GetDataAccessObject();      
+        $fees = $dbFees->GetByForeignKey($bookingInfo->getId());
+
+		$currFee = null;
+		
+        foreach($fees as $fee){
+			//If curr date is before the deadline
+            if($this->CompareDates($this->parseUkDate($fee->getDeadline()), "now"))
+			{				
+				//Select the fee if no fee is set or if our current fee's deadline is later than this one
+				if(!$currFee || $this->CompareDates($this->parseUkDate($currFee->getDeadline()), $this->parseUkDate($fee->getDeadline()))) {				
+					$currFee = $fee;
+				}
+			}
+        }
+		
+		if($currFee) {
+			$eventFee = $currFee->getFee();
+		} else {
+			$eventFee = $fees[count($fees)-1]->getFee(); //Set it to the last fee entered
+		}
+		
+		return $eventFee;
+	}
     
     public function CalculateFee(EventVO $event, $activityID) {
         $this->CheckParam($event, "CalculateFees - event");
