@@ -51,10 +51,10 @@ $controller->GeneratePageData();
                     <span id="pass2Info">Confirm password</span>
                 </div>
                 <?php else:  ?>
-                <div>
+                <!--div>
                     <label>Password: ******</label>
                     <a href="#">Change Password</a>
-                </div>
+                </div-->
                 <?php endif; ?>
 			</div>
             <div class="form_details">

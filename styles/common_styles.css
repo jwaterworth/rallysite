@@ -285,6 +285,19 @@ div.registration_form p{
     max-width: 200px;
 }
 
+/* Confirmation */
+
+.confirmation {
+	margin-top: 25px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 97%;
+	min-height: 500px;
+	background-color: #FFFFFF;
+	border-radius: 3px;
+	padding: 5px;
+	box-shadow: 5px 5px 3px #555555;
+}
 
 /* jquery tabs */
 

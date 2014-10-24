@@ -279,7 +279,6 @@ class AdminPageController extends PageController {
         
         return true;
     }
-
 }
 
 ?>

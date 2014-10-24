@@ -36,7 +36,7 @@ class HeaderController extends PageController {
                     $this->data['club'] = $club->getName();
                 }
 				
-				if(Authentication::CheckAuthenticationLevel(CLUBREP)) {
+				if(Authentication::CheckAuthenticationLevel(EVENTEXEC|SSAGOEXEC)) {
 					$this->data['eventAdmin'] = true;
 				}
             } catch(Exception $e) {

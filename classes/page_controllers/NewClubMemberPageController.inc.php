@@ -134,7 +134,18 @@ class NewClubMemberPageController extends PageController {
 	 public function UpdateAccount($id, $name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
             $emergName, $emergRel, $emergPhone, $emergAddress) {
         
+		$accountData = LogicFactory::CreateObject("Accounts");
+		
 		if($this->CheckAuth(CLUBREP, false)) {
+			
+			$userAccount = $accountData->GetAccount($id);			
+			$loggedinAccount = $accountData->GetAccount(Authentication::GetLoggedInId());			
+			
+			if($userAccount->getClubId() != $loggedinAccount->getClubId()) {
+				$this->errorMessage = "You can only update accounts for members of your own club.";
+				return false;
+			}	
+		
 			$accountData = LogicFactory::CreateObject("Accounts");
 			$account = AccountFactory::CreateValueObject();
 			$account = $accountData->GetAccount($id);

@@ -92,9 +92,9 @@ $(document).ready(function() {
     }
 	
 	function checkConfirmEmail() {
-		if(email.val() == confirmEmail.val()) {
+		if(email.val() == confirmEmail.val() && !validateEmail()) {
 			confirmEmail.removeClass("error");
-			confirmEmailInfo.text("Valid Address");
+			confirmEmailInfo.text("Email addresses match");
 			confirmEmailInfo.removeClass("error");
 			return true;
 		} else {
@@ -144,7 +144,7 @@ $(document).ready(function() {
         //if it's NOT valid
         if(name.val().length < 4){
                 name.addClass("error");
-                nameInfo.text("Error - Name too short");
+                nameInfo.text("Please enter a name of 4 characters or more");
                 nameInfo.addClass("error");
                 return false;
         }
@@ -159,9 +159,14 @@ $(document).ready(function() {
     
     function validatePhone() {
         //if it's NOT valid
-        if(phone.val().length != 11 || phone.val().substr(0,1) != "0" || isNaN(phone.val())|| phone.val().indexOf(" ") != -1){
+		var phoneNum = phone.val();
+		
+		//Remove spaces
+		phoneNum = phoneNum.replace(/\s/g, '');
+		
+        if(phoneNum.length != 11 || phoneNum.substr(0,1) != "0" || isNaN(phoneNum)){
             phone.addClass("error");
-            phoneInfo.text("Error - UK phone number required");
+            phoneInfo.text("UK phone number required. This should be 11 digits long");
             phoneInfo.addClass("error");
             return false;
         }
@@ -178,7 +183,7 @@ $(document).ready(function() {
         //if it's NOT valid
         if(address.val().length < 10 || address.val().length > 255){
                 address.addClass("error");
-                addressInfo.text("Error - Name too short");
+                addressInfo.text("Your address should be at least 10 characters long");
                 addressInfo.addClass("error");
                 return false;
         }
@@ -193,10 +198,9 @@ $(document).ready(function() {
     
     function validateDate() {
         var validFormat = /^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/;
-        alert(date.val());
-        if(validFormat.test(date.val())) { //Invalid form
+        if(!validFormat.test(date.val())) { //Invalid form
             date.addClass("error");
-            dateInfo.text("Error - Invalid date format");
+            dateInfo.text("Please enter your date of birth.");
             dateInfo.addClass("error");
             return false;
         } else {
@@ -223,7 +227,7 @@ $(document).ready(function() {
         //if it's NOT valid
         if(emergName.val().length < 4){
                 emergName.addClass("error");
-                emergNameInfo.text("Error - Name too short");
+                emergNameInfo.text("Please enter a name of 4 characters or more");
                 emergNameInfo.addClass("error");
                 return false;
         }
@@ -238,9 +242,14 @@ $(document).ready(function() {
     
     function validateEmergPhone() {
         //if it's NOT valid
-        if(emergPhone.val().length != 11 || emergPhone.val().substr(0,1) != "0" || isNaN(emergPhone.val()) || emergPhone.val().indexOf(" ") != -1){
+		var phoneNum = emergPhone.val();
+		
+		//Remove spaces
+		phoneNum = phoneNum.replace(/\s/g, '');
+		
+        if(phoneNum.length != 11 || phoneNum.substr(0,1) != "0" || isNaN(phoneNum)){
             emergPhone.addClass("error");
-            emergPhoneInfo.text("Error - UK phone number required");
+            emergPhoneInfo.text("UK phone number required. This should be 11 digits long");
             emergPhoneInfo.addClass("error");
             return false;
         }

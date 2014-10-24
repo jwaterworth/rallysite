@@ -54,8 +54,10 @@ $controller->GeneratePageData();
                 </div>
                 <?php else:  ?>
                 <div>
+					<!--
                     <label>Password: ******</label>
                     <a href="#">Change Password</a>
+					-->
                 </div>
                 <?php endif; ?>
             </div>
@@ -78,6 +80,7 @@ $controller->GeneratePageData();
                 <div>
                     <label>Date of birth</label>
                     <input type="text" id="datepicker" name="userDOB" required placeholder="dd/mm/yyyy" value="<?php echo $account['dob'] ?>"/>
+					<span id="dobInfo"></span>
                 </div>
                 <div>
                     <label>Medical Conditions</label>
@@ -121,7 +124,6 @@ $controller->GeneratePageData();
                 </select>
             </div>
             <input type="submit" value="Register"/>
-            <input type="reset" value="Reset"/>
             <?php else : ?>
             <input type="submit" value="Update"/>        
             <?php endif; ?>
