@@ -276,7 +276,7 @@ function downloads() {
 }
 
 function ajax() {
-	//if(Authentication::CheckAuthenticationLevel(CLUBREP|EVENTEXEC|SSAGOEXEC)) {
+	if(Authentication::CheckAuthenticationLevel(CLUBREP|EVENTEXEC|SSAGOEXEC)) {
 		require_once('ajax/AJAXHandler.php');
 		$ajaxHandler = new AJAXHandler();
 		if($accountID = isset( $_GET['accountID'] ) ? $_GET['accountID'] : "") {
@@ -297,7 +297,7 @@ function ajax() {
 			$bookingId = isset($_POST['bookingId']) ? $_POST['bookingId'] : null;
 			$ajaxHandler->RemoveBooking($bookingId);
 		}
-	//}
+	}
 	
 	if( $activityID = isset( $_GET['activityID'] ) ? $_GET['activityID'] : "") {
 		require_once('ajax/AJAXHandler.php');
