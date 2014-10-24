@@ -11,6 +11,8 @@ $(document).ready(function() {
     var form = $("#registration_form"); 
     var email = $("#email");  
     var emailInfo = $("#emailInfo");  
+	var confirmEmail = $("#confirmEmail");
+	var confirmEmailInfo = $("#confirmEmailInfo");
     var pass1 = $("#password1");  
     var pass1Info = $("#pass1Info");  
     var pass2 = $("#password2");  
@@ -32,6 +34,7 @@ $(document).ready(function() {
 
     //onBlur
     email.blur(validateEmail);
+	confirmEmail.blur(checkConfirmEmail);
     pass1.blur(validatePass1);
     pass2.blur(validatePass2);  
     name.blur(validateName);
@@ -55,7 +58,7 @@ $(document).ready(function() {
     //On submitting
     //On Submitting
     form.submit(function(){
-            if(validateName() & validateEmail() & validatePass1() & validatePass2() & validatePhone() & validateAddress()
+            if(validateName() & validateEmail() & checkConfirmEmail() & validatePass1() & validatePass2() & validatePhone() & validateAddress()
             & validateEmergName() & validateEmergPhone() & validateAddress())
                     return true
             else
@@ -72,6 +75,11 @@ $(document).ready(function() {
                 email.removeClass("error");
                 emailInfo.text("Valid Address");
                 emailInfo.removeClass("error");
+								
+				if(confirmEmail.val()) {
+					checkConfirmEmail();
+				}
+				
                 return true;
         }
         //if it's NOT valid
@@ -80,8 +88,22 @@ $(document).ready(function() {
                 emailInfo.text("Error - Please enter a valid email");
                 emailInfo.addClass("error");
                 return false;
-        }
+        }		
     }
+	
+	function checkConfirmEmail() {
+		if(email.val() == confirmEmail.val()) {
+			confirmEmail.removeClass("error");
+			confirmEmailInfo.text("Valid Address");
+			confirmEmailInfo.removeClass("error");
+			return true;
+		} else {
+			confirmEmail.addClass("error");
+			confirmEmailInfo.text("Error - Please ensure both email addresses match");
+			confirmEmailInfo.addClass("error");
+			return false;
+		}
+	}
     
     function validatePass1(){
         //it's NOT valid
