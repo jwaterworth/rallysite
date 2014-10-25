@@ -14,6 +14,11 @@ $controller->GeneratePageData();
 <?php endif; ?>
 
 <div class="booking_page">
+	<?php if($controller->errorMessage != null && $controller->errorMessage != ""): ?>
+		<div class="error">
+        <p><?php echo $controller->errorMessage ?></p>
+		</div>
+	<?php else: ?>
 	<?php $account = null; if($controller->data['edit']) : ?>
 	<?php
 		{
@@ -31,12 +36,12 @@ $controller->GeneratePageData();
                 <h3 class="form_details">Login Details</h3>
                 <div>
                     <label for="email">Email</label>
-                    <input type="text" id="email" name="userEmail" required value="<?php if($account) echo $account['email'] ?>"/>
+                    <input type="email" id="email" name="userEmail" required value="<?php if($account) echo $account['email'] ?>"/>
                     <span id="emailInfo">Please enter a valid e-mail address. This will be used by the member to log in.</span>
                 </div>
 				<div>
                     <label for="email">Confirm Email</label>
-                    <input type="text" id="confirmEmail" required value="<?php if($account) echo $account['email'] ?>"/>
+                    <input type="email" id="confirmEmail" required value="<?php if($account) echo $account['email'] ?>"/>
                     <span id="confirmEmailInfo">Please confirm your email address.</span>
                 </div>
                 <?php if(!$controller->data['edit']) : ?>
@@ -117,5 +122,5 @@ $controller->GeneratePageData();
             <?php endif; ?>
         </form>
         </div>
-	
+	<?php endif; ?>
 </div>

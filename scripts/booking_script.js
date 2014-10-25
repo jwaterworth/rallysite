@@ -6,7 +6,7 @@ $(document).ready(function() {
 	if($('#clubBookingFlag').val())
 		getAccountDetails();
 	
-	$(".bookingSubmit").click(function(e) {
+	$("#bookingSubmit").click(function(e) {
 		if(BookingScript.ClubBooking && !$('#accountId').val()) {
 			e.preventDefault();
 			alert("Please select a member.");

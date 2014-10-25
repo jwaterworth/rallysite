@@ -137,9 +137,15 @@ class BookingFormPageController extends PageController {
     public function SaveBooking($userID, $activityID, $foodChoices) {
         //Authenticate user
         if(!$this->CheckAuth(ALLTYPES) ) {
-             return $this->errorMessage = "An error occured authenticating account, please log in and try again";
-           
+			$this->errorMessage = "An error occured authenticating account, please log in and try again";
+			return false;
         }
+		
+		if($activityID == null || $activityID == "") {
+			$this->errorMessage = "Please select an activity";
+			return false;
+		}
+		
         $bookingData = LogicFactory::CreateObject("Bookings");	
 		$accountData = LogicFactory::CreateObject("Accounts");
 		

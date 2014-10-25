@@ -57,6 +57,7 @@ $(document).ready(function() {
     */
     //On submitting
     //On Submitting
+	
     form.submit(function(){
             if(validateName() & validateEmail() & checkConfirmEmail() & validatePass1() & validatePass2() & validatePhone() & validateAddress()
             & validateEmergName() & validateEmergPhone() & validateAddress())
@@ -92,7 +93,7 @@ $(document).ready(function() {
     }
 	
 	function checkConfirmEmail() {
-		if(email.val() == confirmEmail.val() && !validateEmail()) {
+		if(email.val() == confirmEmail.val()) {
 			confirmEmail.removeClass("error");
 			confirmEmailInfo.text("Email addresses match");
 			confirmEmailInfo.removeClass("error");

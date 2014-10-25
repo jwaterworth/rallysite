@@ -44,7 +44,11 @@
             <div id="tabs-2">
                 <?php if($controller->data['personalBooking'] == null) : ?>
                     <div class="no_bookings">
-                        <p><?php echo $controller->data['reason'] ?></p>
+						<?php if($controller->data['reason'] == "Login to see your booking") :?>
+							<p><a href=".?event=<?php echo $controller->data['eventID'] ?>&action=myaccount"><?php echo $controller->data['reason'] ?></a></p>
+						<?php else: ?>							
+							<p><?php echo $controller->data['reason'] ?></p>
+						<?php endif ?>
 						<?php if($controller->data['bookingAllowed']) :?>
                         <a class="booking_button" href=".?event=<?php echo $controller->data['eventID'] ?>&action=bookingform"><span id="buttonText">Create a booking</span></a> 
 						<?php endif; ?>

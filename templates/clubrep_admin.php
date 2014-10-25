@@ -27,16 +27,15 @@ $controller->GetClubData();
                     <div id="tabs">
                         <ul>
                             <li><a href="#tabs-1">Club Accounts</a></li>
-                            <li><a href="#tabs-2">Club Details</a></li>
                         </ul>
                         <div id="tabs-1">
                             <p>Awaiting Approval</p>
 							<?php if(count($controller->data['unapproved']) > 0) : ?>
                             <?php foreach($controller->data['unapproved'] as $account) : ?>
                                 <ul class="member_list">
-                                    <li><?php echo $account['name'] ?></li>
-                                    <li class="member_email"><a href="mailto:<?php echo $account['email'] ?>"><?php echo $account['email'] ?></a></li>
-                                    <li class="member_phone"><?php echo $account['phone'] ?></li>
+                                    <li><?php echo htmlspecialchars($account['name']) ?></li>
+                                    <li class="member_email"><a href="mailto:<?php echo htmlspecialchars($account['email']) ?>"><?php echo htmlspecialchars($account['email']) ?></a></li>
+                                    <li class="member_phone"><?php echo htmlspecialchars($account['phone']) ?></li>
                                     <li class="tick"><a href=".?action=clubrepadmin&entry=approvemember&id=<?php echo $account['id'] ?>"><img class="tick" src="images/tick.png"/></a></li>
                                     <li class="tick"><a href="#"><img class="tick" src="images/cross.png"/></a></li>
                                 </ul>   
@@ -46,17 +45,14 @@ $controller->GetClubData();
 							<?php if(count($controller->data['approved']) > 0 ) : ?>
                             <?php foreach($controller->data['approved'] as $account) : ?>
                                 <ul class="member_list">
-                                    <li><?php echo $account['name'] ?></li>
-                                    <li class="member_email"><a href="mailto:<?php echo $account['email'] ?>"><?php echo $account['email'] ?></a></li>
-                                    <li><?php echo $account['phone'] ?></li>
+                                    <li><?php echo htmlspecialchars($account['name']) ?></li>
+                                    <li class="member_email"><a href="mailto:<?php echo htmlspecialchars($account['email']) ?>"><?php echo htmlspecialchars($account['email']) ?></a></li>
+                                    <li><?php echo htmlspecialchars($account['phone']) ?></li>
 									<li><a href=".?action=newclubmember&userid=<?php echo $account['id'] ?>">Update Details</a></li>
                                 </ul>
                             <?php endforeach; ?>
 							<?php endif; ?>
                             <p class="club_header"></p>
-                        </div>
-                        <div id="tabs-2">
-                            <p>Club Bookings</p>
                         </div>
                     </div>
                 </div>

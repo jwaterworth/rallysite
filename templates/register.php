@@ -33,12 +33,12 @@ $controller->GeneratePageData();
                 <h3 class="form_details">Login Details</h3>
                 <div>
                     <label for="email">Email</label>
-                    <input type="text" id="email" name="userEmail" required value="<?php if($account) echo $account['email'] ?>"/>
+                    <input type="email" id="email" name="userEmail" required value="<?php if($account) echo $account['email'] ?>"/>
                     <span id="emailInfo">Please enter a valid e-mail address, you will need it to log in!</span>
                 </div>
 				<div>
                     <label for="email">Confirm Email</label>
-                    <input type="text" id="confirmEmail" required value="<?php if($account) echo $account['email'] ?>"/>
+                    <input type="email" id="confirmEmail" required value="<?php if($account) echo $account['email'] ?>"/>
                     <span id="confirmEmailInfo">Please confirm your email address.</span>
                 </div>
                 <?php if(!$controller->data['edit']) : ?>
