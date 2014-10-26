@@ -54,6 +54,7 @@ class RegisterPageController extends PageController{
             $this->data['account'] = $account;
         } catch (Exception $e) {
             $this->errorMessage = $e->getMessage();
+			Logging::Error(ACCOUNTS_LOGFILE, "RegisterPageController", "Constructor", $e->getMessage(), null);
         }
     }
     
@@ -77,6 +78,7 @@ class RegisterPageController extends PageController{
             $this->data['clubs'] = $arrClubs;
         } catch (Exception $e) {
             $this->errorMessage = $e->getMessage();
+			Logging::Error(ACCOUNTS_LOGFILE, "RegisterPageController", "GeneratePageData", $e->getMessage(), null);
             return;
         }
     }
@@ -136,15 +138,22 @@ class RegisterPageController extends PageController{
 			$account->setEmergAddress($emergAddress);        
 			$account->setEmergRelationship($emergRel); 
 			
-				$accountData->SaveAccount($account);
-				return true;
+			$accountData->SaveAccount($account);
+			Logging::Info(ACCOUNTS_LOGFILE, "RegisterPageController", "UpdateAccount", "Updating account", json_encode(array($id, $name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
+							$emergName, $emergRel, $emergPhone, $emergAddress)));
+			return true;
 			} catch(Exception $e) {
 				$this->errorMessage = $e->getMessage();
+				Logging::Error(ACCOUNTS_LOGFILE, "RegisterPageController", "UpdateAccount", $e->getMessage(), json_encode(array($id, $name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
+							$emergName, $emergRel, $emergPhone, $emergAddress)));
 				return false;
 			}
 		}
 		 else {
 			$this->errorMessage = "You are not logged in.";
+			Logging::Error(ACCOUNTS_LOGFILE,"RegisterPageController", "UpdateAccount", "Tried to update account whilst not logged in", 
+			json_encode(array($id, $name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
+							$emergName, $emergRel, $emergPhone, $emergAddress)));
 		 }
 		
 		return false;
@@ -167,34 +176,58 @@ class RegisterPageController extends PageController{
 			$this->errorMessage = $validation;
 			return false;
 		}
+		
+		//Check account doesn't already exist
 
-		$accountVO = AccountFactory::CreateValueObject();
-		//No need to set password in the objet just yet as it needs hashing and salting
-		$accountVO->setName($name);
-		$accountVO->setEmail($email);
-		$accountVO->setPhoneNumber($phone);
-		$accountVO->setAddress($address);
-		$accountVO->setDateOfBirth($dob);
-		$accountVO->setMedicalConditions($medicalCond);
-		$accountVO->setDietaryReq($dietaryReq);
-		$accountVO->setEmergName($emergName);
-		$accountVO->setEmergPhone($emergPhone);
-		$accountVO->setEmergAddress($emergAddress);
-		$accountVO->setEmergRelationship($emergRel);
-		$accountVO->setClubId($clubId);	
-		$accountVO->setAccountTypeID(MEMBER);
 		
-		$result = Authentication::CreateAccount($accountVO, $password);
+		try{
+			$accountVO = AccountFactory::CreateValueObject();
+			//No need to set password in the objet just yet as it needs hashing and salting
+			$accountVO->setName($name);
+			$accountVO->setEmail($email);
+			$accountVO->setPhoneNumber($phone);
+			$accountVO->setAddress($address);
+			$accountVO->setDateOfBirth($dob);
+			$accountVO->setMedicalConditions($medicalCond);
+			$accountVO->setDietaryReq($dietaryReq);
+			$accountVO->setEmergName($emergName);
+			$accountVO->setEmergPhone($emergPhone);
+			$accountVO->setEmergAddress($emergAddress);
+			$accountVO->setEmergRelationship($emergRel);
+			$accountVO->setClubId($clubId);	
+			$accountVO->setAccountTypeID(MEMBER);
+			
+			$result = Authentication::CreateAccount($accountVO, $password);
+			
+			if($result && $result != 999) {
+				//Send email updates
+				//$emailer = new Email();
+				//$emailer->SendRegistrationEmail($email);
+				Logging::Info(ACCOUNTS_LOGFILE, "RegisterPageController", "Save New Account", "Creating new account",
+				json_encode(array($name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
+							$emergName, $emergRel, $emergPhone, $emergAddress, $clubId)));
+				return true;
+			} elseif($result == 999) {
+				$this->errorMessage =  "Error creating account: Account already exists";
+				Logging::Error(ACCOUNTS_LOGFILE, "RegisterPageController", "SaveNewAccount", "Account already exists", 
+				json_encode(array($name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
+							$emergName, $emergRel, $emergPhone, $emergAddress, $clubId)));
+				return false;
+			} else {
+				$this->errorMessage =  "Error creating account, please try again";
+				Logging::Error(ACCOUNTS_LOGFILE, "RegisterPageController", "SaveNewAccount", "Create account returned false", 
+				json_encode(array($name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
+							$emergName, $emergRel, $emergPhone, $emergAddress, $clubId)));
+				return false;
+			}    
+		} catch(Exception $e) {
+			$this->errorMessage = $e->getMessage();
+			Logging::Error(ACCOUNTS_LOGFILE, "RegisterPageController", "UpdateAccount", $e->getMessage(), 
+				json_encode(array($name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
+							$emergName, $emergRel, $emergPhone, $emergAddress, $clubId)));
+			return false;
+		}
 		
-        if($result) {
-            //Send email updates
-            //$emailer = new Email();
-            //$emailer->SendRegistrationEmail($email);
-			return true;
-        } else {
-            $this->errorMessage =  "Error creating account, please try again";
-            return false;
-        }    
 
 		return false;
     }

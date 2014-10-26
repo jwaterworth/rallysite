@@ -7,7 +7,7 @@ $(document).ready(function() {
 		getAccountDetails();
 	
 	$("#bookingSubmit").click(function(e) {
-		if(BookingScript.ClubBooking && !$('#accountId').val()) {
+		if(BookingScript.ClubBooking && !$('#accountID').val()) {
 			e.preventDefault();
 			alert("Please select a member.");
 		}

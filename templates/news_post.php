@@ -17,9 +17,6 @@ $controller = new NewsPostPageController($newsPostID);
         <p class="news_author"> <?php echo $controller->data['authorName'] ?> | <?php echo $controller->data['timestamp'] ?> </p>
         <p> <?php echo $controller->data['body'] ?> </p>      
     </div>
-    <div id="fb-root"></div>
-    <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
-    <fb:comments href="http://co-project.lboro.ac.uk/users/cojw3/ssago/?action=newspost&newsid=<?php echo $controller->data['id'] ?>"></fb:comments>
     <?php endif; ?>
 </div>
 <?php

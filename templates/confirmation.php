@@ -17,7 +17,8 @@ $controller = new ConfirmationPageController($eventID, $type, $result, $errorMes
             <?php if($controller->errorMessage != null) : ?>
                 <p>An error occurred creating your account: <?php echo $controller->errorMessage ?>. Please contact your club representative or try again.</p>
             <?php else : ?>
-                <p>Congratulations, your account has been registered and is now awaiting approval. A confirmation email has been sent to your email address.</p>
+                <!--p>Congratulations, your account has been registered and is now awaiting approval. A confirmation email has been sent to your email address.</p-->
+				<p>Congratulations, your account has been registered and you may <a href=".?event=<?php echo $controller->data['eventID'] ?>&action=myaccount">sign in</a> now create a booking for rally! A confirmation email has been sent to your email address.</p>
             <?php endif; ?>
         <?php elseif($controller->confirmationType == BOOKING) : ?>
             <?php if($controller->errorMessage != null) : ?>

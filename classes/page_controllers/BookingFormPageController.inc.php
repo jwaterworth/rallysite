@@ -99,6 +99,7 @@ class BookingFormPageController extends PageController {
                 $this->data['clubMembers'] = $arrClubMembers;
             } catch (Exception $e) {
                 $this->errorMessage = $e->getMessage();
+				Logging::Error(ERRORS_LOGFILE, "BookingFormPageController", "GeneratePageData", $e->getMessage(), null);
             }
             
         } else { //else set own user details
@@ -122,6 +123,7 @@ class BookingFormPageController extends PageController {
 
             } catch (Exception $e) {
                 $this->errorMessage = $e->getMessage();
+				Logging::Error(ERRORS_LOGFILE, "BookingFormPageController", "GeneratePageData", $e->getMessage(), null);
                 return;
             }        
         }
@@ -137,12 +139,13 @@ class BookingFormPageController extends PageController {
     public function SaveBooking($userID, $activityID, $foodChoices) {
         //Authenticate user
         if(!$this->CheckAuth(ALLTYPES) ) {
-			$this->errorMessage = "An error occured authenticating account, please log in and try again";
+			$this->errorMessage = "An error occurred authenticating account, please log in and try again";
 			return false;
         }
 		
 		if($activityID == null || $activityID == "") {
 			$this->errorMessage = "Please select an activity";
+			Logging::Error(ERRORS_LOGFILE, "BookingFormPageController", "SaveBooking", "User attempted to make a booking without setting an activity", json_encode(array("userID" => $userId)));
 			return false;
 		}
 		
@@ -161,11 +164,13 @@ class BookingFormPageController extends PageController {
 					$loggedinAccount = $accountData->GetAccount($currLoggedInId);			
 					if($bookingAccount->getClubId() != $loggedinAccount->getClubId()) {
 						$this->errorMessage = "You can only create bookings for members of your own club.";
+						Logging::Error(ERRORS_LOGFILE, "BookingFormPageController", "SaveBooking", "User attempted to create a booking for a member outside their club", json_encode(array("loggedInUserId" => $currLoggedInId)));
 						return false;
 					}
 				}	
 				else {
 					$this->errorMessage = "You must be a club representative to create somebody else's booking.";
+					Logging::Error(ERRORS_LOGFILE, "BookingFormPageController", "SaveBooking", "User attempted to create a booking for a member outside their club", json_encode(array("loggedInUserId" => $currLoggedInId)));
 					return false;
 				}				
 			}
@@ -177,6 +182,8 @@ class BookingFormPageController extends PageController {
 			//This method will throw an exception if a booking doesn't exist
 			$bookingData->GetAccountBooking($this->event, $bookingAccount);
 			$this->errorMessage = "A booking for this account on this event already exists.";
+			Logging::Error(ERRORS_LOGFILE, "BookingFormPageController", "SaveBooking", "User attempted to make their booking twice", 
+			json_encode(array("userId" => $userID, "activityID" => $activityID, "foodChoices" => $foodChoices)));
 			return false;
 		}
 		catch(Exception $e) {
@@ -204,9 +211,12 @@ class BookingFormPageController extends PageController {
             
             $emailer = new Email();
             $emailer->SendBookingEmail($this->event, $booking);
-            
+            Logging::Info(BOOKINGS_LOGFILE, "BookingFormPageController", "SaveBooking", "Creating booking", 
+			json_encode(array("userId" => $userID, "activityID" => $activityID, "foodChoices" => $foodChoices)));
         } catch (Exception $e) {
             $this->errorMessage = $e->getMessage();
+			Logging::Error(ERRORS_LOGFILE, "BookingFormPageController", "SaveBooking", $e->getMessage(), 
+			json_encode(array("userId" => $userID, "activityID" => $activityID, "foodChoices" => $foodChoices)));
             return false;
         }
        
@@ -234,6 +244,8 @@ class BookingFormPageController extends PageController {
             if($userAccount->getId() == $bookingAccount->getId() || $this->CheckAuth(EVENTEXEC|SSAGOEXEC)) {
                 //Remove booking
                 $bookingData->RemoveBooking($booking);
+				Logging::Error(BOOKINGS_LOGFILE, "BookingFormPageController", "RemoveBooking", "Booking removed", 
+				json_encode(array("bookingID" => $bookingID)));
             } else if($this->CheckAuth(CLUBREP, false)){ //If club rep, ensure they are only removing a club member booking
                 
                 //Compare clubs
@@ -242,14 +254,19 @@ class BookingFormPageController extends PageController {
                 
                 if($userClub->getId() != $bookingClub->getId()) {
                     $this->errorMessage = "You may only remove bookings for members of " . $bookingClub->getName();
+					Logging::Error(ERRORS_LOGFILE, "BookingFormPageController", "RemoveBooking", "User attempted to remove a booking for someone outside their club", json_encode(array("loggedInUserId" => $userAccount->getId())));
                     return;
                 } else {
                     //Remove booking
                     $bookingData->RemoveBooking($booking);
+					Logging::Error(BOOKINGS_LOGFILE, "BookingFormPageController", "RemoveBooking", "Booking removed", 
+					json_encode(array("bookingID" => $bookingID)));
                 }
             }         
         } catch (Exception $e) {
             return $this->errorMessage = $e->getMessage();
+			Logging::Error(ERRORS_LOGFILE, "BookingFormPageController", "RemoveBooking", $e->getMessage(), 
+			json_encode(array("bookingID" => $bookingID)));
         }
         
         return;

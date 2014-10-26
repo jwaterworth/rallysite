@@ -70,9 +70,9 @@ $(document).ready(function() {
     function validateEmail(){
         //testing regular expression
         var a = $("#email").val();
-        var filter = /^[a-zA-Z0-9]+[a-zA-Z0-9_.-]+[a-zA-Z0-9_-]+@[a-zA-Z0-9]+[a-zA-Z0-9.-]+[a-zA-Z0-9]+.[a-z]{2,4}$/;
-        //if it's valid email
-        if(filter.test(email.val())){
+		
+        //VERY rudimentary email check as many advise not to bother using a regex as it won't cover all email addresses
+        if(email.val().indexOf('@') != -1 && email.val().indexOf('.') != -1){
                 email.removeClass("error");
                 emailInfo.text("Valid Address");
                 emailInfo.removeClass("error");
@@ -95,7 +95,7 @@ $(document).ready(function() {
 	function checkConfirmEmail() {
 		if(email.val() == confirmEmail.val()) {
 			confirmEmail.removeClass("error");
-			confirmEmailInfo.text("Email addresses match");
+			confirmEmailInfo.text("Match");
 			confirmEmailInfo.removeClass("error");
 			return true;
 		} else {

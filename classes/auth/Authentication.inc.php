@@ -32,6 +32,9 @@
 			$dbAccounts = AccountFactory::GetDataAccessObject();        
 			
 			$result = $dbAccounts->Save($accountVO);
+		}	
+		else {
+			$result = 999; //Account exists
 		}		
 		
         return $result;

@@ -51,6 +51,7 @@ define("COMMON_TEMPLATES", "templates/common");
 define("TEMPLATE_PATH", "templates");
 define("BUSLOGIC_PATH", "classes/business_logic");
 define("PAGE_CONTROLLERS", "classes/page_controllers");
+
         
 //Value Objects
 require_once(VO_PATH."/AccountTypeVO.inc.php");
@@ -81,6 +82,9 @@ require_once(CLASS_PATH."/emails/Email.inc.php");
 
 //Downloads class
 require_once(CLASS_PATH.'/downloads/CSVGenerator.php');
+
+//Logging
+require_once(CLASS_PATH.'/logging/logging.inc.php');
 
 //Factories
 require_once(DATA_FACTORY_PATH."/AccountFactory.inc.php");

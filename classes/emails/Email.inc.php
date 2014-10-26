@@ -92,11 +92,13 @@ class Email {
             
             $phpmailer->MsgHTML($this->GenerateApprovalEmail($account));
             
-            $phpmailer->Send();
+            //$phpmailer->Send();
         } catch(phpmailerException $e) {
-            echo $e->errorMessage();
+            $this->errorMessage = $e->errorMessage();
+			return false;
         } catch(Exception $e) {
-            echo $e->getMessage();
+            $this->errorMessage =  $e->getMessage();
+			return false;
         }
         
         return;
@@ -117,7 +119,7 @@ class Email {
             $phpmailer->AddReplyTo('loughboroughrallycommittee@gmail.com', 'Puzzle Rally Event Exec');
         
             $phpmailer->AltBody = 'To view the message, please use an HTML compatible email client';
-            $phpmailer->SetFrom('ssagoevents@saggo.org.uk', 'SSAGO Bookings');
+            $phpmailer->SetFrom('rallysite@saggo.org.uk', 'Rally Booking - Do not reply');
         
             $address = $account->getEmail();
             $phpmailer->AddAddress($address);
@@ -128,9 +130,11 @@ class Email {
             
             $phpmailer->Send();
         } catch(phpmailerException $e) {
-            echo $e->errorMessage();
+            $this->errorMessage =  $e->getMessage();
+			return false;
         } catch(Exception $e) {
-            echo $e->getMessage();
+            $this->errorMessage =  $e->getMessage();
+			return false;
         }
         
         return;

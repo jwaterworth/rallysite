@@ -139,15 +139,27 @@ class NewClubMemberPageController extends PageController {
 			
 			$result = Authentication::CreateAccount($accountVO, $password);
 			
-			if($result) {
+			if($result && $result != 999) {
 				//Send email updates
-				$emailer = new Email();
-				$emailer->SendRegistrationEmail($email);
+				//$emailer = new Email();
+				//$emailer->SendRegistrationEmail($email);
+				Logging::Info(ACCOUNTS_LOGFILE, "NewClubMemberPageController", "SaveNewAccount", "Creating new account", 
+				json_encode(array($name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
+							$emergName, $emergRel, $emergPhone, $emergAddress, $this->data['clubId'])));
 				return true;
+			} elseif($result == 999) {
+				$this->errorMessage =  "Error creating account: Account already exists";
+				Logging::Error(ACCOUNTS_LOGFILE, "NewClubMemberPageController", "SaveNewAccount", "Account already exists", 
+				json_encode(array($name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
+							$emergName, $emergRel, $emergPhone, $emergAddress, $this->data['clubId'])));
+				return false;
 			} else {
 				$this->errorMessage =  "Error creating account, please try again";
+				Logging::Error(ACCOUNTS_LOGFILE, "NewClubMemberPageController", "SaveNewAccount", "Create account returned false", 
+				json_encode(array($name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
+							$emergName, $emergRel, $emergPhone, $emergAddress, $this->data['clubId'])));
 				return false;
-			}    
+			}      
 
 			return false;
         }
@@ -182,7 +194,7 @@ class NewClubMemberPageController extends PageController {
 				$this->errorMessage = $validation;
 				return false;
 			}
-		
+			try {
 			$accountData = LogicFactory::CreateObject("Accounts");
 			$account = AccountFactory::CreateValueObject();
 			$account = $accountData->GetAccount($id);
@@ -198,11 +210,17 @@ class NewClubMemberPageController extends PageController {
 			$account->setEmergPhone($emergPhone);
 			$account->setEmergAddress($emergAddress);        
 			$account->setEmergRelationship($emergRel); 
-			try {
+			
 				$accountData->SaveAccount($account);
+				Logging::Info(ACCOUNTS_LOGFILE, "NewClubMemberPageController", "UpdateAccount", "Updating account",
+				json_encode(array($id, $name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
+							$emergName, $emergRel, $emergPhone, $emergAddress)));
 				return true;
 			} catch(Exception $e) {
 				$this->errorMessage = $e->getMessage();
+				Logging::Error(ACCOUNTS_LOGFILE, "NewClubMemberPageController", "UpdateAccount", $e->getMessage(),
+				json_encode(array($id, $name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
+							$emergName, $emergRel, $emergPhone, $emergAddress)));
 				return false;
 			}
 		} else {	
