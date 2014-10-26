@@ -156,7 +156,7 @@ class Email {
            // $eventExecAccount = $accountData->getAccount($eventExecID);
             
             //$address = $eventExecAccount->getEmail();
-			$address = "ssagopuzzlerally@gmail.com";
+			$address = "loughboroughrallycommittee@gmail.com";
             
             //True parameter allows exceptions to be thrown
             $phpmailer = new PHPMailer(true);
@@ -213,21 +213,21 @@ class Email {
 			$phpmailer->AddReplyTo($email, 'Issue Reporter');
 			
 			$phpmailer->AltBody = 'To view the message, please use an HTML compatible email client';
-            $phpmailer->SetFrom('rallysite@saggo.org.uk', 'Rally site');
+            $phpmailer->SetFrom('rallysite@ssago.org.uk', 'Rally site');
 			
 			$phpmailer->AddAddress('rallysupport@ssago.org.uk');
 			
 			$phpmailer->Subject = 'Rally Site: Problem Reported';
 			
-			return $this->GenerateProblemEmail($title, $details, $name, $club, $email);
-			
 			$phpmailer->MsgHTML($this->GenerateProblemEmail($title, $details, $name, $club, $email));
 			
-			$phpmail->Send();
+			$phpmailer->Send();			
 		} catch(phpmailException $e) {
 			return false;
-		}
-		
+		} catch(Exception $e) {
+            return false;
+			
+        }
 		return true;
 	}
     

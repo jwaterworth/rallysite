@@ -5,6 +5,7 @@ $issueReceived = false;
 $error = false;
 
 if(isset($_POST['issueTitle']) && $_POST['issueTitle']) {
+	
 	$emailer = new Email();
 	$title = isset($_POST['issueTitle']) ? htmlspecialchars($_POST['issueTitle']) : "Unknown";
 	$details = isset($_POST['issueDetails']) ? htmlspecialchars($_POST['issueDetails']) : "Unknown";
@@ -12,8 +13,11 @@ if(isset($_POST['issueTitle']) && $_POST['issueTitle']) {
 	$club = isset($_POST['reporterClub']) ? htmlspecialchars($_POST['reporterClub']) : "Unknown";
 	$email = isset($_POST['reporterEmail']) ? htmlspecialchars($_POST['reporterEmail']) : "Unknown";
 	
-	if($emailer->SendProblemEmail($title, $details, $name, $club, $email)) {
+	$result = $emailer->SendProblemEmail($title, $details, $name, $club, $email);
+	echo $result;
+	if($result) {
 		$issueReceived = true;
+		
 	} else {
 		$error = true;
 	}	
