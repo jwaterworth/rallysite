@@ -125,7 +125,6 @@ class Email {
             $phpmailer->AddAddress($address);
             
             $phpmailer->Subject = $event->getName() . ' Booking';
-            
             $phpmailer->MsgHTML($this->GenerateBookingConfirmation($bookingData, $event, $account, $booking));
             
             $phpmailer->Send();
