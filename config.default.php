@@ -2,11 +2,16 @@
 ini_set("display_errors", true);
 date_default_timezone_set("Europe/London");
 
+//Logging directory 
+define('ACCOUNTS_LOGFILE', "../accounts.log");
+define('BOOKINGS_LOGFILE', "../bookings.log");
+define('ERRORS_LOGFILE', "../errors.log");
+
 //Database
-define("DB_HOST", "host");
-define("DB_NAME", "rallysite");
-define("DB_USERNAME", "username");
-define("DB_PASSWORD", "password");
+define("DB_HOST", ".");
+define("DB_NAME", ".");
+define("DB_USERNAME", ".");
+define("DB_PASSWORD", ".");
 
 //Account Types
 define('UNAPPROVED', 16);
@@ -51,7 +56,6 @@ define("COMMON_TEMPLATES", "templates/common");
 define("TEMPLATE_PATH", "templates");
 define("BUSLOGIC_PATH", "classes/business_logic");
 define("PAGE_CONTROLLERS", "classes/page_controllers");
-
         
 //Value Objects
 require_once(VO_PATH."/AccountTypeVO.inc.php");
@@ -83,9 +87,6 @@ require_once(CLASS_PATH."/emails/Email.inc.php");
 //Downloads class
 require_once(CLASS_PATH.'/downloads/CSVGenerator.php');
 
-//Logging
-require_once(CLASS_PATH.'/logging/logging.inc.php');
-
 //Factories
 require_once(DATA_FACTORY_PATH."/AccountFactory.inc.php");
 require_once(DATA_FACTORY_PATH."/AccountTypeFactory.inc.php");
@@ -105,4 +106,6 @@ require_once(DATA_FACTORY_PATH."/BookingFoodChoiceFactory.inc.php");
 require_once(DATA_FACTORY_PATH."/OpenSessionFactory.inc.php");
 require_once(PRES_FACTORY_PATH."/LogicFactory.inc.php");
 
-?>
+
+//Logging
+require_once(CLASS_PATH.'/logging/logging.inc.php');

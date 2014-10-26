@@ -29,7 +29,10 @@
                 <img src="<?php echo $controller->data['logoLoc']?>"/>
             </div>
             <div id="tabs-2">
-				<div class="map_container">					
+				<div class="map_container">	
+					<div>
+						<p>Willesley Campsite, Willesley Woodside, Willesley,Ashby De La Zouch,Leicestershire, LE65 2UP</p>
+					</div>
 					<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2416.2307723951876!2d-1.497059!3d52.72802799999999!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4879fe799fb08dad%3A0x17148348abb3382d!2sWillesley+Scout+Campsite!5e0!3m2!1sen!2suk!4v1413844796359" class="google_maps_iframe" frameborder="0" style="border:0"></iframe>
 				</div>
             </div>
