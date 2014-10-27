@@ -13,7 +13,7 @@ if(isset($_POST['issueTitle']) && $_POST['issueTitle']) {
 	$club = isset($_POST['reporterClub']) ? htmlspecialchars($_POST['reporterClub']) : "Unknown";
 	$email = isset($_POST['reporterEmail']) ? htmlspecialchars($_POST['reporterEmail']) : "Unknown";
 	
-	$result = $emailer->SendProblemEmail($title, $details, $name, $club, $email);]
+	$result = $emailer->SendProblemEmail($title, $details, $name, $club, $email);
 	if($result) {
 		$issueReceived = true;
 		
