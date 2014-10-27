@@ -10,12 +10,16 @@ $(document).ready(function() {
 		if(BookingScript.ClubBooking && !$('#accountID').val()) {
 			e.preventDefault();
 			alert("Please select a member.");
+			return;
 		}
 
 		if(!$('#activityInput').val()) {
 			e.preventDefault();
 			alert("Please select an activity.");
+			return;
 		}		
+		
+		return confirm("Please confirm you have checked your activity and food selections to continue. You may only update your booking by emailing the rally exec.");
 	});
 	
 	$(".activityButton").click(function(e) {

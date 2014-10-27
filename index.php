@@ -169,8 +169,7 @@ function entry() {
         case 'removebooking' :
             require_once(PAGE_CONTROLLERS."/BookingFormPageController.inc.php");
             $controller = new BookingFormPageController($eventID);
-            
-            echo $controller->RemoveBooking($_GET['id']);
+            $controller->RemoveBooking($_GET['id']);
             bookings();
             break;
         case 'register':
@@ -282,12 +281,17 @@ function ajax() {
 	if(Authentication::CheckAuthenticationLevel(CLUBREP|EVENTEXEC|SSAGOEXEC)) {
 		require_once('ajax/AJAXHandler.php');
 		$ajaxHandler = new AJAXHandler();
-		if($accountID = isset( $_GET['accountID'] ) ? $_GET['accountID'] : "") {
-			$ajaxHandler->GetAccountDetails($accountID);
-		} else if(isset($_GET['getClubs'])) {
-			$ajaxHandler->GetClubs();
-		} else if(isset($_GET['getClubBookings']) && isset($_GET['clubId'])) {
+		
+		if(isset($_GET['getClubBookings']) && isset($_GET['clubId'])) {
 			$ajaxHandler->GetClubBookings($_GET['event'], $_GET['clubId']);
+		} else if($accountID = isset( $_GET['accountID'] ) ? $_GET['accountID'] : "") {
+			$ajaxHandler->GetAccountDetails($accountID);
+		}
+	}
+	
+	if(Authentication::CheckAuthenticationLevel(CLUBREP|EVENTEXEC|SSAGOEXEC)) {
+		if(isset($_GET['getClubs'])) {
+			$ajaxHandler->GetClubs();
 		} else if(isset($_GET['getActivities']) && isset($_GET['event'])) {
 			$ajaxHandler->GetActivities($_GET['event']);
 		} else if(isset($_GET['updateBooking'])) {
@@ -299,7 +303,7 @@ function ajax() {
 		} else if(isset($_GET['removeBooking'])) {
 			$bookingId = isset($_POST['bookingId']) ? $_POST['bookingId'] : null;
 			$ajaxHandler->RemoveBooking($bookingId);
-		}
+		}	
 	}
 	
 	if( $activityID = isset( $_GET['activityID'] ) ? $_GET['activityID'] : "") {

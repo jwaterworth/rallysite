@@ -68,8 +68,9 @@
                                 <a class="booking_button" href=".?event=<?php echo $controller->data['eventID'] ?>&action=bookingsummary" rel="facebox"><span>view</span></a>
 								<a class="booking_button" href=".?event=<?php echo $controller->data['eventID'] ?>&action=payment"><span>payment</span></a>
 								<a class="booking_button remove_button" href=".?event=<?php echo $controller->data['eventID'] ?>&action=entry&form=removebooking&id=<?php echo $controller->data['personalBooking']['bookingID'] ?>"><span>remove</span></a>
-							</div>
+							</div>							
                         </div>
+						<p>If you require any amendments to your booking, please email the rally staff at <a href="mailto:loughboroughrallycommittee@gmail.com">loughboroughrallycommittee@gmail.com</a>. If you attempt to remove and recreate your booking, you may lose your place on your chosen activity or your early bird discount.</p>
                         <p class="club_header"></p>
                     </div>
                 <?php endif; //Check for personal booking?>

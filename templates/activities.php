@@ -1,4 +1,4 @@
-<?php
+﻿<?php
     include (COMMON_TEMPLATES."/header.php");
     require_once(PAGE_CONTROLLERS."/ActivityPageController.inc.php");
     $eventID = isset( $_GET['event'] ) ? $_GET['event'] : "";

@@ -23,19 +23,21 @@ class AccountsTest extends PHPUnit_Framework_TestCase
 		     
         // Act
 		// Assert
-			$this->assertTrue($registrationController->SaveAccount("Unit Test Account " . $index, 
+		//$this->assertTrue(
+			$registrationController->SaveAccount("Unit Test Account " . $index, 
 											$this->generateRandomString() . "@testing.com", 
 											"password", 
 											"07511914561",
 											 "3 Orston Lane,Whatton,Nottinghamshire",
-											 15-06-1990,
+											 "15/06/1990",
 											 "Diabetic",
 											 "Need to check labels",
 											 "Mrs Test",
 											 "Mother",
 											 "07511914562",
 											 "5 Orston Lane, Wahtton, Nottinghamshire",
-											 "1"));       
+											 "1");       
+		 echo $registrationController->errorMessage;
     }
 
 	private function generateRandomString($length = 10) {

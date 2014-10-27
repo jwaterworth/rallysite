@@ -145,7 +145,7 @@ class BookingFormPageController extends PageController {
 		
 		if($activityID == null || $activityID == "") {
 			$this->errorMessage = "Please select an activity";
-			Logging::Error(ERRORS_LOGFILE, "BookingFormPageController", "SaveBooking", "User attempted to make a booking without setting an activity", json_encode(array("userID" => $userId)));
+			Logging::Error(ERRORS_LOGFILE, "BookingFormPageController", "SaveBooking", "User attempted to make a booking without setting an activity", json_encode(array("userID" => $userID)));
 			return false;
 		}
 		
@@ -244,7 +244,13 @@ class BookingFormPageController extends PageController {
             if($userAccount->getId() == $bookingAccount->getId() || $this->CheckAuth(EVENTEXEC|SSAGOEXEC)) {
                 //Remove booking
                 $bookingData->RemoveBooking($booking);
-				Logging::Error(BOOKINGS_LOGFILE, "BookingFormPageController", "RemoveBooking", "Booking removed", 
+				
+				//Email
+				$emailer = new Email();
+				$emailer->SendBookingRemovalEmail($this->event, $bookingAccount, $booking);
+				
+				//Log
+				Logging::Info(BOOKINGS_LOGFILE, "BookingFormPageController", "RemoveBooking", "Booking removed", 
 				json_encode(array("bookingID" => $bookingID)));
             } else if($this->CheckAuth(CLUBREP, false)){ //If club rep, ensure they are only removing a club member booking
                 

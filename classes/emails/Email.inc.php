@@ -140,6 +140,46 @@ class Email {
         
         return;
     }
+	
+	public function SendBookingRemovalEmail(EventVO $event, AccountVO $account, BookingVO $booking) {
+        $bookingData = LogicFactory::CreateObject("Bookings");
+        $bookingData = new Bookings();	
+		$accountData = LogicFactory::CreateObject("Accounts");
+        $accountData = new Accounts();
+        
+        //Email member
+        try {
+            //True parameter allows exceptions to be thrown
+            $phpmailer = new PHPMailer(true);
+        
+            $phpmailer->AltBody = 'To view the message, please use an HTML compatible email client';
+            $phpmailer->SetFrom($account->getEmail());
+        
+            $phpmailer->AddAddress('loughboroughrallycommittee@gmail.com');
+            
+            $phpmailer->Subject = sprintf("%s - %s has removed their booking.", $event->getName(), $account->getName());
+            $phpmailer->CharSet = 'UTF-8';
+			
+			//Get the data together
+			$name = $account->getName();
+			$activity = $bookingData->GetBookingActivity($booking);
+			$activityName = $activity->getActivityName();
+			$club = $accountData->GetMemberClub($account);
+			$clubName = $club->getName();
+			$paymentDue = $booking->getBookingFee();
+		   
+            $phpmailer->MsgHTML($this->GenerateRemovalEmail($name, $clubName, $activityName, $paymentDue));
+            $phpmailer->Send();
+        } catch(phpmailerException $e) {
+            $this->errorMessage =  $e->getMessage();
+			return false;
+        } catch(Exception $e) {
+            $this->errorMessage =  $e->getMessage();
+			return false;
+        }
+        
+        return;
+    }
     
     public function SendPaymentDetails(EventVO $event, $accountID) {
         $bookingData = LogicFactory::CreateObject("Bookings");
@@ -152,11 +192,7 @@ class Email {
             $replyToAddress = $account->getEmail();
 
             $bookingInfo = $bookingData->GetBookingInfo($event);
-
-            //$eventExecID = $bookingInfo->getPaymentMemberID();
-           // $eventExecAccount = $accountData->getAccount($eventExecID);
-            
-            //$address = $eventExecAccount->getEmail();
+			
 			$address = "loughboroughrallycommittee@gmail.com";
             
             //True parameter allows exceptions to be thrown
@@ -181,31 +217,7 @@ class Email {
         }
         
     }
-    
-    public function TestAttachment(){
-        try {
-            //True parameter allows exceptions to be thrown
-            $phpmailer = new PHPMailer(true);
-            $phpmailer->AddReplyTo('donotreply@ssago.org.uk', 'SSAGO  Executive');
-        
-            $phpmailer->AltBody = 'To view the message, please use an HTML compatible email client';
-            $phpmailer->SetFrom('ssagoevents@saggo.org.uk', 'SSAGO Bookings');
-        
-            
-            $phpmailer->AddAddress('j.waterworth1990@gmail.com');
-            
-            $phpmailer->AddAttachment('/diskh/zco/cojw3/ssago_images/test.csv');
-            
-            $phpmailer->Subject = 'attachment test';
-            
-            $phpmailer->MsgHTML('please work!');
-            
-            $phpmailer->Send();
-        } catch (phpmailerException $e) {
-            echo $e->errorMessage();
-        }
-
-    }
+ 
 	
 	public function SendProblemEmail($title, $details, $name, $club, $email) {
 		try {
@@ -232,6 +244,15 @@ class Email {
 			
         }
 		return true;
+	}
+	
+	private function GenerateRemovalEmail($name, $clubName, $activityName, $paymentDue) {
+		$email_template = file_get_contents(TEMPLATE_PATH."/emails/booking_removal.html");
+		
+		 //Insert name and email into placeholders
+        $email = sprintf($email_template, $name, $clubName, $activityName, $paymentDue);
+        
+        return $email;
 	}
     
     private function GenerateProblemEmail($title, $details, $name, $club, $email) {

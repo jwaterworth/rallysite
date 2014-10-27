@@ -2,6 +2,11 @@
 ini_set("display_errors", true);
 date_default_timezone_set("Europe/London");
 
+//Logging directory 
+define('ACCOUNTS_LOGFILE', "../accounts.log");
+define('BOOKINGS_LOGFILE', "../bookings.log");
+define('ERRORS_LOGFILE', "../errors.log");
+
 //Database
 define("DB_HOST", "omicron");
 define("DB_NAME", "rallysite");
@@ -23,11 +28,17 @@ define('REGISTRATION', 1);
 define('BOOKING', 2);
 define('UPDATE_DETAILS', 3);
 define('CLUB_REGISTRATON', 4);
+define('CLUB_BOOKING' ,5);
+define('CLUB_MEMBER_UPDATE', 6);
 
 //Download TYPES
 define('PARTICIPANT_LIST', 0);
 define('ACTIVITY_LIST', 1);
 define('CATERING_LIST', 2);
+
+//Misc
+define('WHOSGOING', 0);
+define('WHOSDOING', 1);
 
 //Paths
 define("IMAGE_PATH" , "C:/wamp/www/rallysite/images/");
@@ -54,6 +65,7 @@ require_once(VO_PATH."/ActivityVO.inc.php");
 require_once(VO_PATH."/BookingActivityVO.inc.php");
 require_once(VO_PATH."/BookingInfoVO.inc.php");
 require_once(VO_PATH."/BookingVO.inc.php");
+require_once(VO_PATH."/BookingCompositeVO.inc.php");
 require_once(VO_PATH."/ClubVO.inc.php");
 require_once(VO_PATH."/EventVO.inc.php");
 require_once(VO_PATH."/FeesVO.inc.php");
@@ -64,10 +76,10 @@ require_once(VO_PATH."/NewsPostVO.inc.php");
 require_once(VO_PATH."/OpenSessionVO.inc.php");
 
 //Authentication class
-require_once(CLASS_PATH."/auth/Authentication.inc.php");
+require_once("classes/auth/Authentication.inc.php");
 
 //Upload Class
-require_once(CLASS_PATH."/upload/Uploads.inc.php");
+require_once("classes/upload/Uploads.inc.php");
 
 //Email class
 require_once(CLASS_PATH."/emails/Email.inc.php");
@@ -88,9 +100,13 @@ require_once(DATA_FACTORY_PATH."/FeesFactory.inc.php");
 require_once(DATA_FACTORY_PATH."/FoodChoiceFactory.inc.php");
 require_once(DATA_FACTORY_PATH."/FoodTypeFactory.inc.php");
 require_once(DATA_FACTORY_PATH."/BookingFactory.inc.php");
+require_once(DATA_FACTORY_PATH."/BookingCompositeFactory.inc.php");
 require_once(DATA_FACTORY_PATH."/BookingActivityFactory.inc.php");
 require_once(DATA_FACTORY_PATH."/BookingFoodChoiceFactory.inc.php");
 require_once(DATA_FACTORY_PATH."/OpenSessionFactory.inc.php");
 require_once(PRES_FACTORY_PATH."/LogicFactory.inc.php");
 
-?>
+
+//Logging
+require_once(CLASS_PATH.'/logging/logging.inc.php');
+
