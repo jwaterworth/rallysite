@@ -41,6 +41,14 @@ class Accounts extends BusinessLogic {
         
         return $account;
     }
+	
+	public function GetAccountsByEmail($email) {
+		$dbAccounts = AccountFactory::GetDataAccessObject();
+        
+        $accounts = $dbAccounts->GetByAttribute(AccountVO::$dbEmail, $email);
+        
+        return $accounts;
+	}
     
     public function GetClubAccounts(ClubVO $club) {
         $accounts = array();

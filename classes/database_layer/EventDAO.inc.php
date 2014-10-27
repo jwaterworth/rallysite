@@ -82,13 +82,13 @@ class EventDAO extends DatabaseAccessObject{
 			$this->BuildInsertSql(EventVO::$dbBookingInfoID, $valueObject->getBookingInfoID(), $colSql, $valSql);
 		}	
 
-		if($valueObject->getStartDate()) { 
-			$this->BuildInsertSql(EventVO::$dbStartDate, $this->GetDate($valueObject->getStartDate()), $colSql, $valSql);
-		}	
+		//if($valueObject->getStartDate()) { 
+		//	$this->BuildInsertSql(EventVO::$dbStartDate, $this->GetDate($valueObject->getStartDate()), $colSql, $valSql);
+		//}	
 
-		if($valueObject->getEndDate()) { 
-			$this->BuildInsertSql(EventVO::$dbEndDate, $this->GetDate($valueObject->getEndDate()), $colSql, $valSql);
-		}	
+		//if($valueObject->getEndDate()) { 
+		//	$this->BuildInsertSql(EventVO::$dbEndDate, $this->GetDate($valueObject->getEndDate()), $colSql, $valSql);
+		//}	
 
 		if($valueObject->getActivityPageID()) { 
 			$this->BuildInsertSql(EventVO::$dbActivityPageID, $valueObject->getActivityPageID(), $colSql, $valSql);
@@ -118,7 +118,7 @@ class EventDAO extends DatabaseAccessObject{
                     EventVO::$dbActivityPageID."='".
                     $this->mysqli->real_escape_string($valueObject->getActivityPageID())."' ".
                     "WHERE ".EventVO::$dbId."=".$this->mysqli->real_escape_string($valueObject->getId());
-        return $sql;
+        return "";
     }
 	
 	protected function GeneratePDOUpdateSQL($valueObject) {	
@@ -146,11 +146,11 @@ class EventDAO extends DatabaseAccessObject{
 			$this->BuildUpdateSql(EventVO::$dbBookingInfoID, $valueObject->getBookingInfoID(), $sql);
 		}
 		
-		if($valueObject->getLogoLoc() !== null) { 
+		if($valueObject->getStartDate() !== null) { 
 			$this->BuildUpdateSql(EventVO::$dbStartDate, $this->GetDate($valueObject->getStartDate()), $sql);
 		}
 		
-		if($valueObject->getLogoLoc() !== null) { 
+		if($valueObject->getEndDate() !== null) { 
 			$this->BuildUpdateSql(EventVO::$dbEndDate, $this->GetDate($valueObject->getEndDate()), $sql);
 		}
 		

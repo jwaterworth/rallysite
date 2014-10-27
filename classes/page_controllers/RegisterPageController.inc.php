@@ -124,7 +124,17 @@ class RegisterPageController extends PageController{
 			try {
 			$accountData = LogicFactory::CreateObject("Accounts");
 			$account = AccountFactory::CreateValueObject();
+			//Get the update account
 			$account = $accountData->GetAccount($id);
+			
+			//Check we're not updating to someone else's email address
+			if(!$this->CheckExistingAccountsByEmail($accountData, $id, $email)) {
+				$this->errorMessage = "An account (other than yours) with that email address already exists";
+				Logging::Error(ACCOUNTS_LOGFILE, "RegisterPageController", "UpdateAccount", "User attempted to update their accuont with an email used for another account",
+				json_encode(array($id, $name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
+							$emergName, $emergRel, $emergPhone, $emergAddress)));
+				return false;
+			}
 			
 			$account->setName($name);
 			$account->setEmail($email);
@@ -158,7 +168,7 @@ class RegisterPageController extends PageController{
 		
 		return false;
     }
-    
+	    
     private function SaveNewAccount($name, $password, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
             $emergName, $emergRel, $emergPhone, $emergAddress, $clubId) {
         
@@ -175,10 +185,7 @@ class RegisterPageController extends PageController{
 		if($validation != null) {
 			$this->errorMessage = $validation;
 			return false;
-		}
-		
-		//Check account doesn't already exist
-
+		}		
 		
 		try{
 			$accountVO = AccountFactory::CreateValueObject();
@@ -201,28 +208,28 @@ class RegisterPageController extends PageController{
 			
 			if($result && $result != 999) {
 				//Send email updates
-				//$emailer = new Email();
-				//$emailer->SendRegistrationEmail($email);
+				$emailer = new Email();
+				$emailer->SendRegistrationEmail($email);
 				Logging::Info(ACCOUNTS_LOGFILE, "RegisterPageController", "Save New Account", "Creating new account",
 				json_encode(array($name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
 							$emergName, $emergRel, $emergPhone, $emergAddress, $clubId)));
 				return true;
 			} elseif($result == 999) {
 				$this->errorMessage =  "Error creating account: Account already exists";
-				Logging::Error(ACCOUNTS_LOGFILE, "RegisterPageController", "SaveNewAccount", "Account already exists", 
+				Logging::Error(ERRORS_LOGFILE, "RegisterPageController", "SaveNewAccount", "Account already exists", 
 				json_encode(array($name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
 							$emergName, $emergRel, $emergPhone, $emergAddress, $clubId)));
 				return false;
 			} else {
 				$this->errorMessage =  "Error creating account, please try again";
-				Logging::Error(ACCOUNTS_LOGFILE, "RegisterPageController", "SaveNewAccount", "Create account returned false", 
+				Logging::Error(ERRORS_LOGFILE, "RegisterPageController", "SaveNewAccount", "Create account returned false", 
 				json_encode(array($name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
 							$emergName, $emergRel, $emergPhone, $emergAddress, $clubId)));
 				return false;
 			}    
 		} catch(Exception $e) {
 			$this->errorMessage = $e->getMessage();
-			Logging::Error(ACCOUNTS_LOGFILE, "RegisterPageController", "UpdateAccount", $e->getMessage(), 
+			Logging::Error(ERRORS_LOGFILE, "RegisterPageController", "UpdateAccount", $e->getMessage(), 
 				json_encode(array($name, $email, $phone, $address, $dob, $medicalCond, $dietaryReq,
 							$emergName, $emergRel, $emergPhone, $emergAddress, $clubId)));
 			return false;
@@ -231,6 +238,18 @@ class RegisterPageController extends PageController{
 
 		return false;
     }
+		
+	private function CheckExistingAccountsByEmail($accountData, $updateId, $email) {
+		//Also try and get account by email
+		$accountsByEmail = $accountData->GetAccountsByEmail($email);
+		foreach($accountsByEmail as $tempAccount) {
+			if($tempAccount->getId() != $updateId) {				
+				return false;
+			}
+		}
+		
+		return true;
+	}
 	
 	private function ValidateLoginDetails($email, $password, $create = true) {
 		$valid = true;

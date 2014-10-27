@@ -24,16 +24,15 @@ class Email {
             
             //True parameter allows exceptions to be thrown
             $phpmailer = new PHPMailer(true);
-            $phpmailer->AddReplyTo('loughboroughrallycommittee@gmail.com', 'Puzzle Rally Event Exec');
         
             $phpmailer->AltBody = 'To view the message, please use an HTML compatible email client';
-            $phpmailer->SetFrom('ssagoevents@saggo.org.uk', 'SSAGO Registration');
+            $phpmailer->SetFrom('rallysupport@ssago.org.uk', 'SSAGO Registration');
         
             $address = $account->getEmail();
             $phpmailer->AddAddress($address);
             
             $phpmailer->Subject = 'SSAGO Events Account Registration';
-            
+            $phpmailer->CharSet = 'UTF-8';
             $phpmailer->MsgHTML($this->GenerateRegistrationEmail($account));
 
             $phpmailer->Send();
@@ -61,9 +60,10 @@ class Email {
             }
             
             $phpmailer->Subject = 'Club Member Registration';
+            $phpmailer->CharSet = 'UTF-8';
             $phpmailer->MsgHTML($this->GenerateApprovalRequestEmail($account, $club));
             
-            $phpmailer->Send();
+            //$phpmailer->Send();
         } catch(phpmailerException $e) {
             $this->errorMessage = $e->errorMessage();
 			return false;
@@ -80,16 +80,17 @@ class Email {
         try {
             //True parameter allows exceptions to be thrown
             $phpmailer = new PHPMailer(true);
-            $phpmailer->AddReplyTo('donotreply@ssago.org.uk', 'SSAGO  Executive');
+            //$phpmailer->AddReplyTo('rallysupport@ssago.org.uk', 'SSAGO Executive');
         
             $phpmailer->AltBody = 'To view the message, please use an HTML compatible email client';
-            $phpmailer->SetFrom('ssagoevents@ssago.org.uk', 'SSAGO Registration');
+            $phpmailer->SetFrom('rallysupport@ssago.org.uk', 'SSAGO Registration');
         
             $address = $account->getEmail();
             $phpmailer->AddAddress($address);
             
             $phpmailer->Subject = 'SSAGO Events Account Registration';
             
+            $phpmailer->CharSet = 'UTF-8';
             $phpmailer->MsgHTML($this->GenerateApprovalEmail($account));
             
             //$phpmailer->Send();
@@ -116,15 +117,16 @@ class Email {
         try {
             //True parameter allows exceptions to be thrown
             $phpmailer = new PHPMailer(true);
-            $phpmailer->AddReplyTo('loughboroughrallycommittee@gmail.com', 'Puzzle Rally Event Exec');
+            //$phpmailer->AddReplyTo('loughboroughrallycommittee@gmail.com', 'Puzzle Rally Event Exec');
         
             $phpmailer->AltBody = 'To view the message, please use an HTML compatible email client';
-            $phpmailer->SetFrom('rallysite@saggo.org.uk', 'Rally Booking - Do not reply');
+            $phpmailer->SetFrom('rallysupport@ssago.org.uk', 'Rally Booking - Do not reply');
         
             $address = $account->getEmail();
             $phpmailer->AddAddress($address);
             
             $phpmailer->Subject = $event->getName() . ' Booking';
+            $phpmailer->CharSet = 'UTF-8';
             $phpmailer->MsgHTML($this->GenerateBookingConfirmation($bookingData, $event, $account, $booking));
             
             $phpmailer->Send();
@@ -168,6 +170,7 @@ class Email {
             
             $phpmailer->Subject = $event->getName() . ' - Bank Transfer Details Requested';
             
+            $phpmailer->CharSet = 'UTF-8';
             $phpmailer->MsgHTML($this->GeneratePaymentDetails($event, $account));
             
             $phpmailer->Send();
@@ -212,12 +215,13 @@ class Email {
 			$phpmailer->AddReplyTo($email, 'Issue Reporter');
 			
 			$phpmailer->AltBody = 'To view the message, please use an HTML compatible email client';
-            $phpmailer->SetFrom('rallysite@ssago.org.uk', 'Rally site');
+            $phpmailer->SetFrom($email, 'Rally site');
 			
 			$phpmailer->AddAddress('rallysupport@ssago.org.uk');
 			
 			$phpmailer->Subject = 'Rally Site: Problem Reported';
 			
+            $phpmailer->CharSet = 'UTF-8';
 			$phpmailer->MsgHTML($this->GenerateProblemEmail($title, $details, $name, $club, $email));
 			
 			$phpmailer->Send();			

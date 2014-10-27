@@ -7,8 +7,7 @@ $controller = new HeaderController(1);
 ?>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         
         <script src="jquery/jquery.js" type="text/javascript"></script>
         <script src="validation.js" type="text/javascript"></script>
