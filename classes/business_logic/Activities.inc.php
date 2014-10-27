@@ -112,7 +112,7 @@ class Activities extends BusinessLogic {
         
         $capacity = $activity->getActivityCapacity();
 		
-        if($number < $capacity) { //There is space
+        if($capacity == 0 ||$number < $capacity) { //There is space
             return true;
         } else {
             return false;

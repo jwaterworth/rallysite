@@ -287,7 +287,7 @@ class BookingFormPageController extends PageController {
             $activityVOs = $activityData->GetAllActivities($activityPage);
             
             //Sort activities
-            usort($activityVOs, 'cmp');
+            //usort($activityVOs, 'cmp');
            
             //Create array to hold activities
             $arrActivities = array();
@@ -295,7 +295,6 @@ class BookingFormPageController extends PageController {
             //Add each activity to activities array
             foreach($activityVOs as $activityVO) {
                 $activity = array();
-
                 $activity['id'] = $activityVO->getId();
                 $activity['name'] = $activityVO->getActivityName();
                 $activity['description'] = $activityVO->getActivityDescription();
