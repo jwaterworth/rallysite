@@ -103,7 +103,7 @@ function getActivityDetails(activityID) {
                     
                     document.getElementById('activityName').innerHTML = responseText[0];
                     document.getElementById('activityCost').innerHTML = responseText[1];
-                    document.getElementById('activitySpaces').innerHTML = responseText[4] + ' remaining';
+                    document.getElementById('activitySpaces').innerHTML = responseText[4];
 		}
 	}
 	//var accountID = document.getElementById('activityID').value;

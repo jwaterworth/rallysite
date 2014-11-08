@@ -65,7 +65,7 @@ $controller->GeneratePageData();
             <div class="form_details">
                 <h3 class="form_details">Personal Details</h3>
 				<div>
-					<label>Name</label>
+					<label>Full Name</label>
 					<input type="text" id="name" name="userName" required value="<?php if($account) echo $account['name'] ?>"/>
 					<span id="nameInfo"></span>
 				</div>

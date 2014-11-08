@@ -8,6 +8,8 @@ class BookingCompositeVO implements IValueObject {
 	
 	private $userName;
 	
+	private $email;
+	
 	private $bookingId;
 	
 	private $activityId;
@@ -18,9 +20,23 @@ class BookingCompositeVO implements IValueObject {
 	
 	private $clubId;
 	
+	private $foodChoiceId;
+	
+	private $foodChoiceName;
+	
+	private $foodTypeId;
+	
+	private $foodTypeName;	
+	
+	private $dietaryReq;
+	
+	private $medicalCond;
+	
 	public static $dbUserId = 'accountId';
     
     public static $dbUserName = 'accountName';
+	
+	public static $dbEmail = 'accountEmail';
     
     public static $dbBookingId = 'bookingId';
     
@@ -32,6 +48,18 @@ class BookingCompositeVO implements IValueObject {
 	
 	public static $dbClubName = 'clubName';
 	
+	public static $dbfoodChoiceId = 'foodChoiceId';
+	
+	public static $dbfoodChoiceName = 'foodChoiceName';
+	
+	public static $dbfoodTypeId = 'foodTypeId';
+	
+	public static $dbfoodTypeName = 'foodTypeName';	
+	
+	public static $dbDietaryReq = 'dietaryRequirements';
+	
+	public static $dbMedicalCond = 'medicalConditions';
+	
 	public function setId($id) {
     }
 	
@@ -41,6 +69,10 @@ class BookingCompositeVO implements IValueObject {
 	
 	public function setUserName($userName) {
         $this->userName = $userName;
+    }
+	
+	public function setEmail($email) {
+        $this->email = $email;
     }
 	
 	public function setBookingId($bookingId) {
@@ -63,12 +95,40 @@ class BookingCompositeVO implements IValueObject {
         $this->clubName = $clubName;
     }
 	
+	public function setFoodChoiceId($foodChoiceId) {
+        $this->foodChoiceId = $foodChoiceId;
+    }
+	
+	public function setFoodChoiceName($foodChoiceName) {
+        $this->foodChoiceName = $foodChoiceName;
+    }
+	
+	public function setFoodTypeId($foodTypeId) {
+        $this->foodTypeId = $foodTypeId;
+    }
+	
+	public function setFoodTypeName($foodTypeName) {
+        $this->foodTypeName = $foodTypeName;
+    }
+	
+	public function setDietaryReq($dietaryReq) {
+        $this->dietaryReq = $dietaryReq;
+    }
+	
+	public function setMedicalConditions($medicalCond) {
+        $this->medicalCond = $medicalCond;
+    }
+	
 	public function getId() {
 		return "";
 	}	
 	
 	public function getUserId() {
         return $this->userId;
+    }
+	
+	public function getEmail() {
+        return $this->email;
     }
 	
 	public function getUserName() {
@@ -93,5 +153,29 @@ class BookingCompositeVO implements IValueObject {
 	
 	public function getClubName() {
         return $this->clubName;
+    }
+	
+	public function getFoodChoiceId() {
+        return $this->foodChoiceId;
+    }
+	
+	public function getFoodChoiceName() {
+        return $this->foodChoiceName;
+    }
+	
+	public function getFoodTypeId() {
+        return $this->foodTypeId;
+    }
+	
+	public function getFoodTypeName() {
+        return $this->foodTypeName;
+    }
+	
+	public function getDietaryReq() {
+        return $this->dietaryReq;
+    }
+	
+	public function getMedicalConditions() {
+        return $this->medicalCond;
     }
 }

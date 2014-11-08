@@ -1,0 +1,11 @@
+"Activity: Afternoon off Participant List"
+
+
+Participants,3
+Capacity,0
+
+
+Name,Email,Phone,"Date of Birth",Address,"Medical Conditions","Dietary Requirements","Emergency Contact Name","Emergency Contact Phone","Emergency Contact Address"
+"Tom Hanks",tom.hanks@tsg.com,'07511914562',07/10/1992,eggsrhfseseas,segefaawwa,awfwawafdafd,"Mrs Hanks",'07511666561',awfwafada
+"Megan Jones",megansjones1988@gmail.com,'07511914561',12/09/1988,wadawdwaadaw,None,None,Sarah,'07511914562',"Inglenook oxfordshire"
+"James Waterworth",j.waterworth1990@gmail.com,'07511914561',12/05/1990,"1 Orston Lane, Whatton, Nottinghamshire, NG13 9ET",Medical,Dietary,"Catherine Waterworth",'07511914561',"17 Needham Avenue, Glen Parva, Leicester, LE2 9JL"

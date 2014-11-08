@@ -34,7 +34,8 @@ define('CLUB_MEMBER_UPDATE', 6);
 //Download TYPES
 define('PARTICIPANT_LIST', 0);
 define('ACTIVITY_LIST', 1);
-define('CATERING_LIST', 2);
+define('FOOD_TYPE_LIST', 2);
+define('FOOD_TYPE_BY_CLUB_LIST', 3);
 
 //Misc
 define('WHOSGOING', 0);

@@ -43,9 +43,9 @@ class AJAXHandler {
             $cost = $activity->getActivityCost();
             
             $number = $activityData->GetActivityNumber($activity);
-            $capacity = $activity->getActivityCapacity();
+            $capacity = $activity->getActivityCapacity() > 0 ? $activity->getActivityCapacity() : "Unlimited";
             
-            $spaces = $capacity - $number;
+            $spaces = $activity->getActivityCapacity() > 0 ? $capacity - $number : "Unlimited";
 			
             $responseString = $name . '|' . '£'.$cost . '|' . $number . '|' . $capacity . '|' . $spaces;
         } catch (Exception $e) {

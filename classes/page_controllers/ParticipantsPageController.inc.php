@@ -124,7 +124,7 @@ class ParticipantsPageController extends PageController{
                 $activity['id'] = $activityVO->getId();
                 $activity['name'] = $activityVO->getActivityName();
                 $activity['imgLoc'] = $activityVO->getActivityImageLoc();
-                $activity['capacity'] = $activityVO->getActivityCapacity();
+                $activity['capacity'] = $activityVO->getActivityCapacity() > 0 ? $activityVO->getActivityCapacity() : "Unlimited";
                 $activity['number'] = $activityData->GetActivityNumber($activityVO);
 				$this->totalBooked += $activityData->GetActivityNumber($activityVO);
                 //Get activity participants

@@ -89,6 +89,7 @@ class AdminPageController extends PageController {
         
         //Download links
         try {
+			//Activities
             $activityPage = $activityData->GetActivitiesPage($this->event);
             $activities = $activityData->GetAllActivities($activityPage);
                         
@@ -108,6 +109,17 @@ class AdminPageController extends PageController {
             }
             
             $this->data['activity_downloads'] = $arrActivities;
+			
+			//Food Choices
+			$foodTypes = $bookingData->GetFoodTypes($bookingInfo);
+							
+			foreach($foodTypes as $foodType) {
+				$foodTypeData = array();
+				$foodTypeData['foodTypeId'] = $foodType->getId();
+				$foodTypeData['foodTypeName'] = $foodType->getFoodTypeName();
+				
+				$this->data['foodTypes'][] = $foodTypeData;
+			}
             
         } catch (Exception $e) {
             $this->data['activity_downloads'] = null;
@@ -265,18 +277,25 @@ class AdminPageController extends PageController {
             case ACTIVITY_LIST:
                 $fileName = $csvGenerator->CreateActivityListCSV($id);
                 break;
-            case CATERING_LIST:
-                return;
+            case FOOD_TYPE_LIST:
+				$fileName = $csvGenerator->CreateFoodListByTypeCSV($id);
+                break;
+			case FOOD_TYPE_BY_CLUB_LIST:
+				$fileName = $csvGenerator->CreateClubFoodListCSV();
+				break;
             default:
                 return false;
         }
-        
+		
         //Push to browser
-        ob_start('ob_gzhandler');
-        header('Content-type: application/octet-stream');
-        header('Content-Disposition: attachment; filename="'.$fileName.'"');
-        readfile(DOWNLOADS_PATH.$fileName);
+		if(file_exists(DOWNLOADS_PATH.$fileName)) {
+			ob_start('ob_gzhandler');
+			header('Content-type: application/octet-stream');
+			header('Content-Disposition: attachment; filename="'.$fileName.'"');
+			readfile(DOWNLOADS_PATH.$fileName);
+		}
         
+		
         return true;
     }
 }

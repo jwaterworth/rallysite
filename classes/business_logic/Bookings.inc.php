@@ -49,6 +49,18 @@ class Bookings extends BusinessLogic {
         
         return $foodTypes;
     }
+	
+	public function GetFoodType($id) {
+		$dbFoodTypes = FoodTypeFactory::GetDataAccessObject();
+		
+		$foodType = $foodTypes = $dbFoodTypes->GetById($id);
+		
+		if($foodType == null){
+            throw new Exception("No food type found for the specified id");
+        }
+		
+		return $foodType;
+	}
     
     public function GetFoodChoices(FoodTypeVO $foodType) {
         $this->CheckParam($foodType, "GetFoodChoices");
@@ -287,13 +299,12 @@ class Bookings extends BusinessLogic {
         $fees = $dbFees->GetByForeignKey($bookingInfo->getId());
 
 		$currFee = null;
-		
         foreach($fees as $fee){
 			//If curr date is before the deadline
-            if($this->CompareDates($this->parseUkDate($fee->getDeadline()), "now"))
-			{				
+            if($this->CompareDates("now", $this->parseUkDate($fee->getDeadline())))
+			{	
 				//Select the fee if no fee is set or if our current fee's deadline is later than this one
-				if(!$currFee || $this->CompareDates($this->parseUkDate($currFee->getDeadline()), $this->parseUkDate($fee->getDeadline()))) {				
+				if(!$currFee || $this->CompareDates($this->parseUkDate($fee->getDeadline()), $this->parseUkDate($currFee->getDeadline()))) {
 					$currFee = $fee;
 				}
 			}
@@ -304,6 +315,7 @@ class Bookings extends BusinessLogic {
 		} else {
 			$eventFee = $fees[count($fees)-1]->getFee(); //Set it to the last fee entered
 		}
+		
 		
 		return $eventFee;
 	}
@@ -328,10 +340,10 @@ class Bookings extends BusinessLogic {
 		
         foreach($fees as $fee){
 			//If curr date is before the deadline
-            if($this->CompareDates($this->parseUkDate($fee->getDeadline()), "now"))
-			{				
+            if($this->CompareDates("now", $this->parseUkDate($fee->getDeadline())))
+			{	
 				//Select the fee if no fee is set or if our current fee's deadline is later than this one
-				if(!$currFee || $this->CompareDates($this->parseUkDate($currFee->getDeadline()), $this->parseUkDate($fee->getDeadline()))) {				
+				if(!$currFee || $this->CompareDates($this->parseUkDate($fee->getDeadline()), $this->parseUkDate($currFee->getDeadline()))) {
 					$currFee = $fee;
 				}
 			}
@@ -364,6 +376,34 @@ class Bookings extends BusinessLogic {
 		$dateString = sprintf("%s-%s-%s", $values[2], $values[1], $values[0]);
 		$newDate = date("Y-m-d", strtotime($dateString));
 		return $newDate;
+	}
+	
+	public function GetBookingFoodChoicesByChoice($foodChoiceId) {
+		$dbCompositeBookings = BookingCompositeFactory::GetDataAccessObject();
+		
+		$bookingFoodChoices = array();
+		
+		try {
+			$bookingFoodChoices = $dbCompositeBookings->GetFoodChoicesByType($foodChoiceId);
+		} catch(Exception $e) {
+			Logging::Error(ERRORS_LOGFILE, "Bookings Class", "GetFoodChoicesByType", $e->getMessage(), null);
+		}
+		
+		return $bookingFoodChoices;
+	}
+	
+	public function GetBookingFoodChoicesByTypeAndClub($eventId, $foodTypeId, $clubId) {
+		$dbCompositeBookings = BookingCompositeFactory::GetDataAccessObject();
+		
+		$bookingFoodChoices = array();
+		
+		try {
+			$bookingFoodChoices = $dbCompositeBookings->GetFoodChoicesByClub($eventId, $foodTypeId, $clubId);
+		} catch(Exception $e) {
+			Logging::Error(ERRORS_LOGFILE, "Bookings Class", "GetBookingFoodChoicesByTypeAndClub", $e->getMessage(), null);
+		}
+		
+		return $bookingFoodChoices;
 	}
 	
     public function MarkBookingPaid(BookingVO $booking) {

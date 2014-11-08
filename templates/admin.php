@@ -197,15 +197,26 @@ $controller->GetPageData();
 							</div>							
                         </div>
                         <div id="tabs-6">
-                            <p><?php echo $controller->data['eventName'] ?> Participants</p>
+                            <h3><?php echo $controller->data['eventName'] ?> Participants</h3>
                             <ul>
-                                <li><a href=".?event=<?php echo $controller->data['eventID']?>&action=download&type=<?php echo PARTICIPANT_LIST ?>">Download Participants</a></li>
+                                <li><a href=".?event=<?php echo $controller->data['eventID']?>&action=download&type=<?php echo PARTICIPANT_LIST ?>">Download Participant List</a></li>
                             </ul>
-                            <p>Activity Lists</p>
+                            <h3>Activity Lists</h3>
                             <ul>
                                 <?php foreach($controller->data['activity_downloads'] as $activity) : ?>
                                 <li><a href=".?event=<?php echo $controller->data['eventID']?>&action=download&type=<?php echo ACTIVITY_LIST ?>&id=<?php echo $activity['id']?>"><?php echo $activity['name']?> (<?php echo $activity['number']?>)</a></li>
                                 <?php endforeach ?>                                
+                            </ul>
+							<h3>Food Choices</h3>
+							<h4>By Club</h4>
+							<ul>
+                                <li><a href=".?event=<?php echo $controller->data['eventID']?>&action=download&type=<?php echo FOOD_TYPE_BY_CLUB_LIST ?>">Club Food Choices</a></li>
+                            </ul>
+							<h4>By Meal</h4>
+							<ul>
+								<?php foreach($controller->data['foodTypes'] as $foodType) : ?>
+                                <li><a href=".?event=<?php echo $controller->data['eventID']?>&action=download&type=<?php echo FOOD_TYPE_LIST ?>&id=<?php echo $foodType['foodTypeId'] ?>"><?php echo $foodType['foodTypeName'] ?></a></li>
+								<?php endforeach ?>
                             </ul>
                         </div>
                     </div>    
